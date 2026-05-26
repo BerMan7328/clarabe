@@ -812,31 +812,50 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   color: var(--op-oceano-esc);
 }
 
-/* Easter eggs no oceano — "garrafa com mensagem" */
-.clue-ocean {
-  display: flex;
+/* Garrafa encontrada no mar (fica na ilha) */
+.clue-sea {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  position: absolute;
-  top: 38%;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: bottleBob 3s ease-in-out infinite;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  width: 44px;
+  height: 44px;
+  font-size: 1.4rem;
+  background: rgba(26,107,138,0.15);
+  border: 2px solid rgba(26,107,138,0.4);
+  border-radius: 50%;
+  animation: seaBob 3s ease-in-out infinite;
   cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
 }
-.clue-ocean--low {
-  top: 58%;
+.clue-sea::after {
+  content: '~';
+  position: absolute;
+  bottom: -4px; right: -2px;
+  font-family: 'Bangers', cursive;
+  font-size: 0.7rem;
+  color: var(--op-oceano);
+  background: white;
+  border-radius: 50%;
+  width: 14px; height: 14px;
+  display: flex; align-items: center; justify-content: center;
 }
-.clue-ocean.found {
-  opacity: 0.3;
-  pointer-events: none;
+.clue-sea:hover {
+  transform: scale(1.2);
+  filter: brightness(1.3);
+}
+.clue-sea.found {
   animation: none;
+  opacity: 0.4;
+  pointer-events: none;
 }
-@keyframes bottleBob {
-  0%,100% { transform: translateX(-50%) translateY(0) rotate(-5deg); }
-  50%      { transform: translateX(-50%) translateY(-8px) rotate(5deg); }
+.clue-sea.found::after {
+  content: '✓';
+  background: var(--op-oceano);
+  color: white;
+}
+@keyframes seaBob {
+  0%,100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-5px) rotate(3deg); }
 }
 
 /* Bônus oculto */

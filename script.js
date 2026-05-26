@@ -118,9 +118,6 @@ function addBerries(amount, reason) {
   GAME.berries += amount;
   saveGame();
   updateHUD();
-  if (amount > 0 && reason) {
-    showFloatingBerries(amount);
-  }
 }
 
 function showFloatingBerries(amount) {
@@ -804,10 +801,6 @@ function navigateToIsland(index, smooth = true) {
   saveGame();
   updateProgressDots(index);
   checkProgressAchievements();
-  // Animação do barco navegando
-  if (smooth && previousIsland !== index) {
-    animateBoatTransition(previousIsland > index ? 'left' : 'right');
-  }
 
   const targetIsland = islands[index - 1];
   const map = document.getElementById('map');
@@ -1896,7 +1889,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHatClicks();
   injectIslandDates();
   injectNpcDialogs();
-  startSeagulls();
   updateHUD();
 });
 
@@ -1972,32 +1964,6 @@ const ISLAND_META = {
   11: { date: '📅 13/06/2026 · presente',     chapter: 'final',     tag: 'Capítulo Final — A Sessão da Tarde' },
 };
 
-/* Barco navegando na transição entre ilhas */
-function animateBoatTransition(direction = 'right') {
-  const boat = document.createElement('div');
-  boat.className = 'sailing-boat boat-' + direction;
-  boat.textContent = '⛵';
-  document.body.appendChild(boat);
-  setTimeout(() => boat.remove(), 1400);
-}
-
-/* Gaivotas aleatórias */
-function spawnSeagull() {
-  const seagull = document.createElement('div');
-  seagull.className = 'seagull';
-  seagull.textContent = Math.random() > 0.5 ? '🕊️' : '🦅';
-  seagull.style.top = (5 + Math.random() * 25) + '%';
-  seagull.style.animationDuration = (8 + Math.random() * 7) + 's';
-  document.body.appendChild(seagull);
-  setTimeout(() => seagull.remove(), 16000);
-}
-function startSeagulls() {
-  setInterval(() => {
-    if (!document.getElementById('map-wrapper').classList.contains('hidden') && Math.random() > 0.4) {
-      spawnSeagull();
-    }
-  }, 12000);
-}
 
 function injectIslandDates() {
   document.querySelectorAll('.island[data-index]').forEach(island => {

@@ -19,10 +19,11 @@
   <div class="intro-left">
     <div class="op-bg-texture"></div>
     <div class="op-ocean-waves"></div>
-    <div class="op-deco straw-hat">🎩</div>
-    <div class="op-deco log-pose-deco">🧭</div>
-    <div class="op-deco jolly-roger">☠️</div>
-    <div class="op-deco torn-map">🗺️</div>
+    <div class="op-panel-art">
+      <div class="op-art-jolly"></div>
+      <div class="op-art-waves"></div>
+      <div class="op-art-tagline">Grand Line · 2026</div>
+    </div>
   </div>
 
   <div class="intro-center">
@@ -36,11 +37,11 @@
 
   <div class="intro-right">
     <div class="dr30-bg-gradient"></div>
-    <div class="dr30-deco dollhouse">🏠</div>
-    <div class="dr30-deco dress">👗</div>
-    <div class="dr30-deco polaroid">📸</div>
-    <div class="dr30-deco hearts">💕</div>
-    <div class="dr30-deco sparkles">✨</div>
+    <div class="dr30-panel-art">
+      <div class="dr30-art-title">De Repente</div>
+      <div class="dr30-art-number">30</div>
+      <div class="dr30-art-tagline">Uma comédia romântica da vida real</div>
+    </div>
     <div id="glitter-intro" class="glitter-container"></div>
   </div>
 
@@ -194,13 +195,6 @@
 
   <div id="map" class="map">
 
-    <!-- nuvens flutuantes -->
-    <div class="cloud" style="--cx:8%;--cy:12%;--cd:18s">☁️</div>
-    <div class="cloud" style="--cx:22%;--cy:7%;--cd:24s">☁️</div>
-    <div class="cloud" style="--cx:45%;--cy:15%;--cd:20s">☁️</div>
-    <div class="cloud" style="--cx:68%;--cy:9%;--cd:22s">☁️</div>
-    <div class="cloud" style="--cx:85%;--cy:13%;--cd:16s">☁️</div>
-
     <!-- rota pontilhada (decorativa) -->
     <div class="route-line"></div>
 
@@ -210,26 +204,33 @@
     <section class="island island-narrative" id="island-1" data-index="1" data-name="Reino Desencantado">
       <div class="island-body">
         <h2 class="island-title">I — Reino Desencantado</h2>
-        <div class="scene reino-scene">
-          <div class="char clickable" id="char-bernardo" data-action="bernardo-balao">👨‍💼</div>
-          <div class="char clickable" id="char-clara"    data-action="clara-balao">👩‍💼</div>
-          <div class="item clickable" id="item-cracha"   data-action="cracha-photo">🪪</div>
-          <!-- Easter egg 8 — Livro de Leis -->
-          <div class="easter-egg op-egg" id="egg-8" data-egg-id="8"></div>
-          <!-- Easter egg C2 — Vestido Colorido -->
-          <div class="easter-egg dr30-egg" id="egg-C2" data-egg-id="C2"></div>
+        <div class="island-photo-panel">
+          <img src="assets/fotos/evento-startbet.jpeg" alt="A empresa onde tudo começou" class="island-photo">
         </div>
         <p class="island-narration">
-          "No Reino Desencantado, tão tão distante, onde o amor era proibido pelo RH e os crachás escondiam segredos, Clara não esperava que um simples evento pudesse mudar sua vida."
+          "No Reino Desencantado, tão tão distante, onde o amor era proibido pelo RH e os crachás escondiam segredos, Clara não esperava que um simples evento pudesse mudar sua vida. Bernardo olhou de um jeito fixo e nada discreto. Ela só pensou: <em>'quem é esse menino?'</em>"
         </p>
+        <div class="island-actions">
+          <button class="action-btn" id="char-bernardo" data-action="bernardo-balao">
+            <span class="action-icon">👔</span><span class="action-label">Bernardo</span>
+          </button>
+          <button class="action-btn" id="char-clara" data-action="clara-balao">
+            <span class="action-icon">💼</span><span class="action-label">Clara</span>
+          </button>
+          <button class="action-btn" id="item-cracha" data-action="cracha-photo">
+            <span class="action-icon">🪪</span><span class="action-label">Crachá</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-8" data-egg-id="8" title="Investigar...">📚</div>
+          <div class="easter-egg dr30-egg clue-visible" id="egg-C2" data-egg-id="C2" title="Investigar...">👗</div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 1→2 -->
     <div class="ocean-gap" id="ocean-1-2">
-      <!-- Easter egg 13 — Aniversário do Ravi -->
-      <div class="easter-egg op-egg" id="egg-13" data-egg-id="13"></div>
-      <span class="sea-creature" style="--sc-d:16s;--sc-top:55%;--sc-delay:2s">🐟</span>
+      <div class="easter-egg op-egg clue-ocean" id="egg-13" data-egg-id="13" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -238,23 +239,36 @@
     <section class="island island-narrative" id="island-2" data-index="2" data-name="Marineford — Festa do RH">
       <div class="island-body">
         <h2 class="island-title">II — Festa do RH</h2>
-        <div class="scene marineford-scene">
-          <div class="item clickable wanted-poster" id="item-wanted"      data-action="wanted-modal">📜</div>
-          <div class="item clickable"               id="item-carimbo"     data-action="carimbo-tremor">🔴</div>
-          <div class="item clickable"               id="item-regulamento" data-action="regulamento-egg">📋</div>
-          <!-- Easter egg C4 — Revista Adolescente -->
-          <div class="easter-egg dr30-egg" id="egg-C4" data-egg-id="C4"></div>
+        <div class="island-photo-panel island-photo-panel--dark">
+          <div class="island-scene-text">
+            <span class="scene-stamp">⚠️ REGULAMENTO INTERNO</span>
+            <p>"Art. 1º — É vedado o envolvimento romântico entre colaboradores."</p>
+            <p class="scene-caption">— Ironicamente, redigido pela própria Clara.</p>
+          </div>
         </div>
         <p class="island-narration">
-          "No dia seguinte, em uma festa do reino, o destino deu seu segundo sinal. A conexão era tão evidente que nem o RH conseguiu ignorar — e logo veio o alerta: 'melhor vocês não se envolverem por causa do trabalho.'"
+          "No dia seguinte, em uma festa da firma, onde Clara ia, Bernardo aparecia. O RH percebeu e veio o alerta: <em>'melhor vocês não se envolverem por causa do trabalho.'</em> A conexão já estava feita."
         </p>
+        <div class="island-actions">
+          <button class="action-btn wanted-poster" id="item-wanted" data-action="wanted-modal">
+            <span class="action-icon">📜</span><span class="action-label">Cartaz WANTED</span>
+          </button>
+          <button class="action-btn" id="item-carimbo" data-action="carimbo-tremor">
+            <span class="action-icon">🔴</span><span class="action-label">Carimbo</span>
+          </button>
+          <button class="action-btn" id="item-regulamento" data-action="regulamento-egg">
+            <span class="action-icon">📋</span><span class="action-label">Regulamento</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg dr30-egg clue-visible" id="egg-C4" data-egg-id="C4" title="Investigar...">📓</div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 2→3 -->
     <div class="ocean-gap" id="ocean-2-3">
-      <!-- Easter egg 14 — Casamento do Miguel -->
-      <div class="easter-egg op-egg" id="egg-14" data-egg-id="14"></div>
+      <div class="easter-egg op-egg clue-ocean" id="egg-14" data-egg-id="14" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -263,23 +277,30 @@
     <section class="island island-narrative" id="island-3" data-index="3" data-name="Ilha da Den Den">
       <div class="island-body">
         <h2 class="island-title">III — O Instagram</h2>
-        <div class="scene instagram-scene">
-          <div class="item clickable den-den" id="item-den-den" data-action="den-den-audio">🐌</div>
-          <div class="item clickable"         id="item-reels"   data-action="reels-msg">📱</div>
-          <div class="item clickable"         id="item-heart"   data-action="heart-counter">❤️</div>
-          <div class="heart-count" id="heart-count-display">❤️ <span id="heart-num">0</span></div>
+        <div class="island-photo-panel">
+          <img src="assets/fotos/casal-fun.jpeg" alt="Os dois" class="island-photo">
         </div>
         <p class="island-narration">
-          "Com uma desculpa qualquer, ela pediu o Instagram dele. Começava ali uma história feita de curtidas e reels de The Office — mesmo Bernardo nem gostando, mas fingindo com a dedicação de quem já estava completamente entregue ao papel."
+          "Com uma desculpa qualquer, ela pediu o Instagram dele. Começava ali uma história feita de curtidas e reels de The Office — mesmo Bernardo nem gostando da série, fingindo com a dedicação de quem já estava completamente entregue ao papel."
         </p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-den-den" data-action="den-den-audio">
+            <span class="action-icon">🐌</span><span class="action-label">Den Den</span>
+          </button>
+          <button class="action-btn" id="item-reels" data-action="reels-msg">
+            <span class="action-icon">📱</span><span class="action-label">Reels</span>
+          </button>
+          <button class="action-btn" id="item-heart" data-action="heart-counter">
+            <span class="action-icon">❤️</span><span class="action-label">Curtir <span id="heart-num">0</span></span>
+          </button>
+        </div>
+        <div id="heart-count-display" style="display:none"><span></span></div>
       </div>
     </section>
 
     <!-- Ocean 3→4 -->
     <div class="ocean-gap" id="ocean-3-4">
-      <!-- Easter egg 1 — Den Den Mushi -->
-      <div class="easter-egg op-egg" id="egg-1" data-egg-id="1"></div>
-      <span class="sea-creature" style="--sc-d:20s;--sc-top:65%;--sc-delay:4s">🦈</span>
+      <div class="easter-egg op-egg clue-ocean" id="egg-1" data-egg-id="1" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -288,29 +309,41 @@
     <section class="island island-narrative" id="island-4" data-index="4" data-name="Conselheiro Mata">
       <div class="island-body">
         <h2 class="island-title">IV — Conselheiro Mata</h2>
-        <div class="scene camping-scene">
-          <div class="item clickable"          id="item-barraca"  data-action="barraca-photo">⛺</div>
-          <div class="item clickable star"     id="star-1"        data-action="star-msg" data-star="1">⭐</div>
-          <div class="item clickable star"     id="star-2"        data-action="star-msg" data-star="2">⭐</div>
-          <div class="item clickable star"     id="star-3"        data-action="star-msg" data-star="3">⭐</div>
-          <div class="item clickable star"     id="star-4"        data-action="star-msg" data-star="4">⭐</div>
-          <div class="item clickable star"     id="star-5"        data-action="star-msg" data-star="5">⭐</div>
-          <div class="item clickable fogueira" id="item-fogueira" data-action="fogueira-grow">🔥</div>
-          <!-- Easter egg 7 — Terminal DevOps -->
-          <div class="easter-egg op-egg" id="egg-7" data-egg-id="7"></div>
-          <!-- Carrapato (bônus oculto, não contabilizado) -->
-          <div class="easter-egg bonus-egg" id="egg-carrapato" data-egg-id="carrapato"></div>
+        <div class="island-photo-panel island-photo-panel--double">
+          <img src="assets/fotos/conselheiro-mata.jpeg" alt="Conselheiro Mata" class="island-photo">
+          <img src="assets/fotos/conselheiro-fogueira.jpeg" alt="Fogueira" class="island-photo">
         </div>
         <p class="island-narration">
-          "Vieram os encontros, a viagem para Conselheiro Mata e o início de um namoro no cenário menos óbvio possível: mato, barraca e carrapatos."
+          "A primeira viagem juntos. Mato, barraca, carrapatos. O cenário menos óbvio do mundo pra começar um namoro — e foi exatamente ali que começou. Sob as estrelas de Conselheiro Mata, sem sinal, sem plano, só os dois."
         </p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-barraca" data-action="barraca-photo">
+            <span class="action-icon">⛺</span><span class="action-label">Barraca</span>
+          </button>
+          <button class="action-btn fogueira" id="item-fogueira" data-action="fogueira-grow">
+            <span class="action-icon">🔥</span><span class="action-label">Fogueira</span>
+          </button>
+          <button class="action-btn" id="star-1" data-action="star-msg" data-star="1">
+            <span class="action-icon">⭐</span><span class="action-label">Estrelas</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-7" data-egg-id="7" title="Investigar...">💻</div>
+          <div class="easter-egg bonus-egg clue-bonus" id="egg-carrapato" data-egg-id="carrapato" title="...">🪲</div>
+        </div>
+        <!-- hidden star buttons still needed by JS -->
+        <div style="display:none">
+          <div id="star-2" data-action="star-msg" data-star="2"></div>
+          <div id="star-3" data-action="star-msg" data-star="3"></div>
+          <div id="star-4" data-action="star-msg" data-star="4"></div>
+          <div id="star-5" data-action="star-msg" data-star="5"></div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 4→5 -->
     <div class="ocean-gap" id="ocean-4-5">
-      <!-- Easter egg 2 — Baú do Tesouro -->
-      <div class="easter-egg op-egg" id="egg-2" data-egg-id="2"></div>
+      <div class="easter-egg op-egg clue-ocean" id="egg-2" data-egg-id="2" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -319,18 +352,24 @@
     <section class="island island-passage" id="island-5" data-index="5" data-name="Serro">
       <div class="island-body">
         <h2 class="island-title">V — Serro</h2>
-        <div class="scene serro-scene">
-          <div class="item clickable" id="item-church" data-action="serro-photo">⛪</div>
-          <div class="item clickable" id="item-queijo" data-action="queijo-egg">🧀</div>
+        <div class="island-photo-panel island-photo-panel--scenic">
+          <div class="scene-ilustration serro-scene"></div>
         </div>
-        <p class="island-narration">"Serro. História, pedra e o melhor queijo do Brasil."</p>
+        <p class="island-narration">"Serro. Casario colonial, ladeiras de pedra e o melhor queijo do Brasil. O tipo de lugar que você vai junto pra descobrir que tem tudo a ver um com o outro."</p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-church" data-action="serro-photo">
+            <span class="action-icon">⛪</span><span class="action-label">Casario</span>
+          </button>
+          <button class="action-btn" id="item-queijo" data-action="queijo-egg">
+            <span class="action-icon">🧀</span><span class="action-label">Queijo Serro</span>
+          </button>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 5→6 -->
     <div class="ocean-gap" id="ocean-5-6">
-      <!-- Easter egg C6 — Pista de Dança -->
-      <div class="easter-egg dr30-egg" id="egg-C6" data-egg-id="C6"></div>
+      <div class="easter-egg dr30-egg clue-ocean" id="egg-C6" data-egg-id="C6" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -339,20 +378,24 @@
     <section class="island island-passage" id="island-6" data-index="6" data-name="Piracema">
       <div class="island-body">
         <h2 class="island-title">VI — Piracema</h2>
-        <div class="scene piracema-scene">
-          <div class="item clickable" id="item-waterfall" data-action="piracema-photo">💧</div>
-          <!-- Easter egg 10 — Quartinha -->
-          <div class="easter-egg op-egg" id="egg-10" data-egg-id="10"></div>
+        <div class="island-photo-panel island-photo-panel--scenic">
+          <div class="scene-ilustration piracema-scene"></div>
         </div>
-        <p class="island-narration">"Piracema. Água fria, pedra quente."</p>
+        <p class="island-narration">"Piracema. Água fria, pedra quente. Daquelas paradas onde o tempo para — e você percebe que não quer estar em nenhum outro lugar."</p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-waterfall" data-action="piracema-photo">
+            <span class="action-icon">💧</span><span class="action-label">Cachoeira</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-10" data-egg-id="10" title="Investigar...">🕯️</div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 6→7 -->
     <div class="ocean-gap" id="ocean-6-7">
-      <!-- Easter egg 4 — Bandeirinha Junina -->
-      <div class="easter-egg op-egg" id="egg-4" data-egg-id="4"></div>
-      <span class="sea-creature" style="--sc-d:14s;--sc-top:50%;--sc-delay:1s">🐙</span>
+      <div class="easter-egg op-egg clue-ocean" id="egg-4" data-egg-id="4" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -361,22 +404,28 @@
     <section class="island island-passage" id="island-7" data-index="7" data-name="Guarapari">
       <div class="island-body">
         <h2 class="island-title">VII — Guarapari</h2>
-        <div class="scene guarapari-scene">
-          <div class="item clickable" id="item-sea"   data-action="guarapari-photo">🌊</div>
-          <div class="item clickable" id="item-placa" data-action="placa-egg">🪧</div>
-          <!-- Easter egg 3 — Santo Antônio -->
-          <div class="easter-egg op-egg" id="egg-3" data-egg-id="3"></div>
+        <div class="island-photo-panel island-photo-panel--scenic">
+          <div class="scene-ilustration guarapari-scene"></div>
         </div>
-        <p class="island-narration">"Guarapari. Areia radioativa, sol quente, eles dois não ligando pra nada."</p>
+        <p class="island-narration">"Guarapari. Areia radioativa, sol quente — eles dois sem ligar pra nada. Quando você viaja junto e a viagem fica boa, é porque a companhia é melhor que o destino."</p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-sea" data-action="guarapari-photo">
+            <span class="action-icon">🌊</span><span class="action-label">A praia</span>
+          </button>
+          <button class="action-btn" id="item-placa" data-action="placa-egg">
+            <span class="action-icon">🪧</span><span class="action-label">Placa</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-3" data-egg-id="3" title="Investigar...">🙏</div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 7→8 -->
     <div class="ocean-gap" id="ocean-7-8">
-      <!-- Easter egg 5 — Bola de Futebol -->
-      <div class="easter-egg op-egg" id="egg-5" data-egg-id="5"></div>
-      <!-- Easter egg C5 — Calendário 13→30 -->
-      <div class="easter-egg dr30-egg" id="egg-C5" data-egg-id="C5"></div>
+      <div class="easter-egg op-egg clue-ocean" id="egg-5" data-egg-id="5" title="Algo à deriva...">🍾</div>
+      <div class="easter-egg dr30-egg clue-ocean clue-ocean--low" id="egg-C5" data-egg-id="C5" title="Algo à deriva...">🧿</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -385,19 +434,24 @@
     <section class="island island-passage" id="island-8" data-index="8" data-name="Entre Rios">
       <div class="island-body">
         <h2 class="island-title">VIII — Entre Rios</h2>
-        <div class="scene entrerios-scene">
-          <div class="item clickable" id="item-river" data-action="entrerios-photo">🏞️</div>
-          <!-- Easter egg 6 — Cartão de Aposta -->
-          <div class="easter-egg op-egg" id="egg-6" data-egg-id="6"></div>
+        <div class="island-photo-panel">
+          <img src="assets/fotos/evento-startbet.jpeg" alt="Entre Rios" class="island-photo" style="filter:hue-rotate(120deg) saturate(0.7)">
         </div>
-        <p class="island-narration">"Entre Rios. Daquelas viagens onde não precisa acontecer nada pra valer tudo."</p>
+        <p class="island-narration">"Entre Rios. Daquelas viagens onde não precisa acontecer nada pra valer tudo. O silêncio entre as pedras. O cansaço compartilhado. O tipo de lugar que só fica bonito quando você vai com a pessoa certa."</p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-river" data-action="entrerios-photo">
+            <span class="action-icon">🏞️</span><span class="action-label">O rio</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-6" data-egg-id="6" title="Investigar...">🎰</div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 8→9 -->
     <div class="ocean-gap" id="ocean-8-9">
-      <!-- Easter egg 12 — Calendário "30" -->
-      <div class="easter-egg op-egg" id="egg-12" data-egg-id="12"></div>
+      <div class="easter-egg op-egg clue-ocean" id="egg-12" data-egg-id="12" title="Algo à deriva...">🍾</div>
     </div>
 
     <!-- ──────────────────────────────────────────
@@ -406,20 +460,26 @@
     <section class="island island-passage" id="island-9" data-index="9" data-name="Serra do Cipó">
       <div class="island-body">
         <h2 class="island-title">IX — Serra do Cipó</h2>
-        <div class="scene cipo-scene">
-          <div class="item clickable"         id="item-mountain" data-action="cipo-photo">⛰️</div>
-          <div class="item clickable mountain-top" id="item-topo" data-action="topo-wind">🏔️</div>
-          <!-- Easter egg C3 — Espelho Mágico -->
-          <div class="easter-egg dr30-egg" id="egg-C3" data-egg-id="C3"></div>
+        <div class="island-photo-panel island-photo-panel--scenic">
+          <div class="scene-ilustration cipo-scene"></div>
         </div>
-        <p class="island-narration">"Serra do Cipó. A mais épica. Porque algumas histórias pedem cachoeira grande."</p>
+        <p class="island-narration">"Serra do Cipó. A mais épica de todas. Trilha, cachoeira fria, vista absurda. Porque algumas histórias pedem um cenário à altura — e essa história já merecia há tempo."</p>
+        <div class="island-actions">
+          <button class="action-btn" id="item-mountain" data-action="cipo-photo">
+            <span class="action-icon">⛰️</span><span class="action-label">A Serra</span>
+          </button>
+          <button class="action-btn mountain-top" id="item-topo" data-action="topo-wind">
+            <span class="action-icon">🏔️</span><span class="action-label">No topo</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg dr30-egg clue-visible" id="egg-C3" data-egg-id="C3" title="Investigar...">🪞</div>
+        </div>
       </div>
     </section>
 
     <!-- Ocean 9→10 -->
-    <div class="ocean-gap" id="ocean-9-10">
-      <span class="sea-creature" style="--sc-d:18s;--sc-top:60%;--sc-delay:7s">🐬</span>
-    </div>
+    <div class="ocean-gap" id="ocean-9-10"></div>
 
     <!-- ──────────────────────────────────────────
          ILHA 10 — ILHA DO LUFFY
@@ -427,18 +487,27 @@
     <section class="island island-narrative" id="island-10" data-index="10" data-name="Ilha do Luffy">
       <div class="island-body">
         <h2 class="island-title">X — Ilha do Luffy</h2>
-        <div class="scene luffy-dog-scene">
-          <div class="item clickable luffy-dog" id="item-luffy-dog" data-action="luffy-gallery">🐕</div>
-          <div class="item clickable"           id="item-pelo"      data-action="pelo-egg">🪶</div>
-          <div class="item clickable"           id="item-coleira"   data-action="coleira-bark">🔔</div>
-          <!-- Easter egg 9 — Controle It Takes Two -->
-          <div class="easter-egg op-egg" id="egg-9" data-egg-id="9"></div>
-          <!-- Easter egg C1 — Casa de Boneca -->
-          <div class="easter-egg dr30-egg" id="egg-C1" data-egg-id="C1"></div>
+        <div class="island-photo-panel">
+          <img src="assets/fotos/luffy-filhote.jpeg" alt="Luffy" class="island-photo">
         </div>
         <p class="island-narration">
-          "Toda grande história precisa de um personagem inesperado. Foi assim que entrou em cena Luffy — Border Collie que parece albino, mas na verdade é duplo merle. Mais amor, mais pelos, mais caos no roteiro."
+          "Toda grande história precisa de um personagem inesperado. Foi assim que entrou em cena Luffy — Border Collie que parece albino, mas é duplo merle. Mais amor, mais pelos, mais caos no roteiro. E uma presença que fez o apartamento parecer uma casa."
         </p>
+        <div class="island-actions">
+          <button class="action-btn luffy-dog" id="item-luffy-dog" data-action="luffy-gallery">
+            <span class="action-icon">🐕</span><span class="action-label">Ver Luffy</span>
+          </button>
+          <button class="action-btn" id="item-pelo" data-action="pelo-egg">
+            <span class="action-icon">🪶</span><span class="action-label">Os pelos</span>
+          </button>
+          <button class="action-btn" id="item-coleira" data-action="coleira-bark">
+            <span class="action-icon">🔔</span><span class="action-label">Coleira</span>
+          </button>
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-9" data-egg-id="9" title="Investigar...">🎮</div>
+          <div class="easter-egg dr30-egg clue-visible" id="egg-C1" data-egg-id="C1" title="Investigar...">🏠</div>
+        </div>
       </div>
     </section>
 
@@ -451,13 +520,12 @@
     <section class="island island-narrative island-festa" id="island-11" data-index="11" data-name="★ A Festa ★">
       <div class="island-body">
         <h2 class="island-title">XI — ★ A Festa ★</h2>
-        <div class="scene festa-scene">
-          <div class="festa-fireworks" id="festa-fireworks">🎆</div>
-          <div class="festa-flags">🎏🎏🎏</div>
-          <!-- Easter egg 11 — Chapéu de Palha -->
-          <div class="easter-egg op-egg" id="egg-11" data-egg-id="11"></div>
-          <!-- Easter egg 5b — TV/Sátira (ativado pelo egg-5) -->
-          <div class="easter-egg op-egg" id="egg-5b" data-egg-id="5b"></div>
+        <div class="island-photo-panel">
+          <img src="assets/fotos/casal-principal.jpeg" alt="Clara e Bernardo" class="island-photo">
+        </div>
+        <div class="island-clues">
+          <div class="easter-egg op-egg clue-visible" id="egg-11" data-egg-id="11" title="Investigar...">🎩</div>
+          <div class="easter-egg op-egg clue-visible clue-hidden-until-5" id="egg-5b" data-egg-id="5b" title="Investigar...">📺</div>
         </div>
         <p class="island-narration">
           "Dois aniversários. Uma história improvável. Um cachorro no elenco. Brasil na Copa.<br>

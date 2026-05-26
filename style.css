@@ -96,19 +96,85 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   to   { height: 90px; }
 }
 
-.op-deco {
+/* Painel artístico OP lado esquerdo */
+.op-panel-art {
   position: absolute;
-  font-size: clamp(2rem, 5vw, 4rem);
-  user-select: none;
-  animation: floatDeco 4s ease-in-out infinite alternate;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
 }
-.straw-hat  { top: 15%; left: 15%; animation-delay: 0s; }
-.log-pose-deco { top: 40%; left: 70%; font-size: clamp(1.5rem,4vw,3rem); animation-delay: 0.5s; }
-.jolly-roger { bottom: 25%; left: 25%; animation-delay: 1s; }
-.torn-map   { top: 60%; left: 55%; font-size: clamp(1.5rem,4vw,3rem); animation-delay: 1.5s; }
-@keyframes floatDeco {
-  from { transform: translateY(0) rotate(-3deg); }
-  to   { transform: translateY(-12px) rotate(3deg); }
+.op-art-jolly {
+  width: clamp(80px,15vw,120px);
+  height: clamp(80px,15vw,120px);
+  background: var(--op-amarelo);
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,0.3);
+  position: relative;
+  box-shadow: 0 0 40px rgba(245,197,24,0.4);
+}
+.op-art-jolly::before {
+  content: '☠';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2rem,6vw,4rem);
+  color: var(--op-oceano-esc);
+}
+.op-art-waves {
+  width: 80%;
+  height: 3px;
+  background: repeating-linear-gradient(90deg,
+    var(--op-amarelo) 0 16px,
+    transparent 16px 24px);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+.op-art-tagline {
+  font-family: 'Special Elite', monospace;
+  font-size: clamp(0.7rem,2vw,0.95rem);
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Painel artístico DR30 lado direito */
+.dr30-panel-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  z-index: 1;
+}
+.dr30-art-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.2rem,3.5vw,2rem);
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.05em;
+}
+.dr30-art-number {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(4rem,12vw,8rem);
+  color: #fff;
+  line-height: 0.9;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 60px rgba(255,215,0,0.4);
+  letter-spacing: -0.02em;
+}
+.dr30-art-tagline {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: clamp(0.65rem,1.8vw,0.85rem);
+  color: rgba(255,255,255,0.65);
+  text-align: center;
+  max-width: 160px;
+  line-height: 1.4;
 }
 
 .intro-right {
@@ -125,17 +191,6 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   to   { opacity: 1; }
 }
 
-.dr30-deco {
-  position: absolute;
-  font-size: clamp(2rem, 5vw, 4rem);
-  user-select: none;
-  animation: floatDeco 4s ease-in-out infinite alternate;
-}
-.dollhouse { top: 12%; right: 20%; animation-delay: 0.3s; }
-.dress     { top: 38%; right: 15%; animation-delay: 0.8s; }
-.polaroid  { bottom: 30%; right: 30%; font-size: clamp(1.5rem,4vw,3rem); animation-delay: 1.2s; }
-.hearts    { top: 55%; right: 70%; font-size: clamp(1.5rem,3vw,2.5rem); animation-delay: 0.2s; }
-.sparkles  { bottom: 40%; right: 60%; font-size: clamp(1.5rem,3vw,2rem); animation-delay: 0.6s; }
 
 .glitter-container {
   position: absolute;
@@ -337,21 +392,6 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   border-radius: 2px;
 }
 
-/* Nuvens */
-.cloud {
-  position: absolute;
-  left: var(--cx);
-  top: var(--cy);
-  font-size: 2rem;
-  opacity: 0.5;
-  animation: cloudDrift var(--cd, 20s) ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: 1;
-}
-@keyframes cloudDrift {
-  from { transform: translateX(0); }
-  to   { transform: translateX(30px); }
-}
 
 /* ══════════════════════════════════════════════════════
    ILHAS
@@ -443,30 +483,24 @@ img { display: block; max-width: 100%; border-radius: 8px; }
 .island-narration {
   font-family: 'Lora', serif;
   font-style: italic;
-  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
-  line-height: 1.7;
+  font-size: clamp(0.85rem, 1.9vw, 1rem);
+  line-height: 1.75;
   color: var(--op-texto);
-  text-align: center;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
+  text-align: left;
+  margin: 0.75rem 0 0;
+  padding: 0.85rem 1rem 0.85rem 1.1rem;
   border-left: 3px solid var(--op-amarelo);
   background: rgba(245,197,24,0.08);
   border-radius: 0 8px 8px 0;
 }
+.island-passage .island-narration {
+  border-left-color: #4a7a32;
+  background: rgba(74,122,50,0.08);
+}
 
-/* Scene container */
+/* Scene container (mantido para compatibilidade CSS BG) */
 .scene {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  min-height: 120px;
-  position: relative;
-  padding: 1rem;
-  background: rgba(255,255,255,0.3);
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
+  display: none; /* substituído pelo novo layout */
 }
 
 /* Fundos temáticos das cenas */
@@ -705,89 +739,291 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   to   { transform: translateX(8%) scaleY(1.3); opacity: 1; }
 }
 
-.sea-creature {
-  position: absolute;
-  font-size: clamp(1rem, 2vw, 1.4rem);
-  opacity: 0.35;
-  animation: swimAcross var(--sc-d, 14s) linear infinite;
-  animation-delay: var(--sc-delay, 0s);
-  user-select: none;
-  pointer-events: none;
-  top: var(--sc-top, 50%);
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-}
-@keyframes swimAcross {
-  from { transform: translateX(-80px); }
-  to   { transform: translateX(280px); }
-}
 
 /* ══════════════════════════════════════════════════════
-   EASTER EGGS
+   EASTER EGGS — visíveis como artefatos clicáveis
 ══════════════════════════════════════════════════════ */
 .easter-egg {
-  position: absolute;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  opacity: 0;
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><text y='16' font-size='16'>🏴‍☠️</text></svg>"), pointer;
-  transition: opacity 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.3s;
+  user-select: none;
   z-index: 10;
 }
-.easter-egg:hover {
-  opacity: 0.25;
-  background: radial-gradient(circle, rgba(245,197,24,0.5), transparent);
+
+/* Estilo "pista visível" nas ilhas */
+.clue-visible {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 1.4rem;
+  background: rgba(245,197,24,0.12);
+  border: 2px solid rgba(245,197,24,0.35);
+  border-radius: 50%;
+  position: relative;
+  animation: cluePulse 2.5s ease-in-out infinite;
 }
-.easter-egg.found {
-  opacity: 0.5;
-  background: radial-gradient(circle, rgba(245,197,24,0.4), transparent);
+.clue-visible::after {
+  content: '?';
+  position: absolute;
+  top: -6px; right: -4px;
+  font-family: 'Bangers', cursive;
+  font-size: 0.75rem;
+  color: var(--op-amarelo);
+  background: var(--op-oceano-esc);
+  border-radius: 50%;
+  width: 16px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.dr30-egg.clue-visible {
+  background: rgba(255,158,196,0.12);
+  border-color: rgba(255,158,196,0.4);
+  animation: cluePulseDr 2.5s ease-in-out infinite;
+}
+.dr30-egg.clue-visible::after {
+  color: var(--dr-rosa);
+}
+@keyframes cluePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(245,197,24,0.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(245,197,24,0); }
+}
+@keyframes cluePulseDr {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,158,196,0.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(255,158,196,0); }
+}
+
+.clue-visible:hover {
+  transform: scale(1.2);
+  filter: brightness(1.3);
+}
+
+.clue-visible.found {
+  animation: none;
+  background: rgba(245,197,24,0.3);
+  border-color: var(--op-amarelo);
   pointer-events: none;
+  opacity: 0.6;
 }
-.dr30-egg {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><text y='16' font-size='16'>✨</text></svg>"), pointer;
+.clue-visible.found::after {
+  content: '✓';
+  background: var(--op-amarelo);
+  color: var(--op-oceano-esc);
 }
-.dr30-egg:hover {
-  background: radial-gradient(circle, rgba(255,158,196,0.5), transparent);
-}
-.dr30-egg.found {
-  background: radial-gradient(circle, rgba(255,158,196,0.4), transparent);
-}
-.bonus-egg { cursor: pointer; }
 
-/* Posições dos easter eggs nas ilhas (relativo ao .scene) */
-/* Ilha 1 */
-#egg-8   { top: 10px; right: 10px; }
-#egg-C2  { bottom: 10px; left: 10px; }
-/* Ilha 2 */
-#egg-C4  { top: 10px; left: 10px; }
-/* Ilha 4 */
-#egg-7   { bottom: 8px; right: 8px; }
-#egg-carrapato { top: 50%; left: 15%; transform: translateY(-50%); }
-/* Ilha 6 */
-#egg-10  { bottom: 10px; right: 10px; }
-/* Ilha 7 */
-#egg-3   { top: 10px; right: 10px; }
-/* Ilha 8 */
-#egg-6   { top: 10px; right: 10px; }
-/* Ilha 9 */
-#egg-C3  { bottom: 10px; left: 10px; }
-/* Ilha 10 */
-#egg-9   { top: 10px; right: 10px; }
-#egg-C1  { bottom: 10px; left: 10px; }
-/* Ilha 11 */
-#egg-11  { top: 10px; left: 10px; }
-#egg-5b  { bottom: 10px; right: 10px; }
+/* Easter eggs no oceano — "garrafa com mensagem" */
+.clue-ocean {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bottleBob 3s ease-in-out infinite;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  cursor: pointer;
+}
+.clue-ocean--low {
+  top: 58%;
+}
+.clue-ocean.found {
+  opacity: 0.3;
+  pointer-events: none;
+  animation: none;
+}
+@keyframes bottleBob {
+  0%,100% { transform: translateX(-50%) translateY(0) rotate(-5deg); }
+  50%      { transform: translateX(-50%) translateY(-8px) rotate(5deg); }
+}
 
-/* Ocean gaps */
-#ocean-1-2 #egg-13 { top: 30%; left: 50%; transform: translateX(-50%); }
-#ocean-2-3 #egg-14 { top: 55%; left: 50%; transform: translateX(-50%); }
-#ocean-3-4 #egg-1  { top: 40%; left: 50%; transform: translateX(-50%); }
-#ocean-4-5 #egg-2  { top: 55%; left: 50%; transform: translateX(-50%); }
-#ocean-5-6 #egg-C6 { top: 35%; left: 50%; transform: translateX(-50%); }
-#ocean-6-7 #egg-4  { top: 30%; left: 50%; transform: translateX(-50%); }
-#ocean-7-8 #egg-5  { top: 35%; left: 35%; }
-#ocean-7-8 #egg-C5 { top: 55%; right: 30%; }
-#ocean-8-9 #egg-12 { top: 45%; left: 50%; transform: translateX(-50%); }
+/* Bônus oculto */
+.clue-bonus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  background: rgba(0,0,0,0.15);
+  border: 1px dashed rgba(255,255,255,0.2);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.clue-bonus:hover { opacity: 0.9; }
+.clue-bonus.found { opacity: 0.2; pointer-events: none; }
+
+/* Layout de ações e pistas nas ilhas */
+.island-photo-panel {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+}
+.island-photo-panel--double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.island-photo-panel--scenic {
+  height: 120px;
+}
+.island-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.island-photo-panel--dark {
+  background: linear-gradient(160deg, #1a1a2e, #2a1a2e);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.island-scene-text {
+  text-align: center;
+  color: rgba(255,255,255,0.85);
+}
+.scene-stamp {
+  display: inline-block;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  background: var(--op-vermelho);
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.6rem;
+}
+.island-scene-text p {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-top: 0.3rem;
+  color: rgba(255,255,255,0.75);
+}
+.scene-caption {
+  font-style: italic;
+  font-size: 0.72rem !important;
+  opacity: 0.55;
+}
+
+/* Ilustrações CSS para ilhas sem foto */
+.scene-ilustration {
+  width: 100%;
+  height: 120px;
+}
+.serro-scene {
+  background: linear-gradient(180deg, #8b6a3a 0%, #c4984a 40%, #d4a85a 100%);
+  position: relative;
+}
+.serro-scene::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 10%; right: 10%; height: 60%;
+  background: linear-gradient(160deg, #5a3a1a, #7a5a2a);
+  clip-path: polygon(0 100%,10% 40%,20% 60%,30% 20%,40% 50%,50% 0%,60% 40%,70% 15%,80% 50%,90% 30%,100% 55%,100% 100%);
+}
+.piracema-scene {
+  background: linear-gradient(180deg, #1a4a30 0%, #2a6a40 60%, #0d8060 100%);
+  position: relative;
+}
+.piracema-scene::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 35%;
+  background: linear-gradient(180deg, rgba(100,200,255,0.5), rgba(50,150,200,0.7));
+  animation: waterShimmer 2s ease-in-out infinite alternate;
+}
+@keyframes waterShimmer {
+  from { opacity: 0.7; }
+  to   { opacity: 1; }
+}
+.guarapari-scene {
+  background: linear-gradient(180deg, #ff9040 0%, #1a6b8a 55%, #0d4a6a 100%);
+  position: relative;
+}
+.guarapari-scene::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 22%;
+  background: linear-gradient(180deg, #f4d090, #e8c070);
+}
+.cipo-scene {
+  background: linear-gradient(180deg, #b0d0e8 0%, #6090b0 35%, #3a5a40 65%, #2a4a30 100%);
+  position: relative;
+}
+.cipo-scene::before {
+  content: '';
+  position: absolute;
+  bottom: 25%; left: 25%; right: 25%; height: 45%;
+  background: linear-gradient(180deg, #8aada8, #5a8a80);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.island-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0.5rem;
+  justify-content: center;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255,255,255,0.55);
+  border: 1.5px solid var(--op-borda);
+  border-radius: 10px;
+  min-width: 68px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.island-passage .action-btn {
+  border-color: rgba(45,100,40,0.5);
+  background: rgba(255,255,255,0.45);
+}
+.action-btn:hover {
+  background: rgba(245,197,24,0.2);
+  border-color: var(--op-amarelo);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.action-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+.action-icon {
+  font-size: 1.4rem;
+  display: block;
+  line-height: 1;
+}
+.action-label {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--op-texto);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.island-clues {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(139,94,42,0.2);
+}
 
 /* ══════════════════════════════════════════════════════
    NAVEGAÇÃO
@@ -1539,23 +1775,6 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   transform: scale(1.05);
 }
 
-.floating-berries {
-  position: fixed;
-  z-index: 250;
-  font-family: 'Bangers', cursive;
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
-  color: #ffc060;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
-  pointer-events: none;
-  transform: translateX(-50%);
-  animation: floatUp 1.4s ease-out forwards;
-}
-@keyframes floatUp {
-  from { opacity: 0; transform: translateX(-50%) translateY(0); }
-  20%  { opacity: 1; }
-  to   { opacity: 0; transform: translateX(-50%) translateY(-50px); }
-}
 
 /* TOOLBAR LATERAL */
 .toolbar {
@@ -2547,44 +2766,6 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='26' font-size='24'>🏴‍☠️</text></svg>") 16 16, pointer;
 }
 
-/* BARCO NAVEGANDO */
-.sailing-boat {
-  position: fixed;
-  top: 35%;
-  font-size: 3rem;
-  z-index: 60;
-  pointer-events: none;
-  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.4));
-}
-.boat-right { left: -80px; animation: boatSailRight 1.4s ease-in-out forwards; }
-.boat-left  { right: -80px; animation: boatSailLeft 1.4s ease-in-out forwards; }
-@keyframes boatSailRight {
-  0%   { left: -80px; transform: translateY(0) rotate(0deg); }
-  50%  { transform: translateY(-10px) rotate(-3deg); }
-  100% { left: calc(100% + 80px); transform: translateY(0) rotate(0deg); }
-}
-@keyframes boatSailLeft {
-  0%   { right: -80px; transform: translateY(0) rotate(0deg) scaleX(-1); }
-  50%  { transform: translateY(-10px) rotate(3deg) scaleX(-1); }
-  100% { right: calc(100% + 80px); transform: translateY(0) rotate(0deg) scaleX(-1); }
-}
-
-/* GAIVOTAS */
-.seagull {
-  position: fixed;
-  left: -60px;
-  font-size: 1.4rem;
-  z-index: 55;
-  pointer-events: none;
-  opacity: 0.65;
-  animation: seagullFly linear forwards;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-}
-@keyframes seagullFly {
-  from { left: -60px;  transform: translateY(0) rotate(-5deg); }
-  50%  { transform: translateY(-15px) rotate(5deg); }
-  to   { left: calc(100% + 60px); transform: translateY(0) rotate(-5deg); }
-}
 
 /* NPC BUBBLE */
 .npc-bubble {

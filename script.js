@@ -196,18 +196,37 @@ function initWorldMap() {
   const container = document.getElementById('world-islands');
   if (!container) return;
 
-  // Injeta as ilhas
+  // Gera a rota dinâmica conectando todas as ilhas via curva Bezier suave
+  const routePath = document.getElementById('route-path');
+  if (routePath) {
+    let d = `M ${WORLD_ISLANDS[0].x} ${WORLD_ISLANDS[0].y}`;
+    for (let i = 1; i < WORLD_ISLANDS.length; i++) {
+      const prev = WORLD_ISLANDS[i - 1];
+      const cur = WORLD_ISLANDS[i];
+      // ponto de controle entre prev e cur, com leve deslocamento
+      const cx = (prev.x + cur.x) / 2 + ((i % 2 === 0) ? 30 : -30);
+      const cy = (prev.y + cur.y) / 2;
+      d += ` Q ${cx} ${cy} ${cur.x} ${cur.y}`;
+    }
+    routePath.setAttribute('d', d);
+  }
+
+  // Injeta as ilhas — wrapper externo para position, interno para scale/animate
   WORLD_ISLANDS.forEach(island => {
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     g.setAttribute('class', 'world-island');
     g.setAttribute('data-i', island.i);
     g.setAttribute('transform', `translate(${island.x}, ${island.y})`);
 
-    g.innerHTML = `
-      <circle class="island-marker" cx="0" cy="0" r="22"/>
-      <text class="island-num" x="0" y="4">${island.i}</text>
-      <text class="island-label" x="0" y="46">${island.label}</text>
+    // grupo interno (recebe scale sem conflitar com translate)
+    const inner = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    inner.setAttribute('class', 'world-island-inner');
+    inner.innerHTML = `
+      <circle class="island-marker" cx="0" cy="0" r="28"/>
+      <text class="island-num" x="0" y="7">${island.i}</text>
+      <text class="island-label" x="0" y="56">${island.label}</text>
     `;
+    g.appendChild(inner);
 
     g.addEventListener('click', () => {
       navigateTo(island.i);

@@ -957,16 +957,13 @@ img { display: block; max-width: 100%; }
   filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
 }
 
-/* ilhas no mapa-mundi */
-.world-island {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  transform-origin: center;
-  transform-box: fill-box;
+/* ilhas no mapa-mundi — wrapper externo = translate, inner = scale/animate */
+.world-island { cursor: pointer; }
+.world-island-inner {
+  transition: transform 0.25s var(--easing-bounce);
+  transform-origin: 0 0;
 }
-.world-island:hover {
-  transform: scale(1.18);
-}
+.world-island:hover .world-island-inner { transform: scale(1.22); }
 .world-island circle.island-marker {
   fill: var(--op-pergaminho);
   stroke: var(--op-borda);
@@ -982,33 +979,34 @@ img { display: block; max-width: 100%; }
   stroke: #fff;
   stroke-width: 3;
   filter: drop-shadow(0 0 8px rgba(245,197,24,0.8));
+}
+.world-island.current .world-island-inner {
   animation: islandPulse 1.8s ease-in-out infinite;
 }
 @keyframes islandPulse {
   0%,100% { transform: scale(1); }
-  50%      { transform: scale(1.15); }
+  50%      { transform: scale(1.18); }
 }
 .world-island text.island-label {
   font-family: 'Cinzel', serif;
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 22px;
   fill: #fff;
   text-anchor: middle;
   pointer-events: none;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
   paint-order: stroke fill;
-  stroke: rgba(13,61,82,0.8);
-  stroke-width: 3;
+  stroke: rgba(13,61,82,0.85);
+  stroke-width: 4;
   stroke-linejoin: round;
 }
 .world-island.current text.island-label {
   fill: var(--op-amarelo);
-  font-size: 14px;
+  font-size: 24px;
 }
 .world-island text.island-num {
   font-family: 'Cinzel', serif;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 18px;
   fill: var(--op-tinta);
   text-anchor: middle;
   pointer-events: none;

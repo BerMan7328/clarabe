@@ -1832,16 +1832,23 @@ function openHelpModal() {
 }
 
 function showHintModal() {
+  // Revela a ilha 12 escondida
+  revealSecretIsland();
   openModal(`
-    <h3>🗝️ Uma pista do tesouro...</h3>
+    <h3>🗝️ Uma carta apareceu à deriva...</h3>
     <p style="font-family:'Special Elite',monospace;font-size:1.05rem;text-align:center;padding:1rem;background:rgba(245,197,24,0.15);border-radius:8px;line-height:1.7">
       "Você encontrou os <strong>20</strong>. Mas o tesouro real ainda dorme.<br><br>
-      <em>Volte ao princípio.<br>
-      O chapéu que te levou ao mar guarda um segredo.<br>
-      Clique nele cinco vezes — e o mundo novo se abrirá."</em>
+      <em>Para além da Festa, surgiu uma ilha que nunca esteve no mapa: <strong>Raftel</strong>.<br>
+      Lá, um chapéu te espera.<br>
+      Clique nele cinco vezes — e o Mundo Novo se abrirá."</em>
     </p>
     <p style="text-align:center;margin-top:0.75rem;font-size:0.85rem;opacity:0.7">— Carta da Marinha, encontrada à deriva</p>
+    <button class="link-btn" id="hint-go-raftel" style="margin-top:0.75rem">⛵ Navegar até Raftel →</button>
   `);
+  document.getElementById('hint-go-raftel').addEventListener('click', () => {
+    closeModal();
+    navigateToIsland(12);
+  });
 }
 
 function showTreasureFinal() {
@@ -1919,39 +1926,90 @@ function injectIslandDates() {
   });
 }
 
-/* Chapéu de palha — 21º easter egg secreto (5 cliques) */
+/* Chapéu de palha da Ilha 12 — 21º easter egg secreto (5 cliques) */
 function initHatClicks() {
-  const hat = document.querySelector('.intro-screen .straw-hat');
+  // Mostra ilha 12 e ocean 11-12 se já tiver dica revelada
+  if (GAME.hintRevealed) revealSecretIsland();
+
+  const hat = document.getElementById('raftel-hat-21');
   if (!hat) return;
   hat.style.cursor = 'pointer';
   hat.addEventListener('click', e => {
     e.stopPropagation();
+    if (STATE.foundEggs.has('21')) return;
     GAME.hatClicks++;
     saveGame();
-    hat.style.transform = 'scale(1.3) rotate(' + (GAME.hatClicks * 15) + 'deg)';
-    setTimeout(() => { hat.style.transform = ''; }, 300);
-    if (GAME.hatClicks >= 5 && !STATE.foundEggs.has('21')) {
-      // Só permite achar o 21º se já tem os 20 + dica revelada
-      if (GAME.hintRevealed) {
-        EGG_DATA['21'] = {
-          type: 'op', secret: true, title: 'O Tesouro Final',
-          html: `<h3>👑 ENCONTROU!</h3>
-            <p style="text-align:center;font-size:1.1rem;font-family:'Bangers',cursive;color:var(--op-vermelho);letter-spacing:0.04em">
-              O chapéu de palha era a chave.
-            </p>
-            <p style="text-align:center;font-style:italic;margin-top:0.5rem">
-              "Você completou o impossível, navegante. Agora vê o que ninguém mais viu..."
-            </p>`,
-        };
-        STATE.foundEggs.add('21');
-        saveEggs();
-        showEgg('21');
-      } else {
-        // Pisca dica mas não conta
-        showToast('🏴‍☠️ O chapéu fez algo... mas talvez você precise descobrir mais antes.', 'egg-found');
-      }
+    hat.style.transform = 'scale(1.4) rotate(' + (GAME.hatClicks * 35) + 'deg)';
+    setTimeout(() => { hat.style.transform = ''; }, 350);
+    const counter = document.getElementById('raftel-counter');
+    if (counter) counter.textContent = Math.min(GAME.hatClicks, 5);
+    if (GAME.hatClicks >= 5) {
+      EGG_DATA['21'] = {
+        type: 'op', secret: true, title: 'O Tesouro Final',
+        html: `<h3>👑 ENCONTROU!</h3>
+          <p style="text-align:center;font-size:1.1rem;font-family:'Bangers',cursive;color:var(--op-vermelho);letter-spacing:0.04em">
+            O chapéu de palha era a chave.
+          </p>
+          <p style="text-align:center;font-style:italic;margin-top:0.5rem">
+            "Você completou o impossível, navegante. Agora vê o que ninguém mais viu..."
+          </p>`,
+      };
+      STATE.foundEggs.add('21');
+      saveEggs();
       GAME.hatClicks = 0;
       saveGame();
+      playEpicTreasureReveal();
     }
   });
+}
+
+function revealSecretIsland() {
+  document.querySelectorAll('.hidden-island').forEach(el => el.classList.remove('hidden-island'));
+  // Re-renderiza progress dots para incluir a 12ª
+  const container = document.getElementById('island-progress');
+  if (container && container.children.length < 12) {
+    container.innerHTML = '';
+    initProgressDots();
+    updateProgressDots(STATE.currentIsland);
+  }
+}
+
+/* Animação épica de revelação do tesouro */
+function playEpicTreasureReveal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'treasure-overlay';
+  overlay.innerHTML = `
+    <div class="treasure-rays"></div>
+    <div class="treasure-center">
+      <div class="treasure-chest">🏆</div>
+      <div class="treasure-text">
+        <p class="t-line t-1">O navegante chegou.</p>
+        <p class="t-line t-2">O tesouro é real.</p>
+        <p class="t-line t-3">O One Piece existe.</p>
+      </div>
+    </div>
+    <div class="treasure-particles" id="treasure-particles"></div>
+  `;
+  document.body.appendChild(overlay);
+  // Partículas douradas
+  const pc = overlay.querySelector('#treasure-particles');
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'treasure-particle';
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      animation-delay:${Math.random()*2}s;
+      animation-duration:${2+Math.random()*3}s;
+      width:${4+Math.random()*8}px;
+      height:${4+Math.random()*8}px;
+    `;
+    pc.appendChild(p);
+  }
+  setTimeout(() => overlay.classList.add('show'), 50);
+  setTimeout(() => {
+    overlay.classList.add('exit');
+    setTimeout(() => overlay.remove(), 600);
+    showEgg('21');
+  }, 4500);
 }

@@ -857,31 +857,28 @@ function initNavigation() {
    RSVP
 ══════════════════════════════════════════════════════ */
 function initRSVP() {
+  // RSVP da ilha 11 agora é só info final — não tem mais botões de lado (foram pra welcome screen).
+  // Mantém o form invisível como compat, mas sem listener.
   const btnB = document.getElementById('btn-bernardo');
   const btnC = document.getElementById('btn-clara');
   const step1 = document.getElementById('rsvp-step-1');
   const step2 = document.getElementById('rsvp-step-2');
   const step3 = document.getElementById('rsvp-step-3');
-
-  function chooseSide(side) {
-    STATE.userSide = side;
-    localStorage.setItem('userSide', side);
-    document.getElementById('rsvp-lado-input').value = side;
-    step1.classList.add('hidden');
-    step2.classList.remove('hidden');
-
-    if (side === 'Clara') {
-      step2.classList.add('dr30-style');
-      const q = step2.querySelector('.rsvp-question');
-      if (q) q.style.fontFamily = "'Dancing Script', cursive";
+  if (btnB && btnC && false) { // bloco desativado
+    function chooseSide(side) {
+      STATE.userSide = side;
+      localStorage.setItem('userSide', side);
+      const inp = document.getElementById('rsvp-lado-input');
+      if (inp) inp.value = side;
+      step1.classList.add('hidden');
+      step2.classList.remove('hidden');
     }
+    btnB.addEventListener('click', () => chooseSide('Bernardo'));
+    btnC.addEventListener('click', () => chooseSide('Clara'));
   }
 
-  btnB.addEventListener('click', () => chooseSide('Bernardo'));
-  btnC.addEventListener('click', () => chooseSide('Clara'));
-
   const form = document.getElementById('rsvp-form');
-  form.addEventListener('submit', async e => {
+  if (form && form.tagName === 'FORM' && form.style.display !== 'none') form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('.submit-btn');
     btn.textContent = 'Enviando...';
@@ -1035,17 +1032,86 @@ function initIntro() {
     intro.classList.add('fade-out');
     setTimeout(() => {
       intro.classList.add('hidden');
-      document.getElementById('hud').classList.remove('hidden');
-      document.getElementById('toolbar').classList.remove('hidden');
-      document.getElementById('map-wrapper').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => {
-        updateEggCounter();
-        navigateToIsland(1, false);
-        restoreFoundEggs();
-      }, 100);
+      showWelcomeScreen();
     }, 800);
   });
+}
+
+function showWelcomeScreen() {
+  const w = document.getElementById('welcome-screen');
+  w.classList.remove('hidden');
+  document.body.style.overflow = 'auto';
+  initWelcomeFlow();
+}
+
+function initWelcomeFlow() {
+  const btnB = document.getElementById('w-btn-bernardo');
+  const btnC = document.getElementById('w-btn-clara');
+  const step1 = document.getElementById('welcome-step-1');
+  const step2 = document.getElementById('welcome-step-2');
+  const step3 = document.getElementById('welcome-step-3');
+  const ladoInput = document.getElementById('w-rsvp-lado-input');
+
+  function chooseSide(side) {
+    STATE.userSide = side;
+    GAME.cardSide = side;
+    localStorage.setItem('userSide', side);
+    saveGame();
+    ladoInput.value = side;
+    step1.classList.add('hidden');
+    step2.classList.remove('hidden');
+    if (side === 'Clara') step2.classList.add('dr30-style');
+  }
+  btnB?.addEventListener('click', () => chooseSide('Bernardo'));
+  btnC?.addEventListener('click', () => chooseSide('Clara'));
+
+  const form = document.getElementById('welcome-rsvp-form');
+  form?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+    try {
+      const data = new FormData(form);
+      const res = await fetch(form.action, {
+        method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('fail');
+    } catch {
+      // fallback gracioso - mostra etapa 3 mesmo sem Formspree
+    }
+    step2.classList.add('hidden');
+    step3.classList.remove('hidden');
+    addBerries(200, 'rsvp-confirmed');
+    // confetti
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => spawnConfetti(window.innerWidth*(0.15 + i*0.18), window.innerHeight*0.35), i*150);
+    }
+  });
+
+  // Bypass: já confirmado anteriormente?
+  if (STATE.userSide) {
+    step1.classList.add('hidden');
+    // Já tem lado escolhido — pula direto pra confirmação
+    step3.classList.remove('hidden');
+  }
+
+  document.getElementById('welcome-ics-btn')?.addEventListener('click', downloadICS);
+
+  document.getElementById('welcome-embark')?.addEventListener('click', enterMap);
+}
+
+function enterMap() {
+  document.getElementById('welcome-screen').classList.add('hidden');
+  document.getElementById('hud').classList.remove('hidden');
+  document.getElementById('toolbar').classList.remove('hidden');
+  document.getElementById('map-wrapper').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => {
+    updateEggCounter();
+    navigateToIsland(1, false);
+    restoreFoundEggs();
+  }, 100);
 }
 
 function restoreFoundEggs() {

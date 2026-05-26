@@ -47,6 +47,102 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════
+     WELCOME / RSVP SCREEN (entre intro e mapa)
+══════════════════════════════════════════════════ -->
+<div id="welcome-screen" class="welcome-screen hidden">
+  <div class="welcome-inner">
+
+    <div class="welcome-hero">
+      <div class="welcome-flag">🏴‍☠️</div>
+      <h2 class="welcome-title">Bem-vindo, navegante</h2>
+      <p class="welcome-sub">Antes de zarpar pela Grand Line dos 27 &amp; 30…</p>
+    </div>
+
+    <!-- Card 1: O Evento -->
+    <div class="welcome-card">
+      <h3>🎉 Sessão da Tarde — Aniversário Clara &amp; Bê</h3>
+      <div class="welcome-info-grid">
+        <div><strong>🗓️ Data</strong><br>13 de junho de 2026 (sábado)</div>
+        <div><strong>🕑 Horário</strong><br>A partir das 14h</div>
+        <div><strong>⚽ Brasil na Copa</strong><br>Transmissão ao vivo às 19h</div>
+        <div><strong>🍽️ Comida & Bebida</strong><br>Comida por conta dos anfitriões<br>Cada um traz o que beber</div>
+      </div>
+      <div class="welcome-location">
+        <strong>📍 Local</strong><br>
+        Av Nair Martins Drumond, nº 7<br>
+        Recanto da Serra, Brumadinho/MG<br>
+        <em>(~50 minutos do Centro de BH)</em><br>
+        🏊 Piscina &nbsp;•&nbsp; 🧖 Sauna
+      </div>
+      <div class="welcome-actions">
+        <a href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener" class="link-btn">📍 Google Maps</a>
+        <a href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener" class="link-btn">💬 WhatsApp da festa</a>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG" target="_blank" rel="noopener" class="link-btn">📅 Google Calendar</a>
+        <button class="link-btn" id="welcome-ics-btn">📅 Baixar .ics</button>
+      </div>
+    </div>
+
+    <!-- Card 2: RSVP -->
+    <div class="welcome-card welcome-rsvp" id="welcome-rsvp-card">
+      <h3>✅ Confirme sua presença</h3>
+      <p style="font-size:0.85rem;text-align:center;font-style:italic;opacity:0.85;margin-bottom:0.75rem">
+        Pra organizar comida, bebida e estrutura. RSVP até <strong>05/06/2026</strong>.
+      </p>
+
+      <!-- Step 1: lado -->
+      <div id="welcome-step-1" class="welcome-step">
+        <p style="text-align:center;font-family:'Bangers',cursive;font-size:1.2rem;margin-bottom:0.5rem">Você veio pelo lado de quem?</p>
+        <div class="side-buttons">
+          <button class="side-btn side-op" id="w-btn-bernardo">🏴‍☠️ Bernardo</button>
+          <button class="side-btn side-dr" id="w-btn-clara">🌸 Clara</button>
+        </div>
+      </div>
+
+      <!-- Step 2: form -->
+      <div id="welcome-step-2" class="welcome-step hidden">
+        <form id="welcome-rsvp-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
+          <input type="hidden" name="_subject" value="RSVP — Sessão da Tarde Bê &amp; Clara">
+          <input type="hidden" name="lado" id="w-rsvp-lado-input" value="">
+          <div class="field">
+            <label for="w-f-nome">Nome completo</label>
+            <input type="text" id="w-f-nome" name="nome" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label>Vai?</label>
+            <div class="radios">
+              <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> Sim ✅</label>
+              <label class="radio-opt"><input type="radio" name="vai" value="Não"> Não ❌</label>
+              <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> Talvez 🤔</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="w-f-restricao">Restrição alimentar (opcional)</label>
+            <input type="text" id="w-f-restricao" name="restricao">
+          </div>
+          <button type="submit" class="submit-btn">Confirmar presença →</button>
+        </form>
+      </div>
+
+      <!-- Step 3: confirmado -->
+      <div id="welcome-step-3" class="welcome-step hidden">
+        <div style="text-align:center;font-size:3rem">✅</div>
+        <p style="text-align:center;font-family:'Bangers',cursive;font-size:1.4rem;color:var(--op-vermelho)">Presença confirmada!</p>
+        <p style="text-align:center;font-style:italic">Até dia 13 de junho. Agora vem comigo conhecer a história deles.</p>
+      </div>
+    </div>
+
+    <div class="welcome-cta">
+      <p style="text-align:center;font-family:'Lora',serif;font-size:0.85rem;opacity:0.7;margin-bottom:0.5rem">
+        🗺️ A partir daqui começa a <strong>caça ao tesouro</strong> — 20 easter eggs escondidos pelas ilhas + 1 secreto.<br>
+        Quem encontrar todos, ganha o <strong>tesouro do One Piece</strong>. 🏴‍☠️
+      </p>
+      <button id="welcome-embark" class="zarpar-btn welcome-embark-btn">⛵ Embarcar na aventura →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
      HUD (sempre visível após intro)
 ══════════════════════════════════════════════════ -->
 <div id="hud" class="hud hidden">
@@ -368,45 +464,27 @@
           Uma comédia romântica cheia de caos, amor e reviravoltas."
         </p>
 
-        <!-- ──────── RSVP ──────── -->
+        <!-- ──────── A FESTA — info final (RSVP já foi feito na welcome) ──────── -->
         <div id="rsvp-wrapper" class="rsvp-wrapper">
 
-          <!-- Passo 1 -->
+          <!-- Mensagem de "você chegou ao fim" -->
           <div id="rsvp-step-1" class="rsvp-step active">
-            <h3 class="rsvp-question">Você veio pelo lado de quem?</h3>
-            <div class="side-buttons">
-              <button class="side-btn side-op" id="btn-bernardo">🏴‍☠️ Bernardo</button>
-              <button class="side-btn side-dr" id="btn-clara">🌸 Clara</button>
+            <div style="text-align:center;padding:1rem">
+              <div style="font-size:3rem">🏁</div>
+              <h3 style="font-family:'Bangers',cursive;font-size:1.6rem;letter-spacing:0.04em;color:var(--op-vermelho)">Você chegou ao destino!</h3>
+              <p style="font-style:italic;margin-top:0.5rem">A história te trouxe até aqui. Agora só falta vir de verdade — dia 13 de junho.</p>
             </div>
           </div>
 
-          <!-- Passo 2 -->
+          <!-- Step 2 mantido vazio (compat) -->
           <div id="rsvp-step-2" class="rsvp-step hidden">
-            <form id="rsvp-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
-              <input type="hidden" name="_subject" value="RSVP — Sessão da Tarde Bê &amp; Clara">
+            <form id="rsvp-form" style="display:none">
               <input type="hidden" name="lado" id="rsvp-lado-input" value="">
-              <div class="field">
-                <label for="f-nome">Nome completo</label>
-                <input type="text" id="f-nome" name="nome" required autocomplete="name">
-              </div>
-              <div class="field">
-                <label>Vai?</label>
-                <div class="radios">
-                  <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> Sim ✅</label>
-                  <label class="radio-opt"><input type="radio" name="vai" value="Não"> Não ❌</label>
-                  <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> Talvez 🤔</label>
-                </div>
-              </div>
-              <div class="field">
-                <label for="f-restricao">Restrição alimentar</label>
-                <input type="text" id="f-restricao" name="restricao" placeholder="opcional">
-              </div>
-              <button type="submit" class="submit-btn">Confirmar presença →</button>
             </form>
           </div>
 
-          <!-- Passo 3 -->
-          <div id="rsvp-step-3" class="rsvp-step hidden">
+          <!-- Info do evento (sempre visível na ilha 11) -->
+          <div id="rsvp-step-3" class="rsvp-step">
             <div class="arrival-reveal">
               <img src="assets/fotos/casal-principal.jpeg" alt="Local da festa" class="arrival-photo">
             </div>

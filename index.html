@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sessão da Tarde — Aniversário da Clara &amp; Bê</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lora:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     INTRO SCREEN
+══════════════════════════════════════════════════ -->
+<div id="intro-screen" class="intro-screen">
+
+  <div class="intro-left">
+    <div class="op-bg-texture"></div>
+    <div class="op-ocean-waves"></div>
+    <div class="op-deco straw-hat">🎩</div>
+    <div class="op-deco log-pose-deco">🧭</div>
+    <div class="op-deco jolly-roger">☠️</div>
+    <div class="op-deco torn-map">🗺️</div>
+  </div>
+
+  <div class="intro-center">
+    <div class="cinema-strip top"></div>
+    <div class="sessao-label">Sessão da Tarde apresenta...</div>
+    <h1 class="grande-title" id="grande-title"></h1>
+    <p class="intro-subtitle">Uma aventura pela Grand Line, com glitter, caos, romance e uma mulher que acordou de repente aos 30.</p>
+    <button id="zarpar-btn" class="zarpar-btn">Zarpar →</button>
+    <div class="cinema-strip bottom"></div>
+  </div>
+
+  <div class="intro-right">
+    <div class="dr30-bg-gradient"></div>
+    <div class="dr30-deco dollhouse">🏠</div>
+    <div class="dr30-deco dress">👗</div>
+    <div class="dr30-deco polaroid">📸</div>
+    <div class="dr30-deco hearts">💕</div>
+    <div class="dr30-deco sparkles">✨</div>
+    <div id="glitter-intro" class="glitter-container"></div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     HUD (sempre visível após intro)
+══════════════════════════════════════════════════ -->
+<div id="hud" class="hud hidden">
+  <div class="hud-logpose">
+    <div class="logpose-wheel">🧭</div>
+    <div class="logpose-info">
+      <span class="logpose-label">Log Pose</span>
+      <span id="current-island-name" class="island-current">Grand Line</span>
+    </div>
+  </div>
+  <div class="hud-eggs">
+    🏴‍☠️✨ <span id="egg-count">0</span>/20 encontrados
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MAP WRAPPER
+══════════════════════════════════════════════════ -->
+<div id="map-wrapper" class="map-wrapper hidden">
+
+  <button id="quick-rsvp" class="quick-rsvp">Só quero confirmar presença →</button>
+
+  <div class="nav-arrows">
+    <button id="nav-left"  class="nav-arrow nav-left"  aria-label="Ilha anterior">←</button>
+    <button id="nav-right" class="nav-arrow nav-right" aria-label="Próxima ilha">→</button>
+  </div>
+
+  <div id="map" class="map">
+
+    <!-- nuvens flutuantes -->
+    <div class="cloud" style="--cx:8%;--cy:12%;--cd:18s">☁️</div>
+    <div class="cloud" style="--cx:22%;--cy:7%;--cd:24s">☁️</div>
+    <div class="cloud" style="--cx:45%;--cy:15%;--cd:20s">☁️</div>
+    <div class="cloud" style="--cx:68%;--cy:9%;--cd:22s">☁️</div>
+    <div class="cloud" style="--cx:85%;--cy:13%;--cd:16s">☁️</div>
+
+    <!-- rota pontilhada (decorativa) -->
+    <div class="route-line"></div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 1 — REINO DESENCANTADO
+    ────────────────────────────────────────── -->
+    <section class="island island-narrative" id="island-1" data-index="1" data-name="Reino Desencantado">
+      <div class="island-body">
+        <h2 class="island-title">I — Reino Desencantado</h2>
+        <div class="scene reino-scene">
+          <div class="char clickable" id="char-bernardo" data-action="bernardo-balao">👨‍💼</div>
+          <div class="char clickable" id="char-clara"    data-action="clara-balao">👩‍💼</div>
+          <div class="item clickable" id="item-cracha"   data-action="cracha-photo">🪪</div>
+          <!-- Easter egg 8 — Livro de Leis -->
+          <div class="easter-egg op-egg" id="egg-8" data-egg-id="8"></div>
+          <!-- Easter egg C2 — Vestido Colorido -->
+          <div class="easter-egg dr30-egg" id="egg-C2" data-egg-id="C2"></div>
+        </div>
+        <p class="island-narration">
+          "No Reino Desencantado, tão tão distante, onde o amor era proibido pelo RH e os crachás escondiam segredos, Clara não esperava que um simples evento pudesse mudar sua vida."
+        </p>
+      </div>
+    </section>
+
+    <!-- Ocean 1→2 -->
+    <div class="ocean-gap" id="ocean-1-2">
+      <!-- Easter egg 13 — Aniversário do Ravi -->
+      <div class="easter-egg op-egg" id="egg-13" data-egg-id="13"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 2 — FESTA DO RH / MARINEFORD
+    ────────────────────────────────────────── -->
+    <section class="island island-narrative" id="island-2" data-index="2" data-name="Marineford — Festa do RH">
+      <div class="island-body">
+        <h2 class="island-title">II — Festa do RH</h2>
+        <div class="scene marineford-scene">
+          <div class="item clickable wanted-poster" id="item-wanted"      data-action="wanted-modal">📜</div>
+          <div class="item clickable"               id="item-carimbo"     data-action="carimbo-tremor">🔴</div>
+          <div class="item clickable"               id="item-regulamento" data-action="regulamento-egg">📋</div>
+          <!-- Easter egg C4 — Revista Adolescente -->
+          <div class="easter-egg dr30-egg" id="egg-C4" data-egg-id="C4"></div>
+        </div>
+        <p class="island-narration">
+          "No dia seguinte, em uma festa do reino, o destino deu seu segundo sinal. A conexão era tão evidente que nem o RH conseguiu ignorar — e logo veio o alerta: 'melhor vocês não se envolverem por causa do trabalho.'"
+        </p>
+      </div>
+    </section>
+
+    <!-- Ocean 2→3 -->
+    <div class="ocean-gap" id="ocean-2-3">
+      <!-- Easter egg 14 — Casamento do Miguel -->
+      <div class="easter-egg op-egg" id="egg-14" data-egg-id="14"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 3 — O INSTAGRAM / THE OFFICE
+    ────────────────────────────────────────── -->
+    <section class="island island-narrative" id="island-3" data-index="3" data-name="Ilha da Den Den">
+      <div class="island-body">
+        <h2 class="island-title">III — O Instagram</h2>
+        <div class="scene instagram-scene">
+          <div class="item clickable den-den" id="item-den-den" data-action="den-den-audio">🐌</div>
+          <div class="item clickable"         id="item-reels"   data-action="reels-msg">📱</div>
+          <div class="item clickable"         id="item-heart"   data-action="heart-counter">❤️</div>
+          <div class="heart-count" id="heart-count-display">❤️ <span id="heart-num">0</span></div>
+        </div>
+        <p class="island-narration">
+          "Com uma desculpa qualquer, ela pediu o Instagram dele. Começava ali uma história feita de curtidas e reels de The Office — mesmo Bernardo nem gostando, mas fingindo com a dedicação de quem já estava completamente entregue ao papel."
+        </p>
+      </div>
+    </section>
+
+    <!-- Ocean 3→4 -->
+    <div class="ocean-gap" id="ocean-3-4">
+      <!-- Easter egg 1 — Den Den Mushi -->
+      <div class="easter-egg op-egg" id="egg-1" data-egg-id="1"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 4 — CONSELHEIRO MATA
+    ────────────────────────────────────────── -->
+    <section class="island island-narrative" id="island-4" data-index="4" data-name="Conselheiro Mata">
+      <div class="island-body">
+        <h2 class="island-title">IV — Conselheiro Mata</h2>
+        <div class="scene camping-scene">
+          <div class="item clickable"          id="item-barraca"  data-action="barraca-photo">⛺</div>
+          <div class="item clickable star"     id="star-1"        data-action="star-msg" data-star="1">⭐</div>
+          <div class="item clickable star"     id="star-2"        data-action="star-msg" data-star="2">⭐</div>
+          <div class="item clickable star"     id="star-3"        data-action="star-msg" data-star="3">⭐</div>
+          <div class="item clickable star"     id="star-4"        data-action="star-msg" data-star="4">⭐</div>
+          <div class="item clickable star"     id="star-5"        data-action="star-msg" data-star="5">⭐</div>
+          <div class="item clickable fogueira" id="item-fogueira" data-action="fogueira-grow">🔥</div>
+          <!-- Easter egg 7 — Terminal DevOps -->
+          <div class="easter-egg op-egg" id="egg-7" data-egg-id="7"></div>
+          <!-- Carrapato (bônus oculto, não contabilizado) -->
+          <div class="easter-egg bonus-egg" id="egg-carrapato" data-egg-id="carrapato"></div>
+        </div>
+        <p class="island-narration">
+          "Vieram os encontros, a viagem para Conselheiro Mata e o início de um namoro no cenário menos óbvio possível: mato, barraca e carrapatos."
+        </p>
+      </div>
+    </section>
+
+    <!-- Ocean 4→5 -->
+    <div class="ocean-gap" id="ocean-4-5">
+      <!-- Easter egg 2 — Baú do Tesouro -->
+      <div class="easter-egg op-egg" id="egg-2" data-egg-id="2"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 5 — SERRO
+    ────────────────────────────────────────── -->
+    <section class="island island-passage" id="island-5" data-index="5" data-name="Serro">
+      <div class="island-body">
+        <h2 class="island-title">V — Serro</h2>
+        <div class="scene serro-scene">
+          <div class="item clickable" id="item-church" data-action="serro-photo">⛪</div>
+          <div class="item clickable" id="item-queijo" data-action="queijo-egg">🧀</div>
+        </div>
+        <p class="island-narration">"Serro. História, pedra e o melhor queijo do Brasil."</p>
+      </div>
+    </section>
+
+    <!-- Ocean 5→6 -->
+    <div class="ocean-gap" id="ocean-5-6">
+      <!-- Easter egg C6 — Pista de Dança -->
+      <div class="easter-egg dr30-egg" id="egg-C6" data-egg-id="C6"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 6 — PIRACEMA
+    ────────────────────────────────────────── -->
+    <section class="island island-passage" id="island-6" data-index="6" data-name="Piracema">
+      <div class="island-body">
+        <h2 class="island-title">VI — Piracema</h2>
+        <div class="scene piracema-scene">
+          <div class="item clickable" id="item-waterfall" data-action="piracema-photo">💧</div>
+          <!-- Easter egg 10 — Quartinha -->
+          <div class="easter-egg op-egg" id="egg-10" data-egg-id="10"></div>
+        </div>
+        <p class="island-narration">"Piracema. Água fria, pedra quente."</p>
+      </div>
+    </section>
+
+    <!-- Ocean 6→7 -->
+    <div class="ocean-gap" id="ocean-6-7">
+      <!-- Easter egg 4 — Bandeirinha Junina -->
+      <div class="easter-egg op-egg" id="egg-4" data-egg-id="4"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 7 — GUARAPARI
+    ────────────────────────────────────────── -->
+    <section class="island island-passage" id="island-7" data-index="7" data-name="Guarapari">
+      <div class="island-body">
+        <h2 class="island-title">VII — Guarapari</h2>
+        <div class="scene guarapari-scene">
+          <div class="item clickable" id="item-sea"   data-action="guarapari-photo">🌊</div>
+          <div class="item clickable" id="item-placa" data-action="placa-egg">🪧</div>
+          <!-- Easter egg 3 — Santo Antônio -->
+          <div class="easter-egg op-egg" id="egg-3" data-egg-id="3"></div>
+        </div>
+        <p class="island-narration">"Guarapari. Areia radioativa, sol quente, eles dois não ligando pra nada."</p>
+      </div>
+    </section>
+
+    <!-- Ocean 7→8 -->
+    <div class="ocean-gap" id="ocean-7-8">
+      <!-- Easter egg 5 — Bola de Futebol -->
+      <div class="easter-egg op-egg" id="egg-5" data-egg-id="5"></div>
+      <!-- Easter egg C5 — Calendário 13→30 -->
+      <div class="easter-egg dr30-egg" id="egg-C5" data-egg-id="C5"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 8 — ENTRE RIOS
+    ────────────────────────────────────────── -->
+    <section class="island island-passage" id="island-8" data-index="8" data-name="Entre Rios">
+      <div class="island-body">
+        <h2 class="island-title">VIII — Entre Rios</h2>
+        <div class="scene entrerios-scene">
+          <div class="item clickable" id="item-river" data-action="entrerios-photo">🏞️</div>
+          <!-- Easter egg 6 — Cartão de Aposta -->
+          <div class="easter-egg op-egg" id="egg-6" data-egg-id="6"></div>
+        </div>
+        <p class="island-narration">"Entre Rios. Daquelas viagens onde não precisa acontecer nada pra valer tudo."</p>
+      </div>
+    </section>
+
+    <!-- Ocean 8→9 -->
+    <div class="ocean-gap" id="ocean-8-9">
+      <!-- Easter egg 12 — Calendário "30" -->
+      <div class="easter-egg op-egg" id="egg-12" data-egg-id="12"></div>
+    </div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 9 — SERRA DO CIPÓ
+    ────────────────────────────────────────── -->
+    <section class="island island-passage" id="island-9" data-index="9" data-name="Serra do Cipó">
+      <div class="island-body">
+        <h2 class="island-title">IX — Serra do Cipó</h2>
+        <div class="scene cipo-scene">
+          <div class="item clickable"         id="item-mountain" data-action="cipo-photo">⛰️</div>
+          <div class="item clickable mountain-top" id="item-topo" data-action="topo-wind">🏔️</div>
+          <!-- Easter egg C3 — Espelho Mágico -->
+          <div class="easter-egg dr30-egg" id="egg-C3" data-egg-id="C3"></div>
+        </div>
+        <p class="island-narration">"Serra do Cipó. A mais épica. Porque algumas histórias pedem cachoeira grande."</p>
+      </div>
+    </section>
+
+    <!-- Ocean 9→10 -->
+    <div class="ocean-gap" id="ocean-9-10"></div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 10 — ILHA DO LUFFY
+    ────────────────────────────────────────── -->
+    <section class="island island-narrative" id="island-10" data-index="10" data-name="Ilha do Luffy">
+      <div class="island-body">
+        <h2 class="island-title">X — Ilha do Luffy</h2>
+        <div class="scene luffy-dog-scene">
+          <div class="item clickable luffy-dog" id="item-luffy-dog" data-action="luffy-gallery">🐕</div>
+          <div class="item clickable"           id="item-pelo"      data-action="pelo-egg">🪶</div>
+          <div class="item clickable"           id="item-coleira"   data-action="coleira-bark">🔔</div>
+          <!-- Easter egg 9 — Controle It Takes Two -->
+          <div class="easter-egg op-egg" id="egg-9" data-egg-id="9"></div>
+          <!-- Easter egg C1 — Casa de Boneca -->
+          <div class="easter-egg dr30-egg" id="egg-C1" data-egg-id="C1"></div>
+        </div>
+        <p class="island-narration">
+          "Toda grande história precisa de um personagem inesperado. Foi assim que entrou em cena Luffy — Border Collie que parece albino, mas na verdade é duplo merle. Mais amor, mais pelos, mais caos no roteiro."
+        </p>
+      </div>
+    </section>
+
+    <!-- Ocean 10→11 -->
+    <div class="ocean-gap" id="ocean-10-11"></div>
+
+    <!-- ──────────────────────────────────────────
+         ILHA 11 — ★ A FESTA ★
+    ────────────────────────────────────────── -->
+    <section class="island island-narrative island-festa" id="island-11" data-index="11" data-name="★ A Festa ★">
+      <div class="island-body">
+        <h2 class="island-title">XI — ★ A Festa ★</h2>
+        <div class="scene festa-scene">
+          <div class="festa-fireworks" id="festa-fireworks">🎆</div>
+          <div class="festa-flags">🎏🎏🎏</div>
+          <!-- Easter egg 11 — Chapéu de Palha -->
+          <div class="easter-egg op-egg" id="egg-11" data-egg-id="11"></div>
+          <!-- Easter egg 5b — TV/Sátira (ativado pelo egg-5) -->
+          <div class="easter-egg op-egg" id="egg-5b" data-egg-id="5b"></div>
+        </div>
+        <p class="island-narration">
+          "Dois aniversários. Uma história improvável. Um cachorro no elenco. Brasil na Copa.<br>
+          Uma comédia romântica cheia de caos, amor e reviravoltas."
+        </p>
+
+        <!-- ──────── RSVP ──────── -->
+        <div id="rsvp-wrapper" class="rsvp-wrapper">
+
+          <!-- Passo 1 -->
+          <div id="rsvp-step-1" class="rsvp-step active">
+            <h3 class="rsvp-question">Você veio pelo lado de quem?</h3>
+            <div class="side-buttons">
+              <button class="side-btn side-op" id="btn-bernardo">🏴‍☠️ Bernardo</button>
+              <button class="side-btn side-dr" id="btn-clara">🌸 Clara</button>
+            </div>
+          </div>
+
+          <!-- Passo 2 -->
+          <div id="rsvp-step-2" class="rsvp-step hidden">
+            <form id="rsvp-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
+              <input type="hidden" name="_subject" value="RSVP — Sessão da Tarde Bê &amp; Clara">
+              <input type="hidden" name="lado" id="rsvp-lado-input" value="">
+              <div class="field">
+                <label for="f-nome">Nome completo</label>
+                <input type="text" id="f-nome" name="nome" required autocomplete="name">
+              </div>
+              <div class="field">
+                <label>Vai?</label>
+                <div class="radios">
+                  <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> Sim ✅</label>
+                  <label class="radio-opt"><input type="radio" name="vai" value="Não"> Não ❌</label>
+                  <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> Talvez 🤔</label>
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-restricao">Restrição alimentar</label>
+                <input type="text" id="f-restricao" name="restricao" placeholder="opcional">
+              </div>
+              <button type="submit" class="submit-btn">Confirmar presença →</button>
+            </form>
+          </div>
+
+          <!-- Passo 3 -->
+          <div id="rsvp-step-3" class="rsvp-step hidden">
+            <div class="arrival-reveal">
+              <img src="assets/fotos/casal-principal.jpeg" alt="Local da festa" class="arrival-photo">
+            </div>
+
+            <div class="info-cards">
+
+              <div class="info-card card-festa">
+                <h3>🎉 Sessão da Tarde — Aniversário da Clara &amp; Bê</h3>
+                <p>🗓️ <strong>13 de junho de 2026</strong> (sábado)</p>
+                <p>🕑 A partir das <strong>14h</strong></p>
+                <p>📍 Av Nair Martins Drumond, nº 7<br>
+                   Recanto da Serra, Brumadinho/MG<br>
+                   <em>(~50 minutos do Centro de BH)</em></p>
+              </div>
+
+              <div class="info-card card-lugar">
+                <h3>🏡 O Lugar</h3>
+                <div class="local-fotos">
+                  <img src="assets/fotos/conselheiro-mata.jpeg" alt="Sítio 1">
+                  <img src="assets/fotos/conselheiro-fogueira.jpeg" alt="Sítio 2">
+                </div>
+                <p>🏊 Piscina &nbsp;•&nbsp; 🧖 Sauna</p>
+                <p>🍽️ Comida por conta dos anfitriões</p>
+                <p>🥤 Cada um traz o que for beber</p>
+              </div>
+
+              <div class="info-card card-copa">
+                <div class="bola-rolando" id="bola-copa">⚽</div>
+                <h3>🇧🇷 Brasil na Copa</h3>
+                <p>Transmissão ao vivo às <strong>19h</strong></p>
+                <p><em>"Festa de aniversário + jogo do Brasil.<br>Impossível ser melhor."</em></p>
+              </div>
+
+              <div class="info-card card-links">
+                <h3>🔗 Links Rápidos</h3>
+                <a href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener" class="link-btn">📍 Ver no Google Maps</a>
+                <a href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener" class="link-btn">💬 Grupo do WhatsApp</a>
+                <span class="link-btn link-disabled">🔗 Site do Lugar <small>(em breve)</small></span>
+              </div>
+
+              <div class="info-card card-agenda">
+                <h3>📅 Adicionar à Agenda</h3>
+                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG"
+                   target="_blank" rel="noopener" class="link-btn" id="btn-gcal">📅 Google Calendar</a>
+                <button class="link-btn" id="btn-ics">📅 Baixar .ics (Apple/Outlook)</button>
+                <div id="secret-egg-area" class="hidden"></div>
+              </div>
+
+            </div><!-- /info-cards -->
+          </div><!-- /rsvp-step-3 -->
+
+        </div><!-- /rsvp-wrapper -->
+      </div><!-- /island-body -->
+    </section>
+
+  </div><!-- /map -->
+</div><!-- /map-wrapper -->
+
+<!-- ══════════════════════════════════════════════════
+     MODAL
+══════════════════════════════════════════════════ -->
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Easter egg">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+    <div id="modal-body" class="modal-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TOAST
+══════════════════════════════════════════════════ -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

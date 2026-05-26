@@ -195,15 +195,21 @@ const EGG_DATA = {
     type: 'op',
     title: 'Den Den Mushi',
     html: `<h3>📞 Den Den Mushi</h3>
-      <img src="assets/fotos/luffy-filhote.jpeg" alt="Den Den Mushi — casal e Luffy filhote">
-      <p>Comunicação 100% pirata. Sinal fraco, conexão forte.</p>`,
+      ${buildGallery(['assets/fotos/luffy-filhote.jpeg','assets/fotos/casal-fun.jpeg','assets/fotos/casal-carro.jpeg'], 'Den Den Mushi')}
+      <p style="margin-top:0.5rem">Comunicação 100% pirata. Sinal fraco, conexão forte.</p>
+      <p style="font-style:italic;font-size:0.85rem;margin-top:0.4rem;opacity:0.85">
+        "Foi assim que Bernardo descobriu como conversar com Clara fora do trabalho: pelo Den Den Mushi do Instagram."
+      </p>`,
   },
   '2': {
     type: 'op',
     title: 'Baú do Tesouro',
     html: `<h3>🎁 Baú do Tesouro</h3>
-      <img src="assets/fotos/casal-encontro.jpeg" alt="Dia dos namorados">
-      <p>Nem todo baú tem ouro. Alguns têm memórias.</p>`,
+      ${buildGallery(['assets/fotos/casal-encontro.jpeg','assets/fotos/casal-principal.jpeg','assets/fotos/casal-fun.jpeg'], 'Memórias')}
+      <p style="margin-top:0.5rem">Nem todo baú tem ouro. Alguns têm memórias.</p>
+      <p style="font-style:italic;font-size:0.85rem;margin-top:0.4rem;opacity:0.85">
+        Datas marcadas. Lugares revisitados. Pequenas comemorações que ninguém viu — mas que ficaram.
+      </p>`,
   },
   '3': {
     type: 'op',
@@ -296,15 +302,25 @@ const EGG_DATA = {
     type: 'op',
     title: 'Aniversário do Ravi',
     html: `<h3>📸 Aniversário do Ravi</h3>
-      <img src="assets/fotos/evento-ravi.jpeg" alt="Aniversário do Ravi">
-      <p>"Aniversário do Ravi. Um capítulo importante."</p>`,
+      ${buildGallery(['assets/fotos/evento-ravi.jpeg'], 'Aniversário do Ravi')}
+      <p style="font-family:'Special Elite',monospace;font-size:0.9rem;margin-top:0.5rem">
+        "Aniversário do Ravi. Um capítulo importante."
+      </p>
+      <p style="font-style:italic;font-size:0.85rem;margin-top:0.4rem;opacity:0.85">
+        Dos primeiros eventos sociais "do casal" — quando deixou de ser segredo e começou a ser história.
+      </p>`,
   },
   '14': {
     type: 'op',
     title: 'Casamento do Miguel',
     html: `<h3>💍 Casamento do Miguel</h3>
-      <img src="assets/fotos/evento-miguel.jpeg" alt="Casamento do Miguel">
-      <p>"Casamento do Miguel. Foram juntos."</p>`,
+      ${buildGallery(['assets/fotos/evento-miguel.jpeg'], 'Casamento do Miguel')}
+      <p style="font-family:'Special Elite',monospace;font-size:0.9rem;margin-top:0.5rem">
+        "Casamento do Miguel. Foram juntos."
+      </p>
+      <p style="font-style:italic;font-size:0.85rem;margin-top:0.4rem;opacity:0.85">
+        Primeiras fotos formais. Primeira vez em que olharam um pro outro vestidos como adultos e pensaram: "isso é a gente."
+      </p>`,
   },
   'carrapato': {
     type: 'bonus',
@@ -1559,10 +1575,152 @@ function downloadCard() {
   showToast('🪪 Carteirinha baixada!', 'egg-found');
 }
 
-/* placeholders ainda — implementados nas Waves 4 e 6 */
+/* ══════════════════════════════════════════════════════
+   TIMELINE CRONOLÓGICA
+══════════════════════════════════════════════════════ */
+const TIMELINE = [
+  {
+    when: '2022 — primeiro semestre',
+    icon: '👀',
+    title: 'O primeiro olhar',
+    text: 'No Reino Desencantado, num evento da empresa, Bernardo olhou pra Clara de um jeito fixo e nada discreto. Clara só pensou: "quem é esse menino?"',
+    island: 1,
+    chapter: 'principal',
+  },
+  {
+    when: '2022 — dia seguinte',
+    icon: '🎉',
+    title: 'A festa do RH (Marineford)',
+    text: 'Em uma festa da firma, onde Clara ia, Bernardo aparecia. O RH percebeu e veio o alerta: "melhor não se envolverem por causa do trabalho." Ironicamente, o regulamento foi escrito pela própria Clara.',
+    island: 2,
+    chapter: 'principal',
+  },
+  {
+    when: '2022 — semanas seguintes',
+    icon: '📱',
+    title: 'O Instagram & os reels',
+    text: 'Com uma desculpa qualquer, Clara pediu o Instagram dele. Começava ali uma sequência de curtidas em stories e reels de The Office — mesmo Bernardo não gostando, mas fingindo com a dedicação de quem já estava entregue ao papel.',
+    island: 3,
+    chapter: 'principal',
+  },
+  {
+    when: '2022 — um mês depois',
+    icon: '💌',
+    title: 'O primeiro convite',
+    text: 'Depois de mais de um mês de suspense, Bernardo finalmente criou coragem e chamou Clara pra sair.',
+    chapter: 'principal',
+  },
+  {
+    when: '2023',
+    icon: '⛺',
+    title: 'Conselheiro Mata',
+    text: 'A primeira viagem juntos. Mato, barraca, carrapatos. O cenário menos óbvio do mundo pra começar um namoro — e foi exatamente ali que começou.',
+    island: 4,
+    chapter: 'principal',
+  },
+  {
+    when: '2023',
+    icon: '🐕',
+    title: 'Luffy entra no roteiro',
+    text: 'Um Border Collie que parece albino, mas é duplo merle. Mais amor, mais pelos pela casa, uma boa dose de caos.',
+    island: 10,
+    chapter: 'principal',
+  },
+  {
+    when: '2023–2024',
+    icon: '🏖️',
+    title: 'Capítulo B — As Viagens',
+    text: 'Em paralelo à história principal, o casal foi acumulando endereços: Serro, Piracema, Guarapari, Entre Rios, Serra do Cipó. Cinco cenários, uma constante: os dois juntos.',
+    chapter: 'viagens',
+  },
+  {
+    when: '2024–2025',
+    icon: '🌀',
+    title: 'Términos, voltas e reviravoltas',
+    text: 'Entre conflitos, reconciliações e reviravoltas dignas de filme, o maior vilão foi sempre o mesmo: o contexto de trabalho do Reino Desencantado.',
+    chapter: 'principal',
+  },
+  {
+    when: '2025',
+    icon: '🚪',
+    title: 'A saída do Reino',
+    text: 'Clara finalmente saiu daquele cenário. Foi quando os dois descobriram que talvez o amor só precisasse de uma nova fase pra acontecer do jeito certo.',
+    chapter: 'principal',
+  },
+  {
+    when: '13 de junho de 2026',
+    icon: '🎂',
+    title: 'A Sessão da Tarde',
+    text: 'Clara fazendo 30 (entrando oficialmente em "De Repente 30"). Bernardo fazendo 27 (no melhor estilo One Piece: meio perdido às vezes, mas com o coração no lugar certo). Dois aniversários, uma história improvável, um cachorro no elenco, Brasil na Copa.',
+    island: 11,
+    chapter: 'principal',
+  },
+];
+
 function openTimelineModal() {
-  openModal(`<h3>📜 Timeline da História</h3>
-    <p>Em construção (Wave 4 — narrativa profunda chegando logo).</p>`);
+  const items = TIMELINE.map((t, i) => `
+    <div class="timeline-item timeline-${t.chapter}">
+      <div class="timeline-icon">${t.icon}</div>
+      <div class="timeline-body">
+        <div class="timeline-when">${t.when}</div>
+        <div class="timeline-title">${t.title}</div>
+        <div class="timeline-text">${t.text}</div>
+        ${t.island ? `<button class="timeline-goto" data-i="${t.island}">Ir pra ilha →</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+  openModal(`
+    <h3>📜 Linha do tempo</h3>
+    <p style="font-size:0.82rem;text-align:center;font-style:italic;opacity:0.85;margin-bottom:0.75rem">
+      A jornada do Bê &amp; Clara em ordem cronológica.<br>
+      <span style="color:var(--op-vermelho)">🏴‍☠️ Capítulo principal</span> · <span style="color:#2d8a5a">🏖️ Viagens (capítulo paralelo)</span>
+    </p>
+    <div class="timeline">${items}</div>
+  `);
+  document.querySelectorAll('.timeline-goto').forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeModal();
+      navigateToIsland(parseInt(btn.dataset.i));
+    });
+  });
+  unlockAchievement('timeline-seen');
+}
+
+/* ══════════════════════════════════════════════════════
+   GALERIA UTILITY — múltiplas fotos em carousel
+══════════════════════════════════════════════════════ */
+function buildGallery(images, alt = '') {
+  if (!images || !images.length) return '';
+  if (images.length === 1) {
+    return `<img src="${images[0]}" alt="${alt}">`;
+  }
+  const slides = images.map((src, i) =>
+    `<img src="${src}" alt="${alt} ${i+1}" data-i="${i}" class="${i === 0 ? 'active' : ''}">`
+  ).join('');
+  const id = 'gal-' + Math.random().toString(36).slice(2, 8);
+  setTimeout(() => initGallery(id), 50);
+  return `<div class="gallery" id="${id}">
+    <div class="gallery-frame">${slides}</div>
+    <button class="gallery-prev" data-dir="-1">‹</button>
+    <button class="gallery-next" data-dir="1">›</button>
+    <div class="gallery-dots">${images.map((_,i)=>`<span class="gdot ${i===0?'active':''}" data-i="${i}"></span>`).join('')}</div>
+  </div>`;
+}
+
+function initGallery(id) {
+  const root = document.getElementById(id);
+  if (!root) return;
+  const slides = root.querySelectorAll('.gallery-frame img');
+  const dots = root.querySelectorAll('.gdot');
+  let idx = 0;
+  function go(i) {
+    idx = (i + slides.length) % slides.length;
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+  }
+  root.querySelector('.gallery-prev')?.addEventListener('click', () => go(idx - 1));
+  root.querySelector('.gallery-next')?.addEventListener('click', () => go(idx + 1));
+  dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i))));
 }
 function openBrasilMapModal(){ openModal(`<h3>🇧🇷 Mapa Real do Brasil</h3><p>Em construção (Wave 6).</p>`); }
 function openDiaryModal()    { openModal(`<h3>📖 Diário de Bordo</h3><p>Em construção (Wave 6).</p>`); }
@@ -1633,8 +1791,42 @@ document.addEventListener('DOMContentLoaded', () => {
   initRSVP();
   initToolbar();
   initHatClicks();
+  injectIslandDates();
   updateHUD();
 });
+
+/* ══════════════════════════════════════════════════════
+   FITINHAS DE DATA / CAPÍTULO em cada ilha
+══════════════════════════════════════════════════════ */
+const ISLAND_META = {
+  1:  { date: '📅 2022 · primeiro semestre',  chapter: 'principal', tag: 'Capítulo I — O olhar' },
+  2:  { date: '📅 2022 · dia seguinte',       chapter: 'principal', tag: 'Capítulo II — Marineford' },
+  3:  { date: '📅 2022 · semanas seguintes',  chapter: 'principal', tag: 'Capítulo III — Reels e curtidas' },
+  4:  { date: '📅 2023 · primeiro encontro',  chapter: 'principal', tag: 'Capítulo IV — Aqui virou namoro' },
+  5:  { date: '🗺️ Capítulo B · As Viagens',   chapter: 'viagens',   tag: 'Serro · Minas colonial' },
+  6:  { date: '🗺️ Capítulo B · As Viagens',   chapter: 'viagens',   tag: 'Piracema · água fria, pedra quente' },
+  7:  { date: '🗺️ Capítulo B · As Viagens',   chapter: 'viagens',   tag: 'Guarapari · areia radioativa' },
+  8:  { date: '🗺️ Capítulo B · As Viagens',   chapter: 'viagens',   tag: 'Entre Rios · silêncio que vale tudo' },
+  9:  { date: '🗺️ Capítulo B · As Viagens',   chapter: 'viagens',   tag: 'Serra do Cipó · a mais épica' },
+  10: { date: '📅 2023 · novo integrante',    chapter: 'principal', tag: 'Capítulo V — Luffy entra em cena' },
+  11: { date: '📅 13/06/2026 · presente',     chapter: 'final',     tag: 'Capítulo Final — A Sessão da Tarde' },
+};
+
+function injectIslandDates() {
+  document.querySelectorAll('.island[data-index]').forEach(island => {
+    const idx = parseInt(island.dataset.index);
+    const meta = ISLAND_META[idx];
+    if (!meta) return;
+    const title = island.querySelector('.island-title');
+    if (!title) return;
+    const strip = document.createElement('div');
+    strip.className = `chapter-strip chapter-${meta.chapter}`;
+    strip.innerHTML = `
+      <div class="chapter-tag">${meta.tag}</div>
+      <div class="chapter-date">${meta.date}</div>`;
+    title.insertAdjacentElement('afterend', strip);
+  });
+}
 
 /* Chapéu de palha — 21º easter egg secreto (5 cliques) */
 function initHatClicks() {

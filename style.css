@@ -1339,6 +1339,73 @@ img { display: block; max-width: 100%; }
   z-index: 5;
 }
 
+/* ═══ EMOTES INLINE SVG (versão definitiva, mais visível) ═══ */
+.emote-svg {
+  position: absolute;
+  pointer-events: none;
+  z-index: 6;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45));
+}
+
+/* Corações grandes ao redor do avatar */
+.heart-bob {
+  width: 36px;
+  height: 36px;
+  animation: heartBob 1.8s ease-in-out infinite;
+}
+.heart-pos-1 { top: -22px; right: -18px; animation-delay: 0s; }
+.heart-pos-2 { top: -6px;  left: -28px; width: 28px; height: 28px; animation-delay: 0.4s; }
+.heart-pos-3 { top: 30px;  right: -36px; width: 22px; height: 22px; animation-delay: 0.8s; }
+@keyframes heartBob {
+  0%,100% { transform: translateY(0) rotate(-6deg) scale(1); }
+  50%      { transform: translateY(-12px) rotate(6deg) scale(1.12); }
+}
+
+/* Estrelinhas/sparkles douradas */
+.spark-flash {
+  width: 22px;
+  height: 22px;
+  animation: sparkFlash 1.4s ease-in-out infinite;
+}
+.spark-pos-1 { top: -28px; left: 20px; width: 26px; height: 26px; animation-delay: 0.2s; }
+.spark-pos-2 { bottom: -8px; left: -10px; animation-delay: 0.7s; }
+@keyframes sparkFlash {
+  0%,100% { opacity: 0.55; transform: rotate(0) scale(1); }
+  50%      { opacity: 1; transform: rotate(45deg) scale(1.25); }
+}
+
+/* Balão de interrogação Clara */
+.emote-question-bubble {
+  position: absolute;
+  top: -22px;
+  right: -20px;
+  width: 42px; height: 42px;
+  background: var(--dr-rosa);
+  color: #fff;
+  font-family: 'Bangers', cursive;
+  font-size: 1.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #fff;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.4);
+  z-index: 7;
+  animation: bubblePulse 1.5s ease-in-out infinite;
+}
+@keyframes bubblePulse {
+  0%,100% { transform: scale(1) rotate(-8deg); }
+  50%      { transform: scale(1.15) rotate(8deg); }
+}
+
+@media (max-width: 480px) {
+  .heart-bob { width: 28px; height: 28px; }
+  .heart-pos-2 { width: 22px; height: 22px; }
+  .heart-pos-3 { width: 18px; height: 18px; }
+  .emote-question-bubble { width: 34px; height: 34px; font-size: 1.4rem; }
+  .spark-pos-1 { width: 20px; height: 20px; }
+}
+
 /* Coração flutuando — agora via background SVG (mais confiável que clip-path) */
 .emote-heart {
   width: 26px;

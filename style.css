@@ -871,6 +871,7 @@ img { display: block; max-width: 100%; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
 }
 .avatar-slot.avatar-clara { border-color: var(--dr-rosa); }
@@ -894,9 +895,75 @@ img { display: block; max-width: 100%; }
 .avatar-slot.avatar-clara::before { color: var(--dr-rosa-esc); }
 .avatar-slot:has(img:not([src=""]))::before { display: none; }
 
-.avatar-slot.avatar-sm { width: 64px; height: 64px; border-width: 2px; }
-.avatar-slot.avatar-sm::before { font-size: 0.75rem; }
+.avatar-slot.avatar-sm { width: 68px; height: 68px; border-width: 2px; }
+.avatar-slot.avatar-sm::before { font-size: 0.72rem; }
 .avatar-slot.avatar-lg { width: 130px; height: 130px; border-width: 4px; }
+@media (max-width: 480px) {
+  .avatar-slot { width: 78px; height: 78px; border-width: 2.5px; }
+  .avatar-slot.avatar-sm { width: 56px; height: 56px; }
+  .avatar-slot.avatar-lg { width: 110px; height: 110px; border-width: 3px; }
+  .avatar-poster { width: 130px; padding: 6px 6px 22px; }
+  .avatar-poster::before { font-size: 0.85rem; }
+  .avatar-poster .poster-name { font-size: 0.75rem; }
+}
+
+/* Cartaz WANTED retangular com avatar completo */
+.avatar-poster {
+  position: relative;
+  width: 160px;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.3), transparent 60%),
+    linear-gradient(160deg, var(--op-pergaminho), var(--op-pergaminho2));
+  border: 3px solid var(--op-borda-esc);
+  padding: 8px 8px 28px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.5);
+  transform: rotate(-3deg);
+  z-index: 2;
+}
+.avatar-poster::before {
+  content: 'WANTED';
+  display: block;
+  font-family: 'Special Elite', monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.25em;
+  text-align: center;
+  color: var(--op-tinta);
+  margin-bottom: 4px;
+  border-bottom: 2px double var(--op-tinta);
+  padding-bottom: 3px;
+}
+.avatar-poster img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 2px solid var(--op-tinta);
+  display: block;
+}
+.avatar-poster .poster-name {
+  position: absolute;
+  bottom: 5px;
+  left: 8px;
+  right: 8px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--op-vermelho-esc);
+  border-top: 1px dashed var(--op-borda);
+  padding-top: 3px;
+}
+.avatar-poster.poster-dr {
+  border-color: var(--dr-rosa-esc);
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.3), transparent 60%),
+    linear-gradient(160deg, var(--dr-creme), var(--dr-rosa-claro));
+  transform: rotate(3deg);
+}
+.avatar-poster.poster-dr::before { color: var(--dr-rosa-esc); }
+.avatar-poster.poster-dr .poster-name { color: var(--dr-rosa-esc); }
+.avatar-poster.poster-dr img { border-color: var(--dr-rosa-esc); }
 
 /* Fita debaixo do avatar (nome) */
 .avatar-label {
@@ -1999,6 +2066,15 @@ img { display: block; max-width: 100%; }
   padding: 1rem;
   background:
     radial-gradient(ellipse at center, rgba(245,197,24,0.12), transparent 70%);
+}
+.cinema-avatars {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+.cinema-avatars .avatar-slot {
+  position: relative;
+  width: 50px; height: 50px;
 }
 .cinema-eyebrow {
   font-family: 'Special Elite', monospace;

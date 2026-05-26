@@ -598,6 +598,7 @@ function navigateToIsland(index, smooth = true) {
   const islands = getIslandElements();
   if (index < 1 || index > islands.length) return;
   STATE.currentIsland = index;
+  updateProgressDots(index);
 
   const targetIsland = islands[index - 1];
   const map = document.getElementById('map');
@@ -614,6 +615,29 @@ function navigateToIsland(index, smooth = true) {
 
   document.getElementById('nav-left').disabled  = index <= 1;
   document.getElementById('nav-right').disabled = index >= islands.length;
+}
+
+function initProgressDots() {
+  const container = document.getElementById('island-progress');
+  if (!container) return;
+  const islands = getIslandElements();
+  islands.forEach((island, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'progress-dot';
+    dot.title = island.dataset.name || `Ilha ${i+1}`;
+    dot.addEventListener('click', () => navigateToIsland(i + 1));
+    container.appendChild(dot);
+  });
+  updateProgressDots(1);
+}
+
+function updateProgressDots(index) {
+  const dots = document.querySelectorAll('.progress-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.remove('active', 'visited');
+    if (i + 1 === index) dot.classList.add('active');
+    else if (i + 1 < index) dot.classList.add('visited');
+  });
 }
 
 function initNavigation() {
@@ -851,5 +875,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initEasterEggs();
   initIslandInteractions();
   initNavigation();
+  initProgressDots();
   initRSVP();
 });

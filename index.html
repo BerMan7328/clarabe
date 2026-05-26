@@ -125,8 +125,105 @@
     </div>
   </div>
   <div class="hud-right">
+    <button class="hud-map-btn" id="open-world-map" aria-label="Ver mapa completo">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span class="hud-map-btn-label">Mapa</span>
+    </button>
     <span class="hud-progress-text"><span id="hud-current">1</span>/<span id="hud-total">15</span></span>
   </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     WORLD MAP — zoom-out de todas as ilhas
+════════════════════════════════════════════════════════════ -->
+<div id="world-map" class="world-map hidden" role="dialog" aria-modal="true" aria-label="Mapa da Grand Line">
+  <div class="world-map-bg"></div>
+  <button class="world-map-close" id="close-world-map" aria-label="Voltar à história">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+  </button>
+
+  <header class="world-map-header">
+    <span class="world-map-eyebrow">Grand Line da Clara &amp; Bê</span>
+    <h2 class="world-map-title">A jornada inteira</h2>
+    <p class="world-map-sub">14 ilhas até a Sessão da Tarde</p>
+  </header>
+
+  <div class="world-map-canvas">
+    <svg class="world-map-svg" viewBox="0 0 1000 1400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- textura/papel de fundo via gradient -->
+      <defs>
+        <radialGradient id="oceanGrad" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#1a6b8a" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#0d3d52" stop-opacity="0.05"/>
+        </radialGradient>
+        <filter id="islandShadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+          <feOffset dx="2" dy="4" result="offsetblur"/>
+          <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+          <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <pattern id="paperPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <rect width="40" height="40" fill="rgba(244,228,193,0.03)"/>
+        </pattern>
+      </defs>
+
+      <!-- oceano -->
+      <rect width="1000" height="1400" fill="url(#oceanGrad)"/>
+
+      <!-- ondas decorativas -->
+      <g opacity="0.15" fill="none" stroke="#f5c518" stroke-width="1.5">
+        <path d="M50 200 Q80 195 110 200 T170 200" />
+        <path d="M820 350 Q850 345 880 350 T940 350" />
+        <path d="M120 700 Q150 695 180 700 T240 700" />
+        <path d="M780 950 Q810 945 840 950 T900 950" />
+        <path d="M60 1180 Q90 1175 120 1180 T180 1180" />
+      </g>
+
+      <!-- rota pontilhada conectando as ilhas -->
+      <path id="route-path"
+            d="M 200 130 Q 350 100 480 180 Q 620 240 700 330 Q 760 410 660 510 Q 540 580 380 600 Q 250 650 220 760 Q 240 870 380 900 Q 540 920 680 850 Q 800 800 820 920 Q 800 1030 660 1060 Q 500 1080 380 1140 Q 280 1200 320 1290 Q 380 1340 500 1320"
+            fill="none"
+            stroke="#c0392b"
+            stroke-width="3"
+            stroke-dasharray="6 10"
+            opacity="0.6"
+            stroke-linecap="round"/>
+
+      <!-- ilhas (vão ser injetadas via JS) -->
+      <g id="world-islands"></g>
+
+      <!-- rosa dos ventos no canto -->
+      <g transform="translate(880, 110)" opacity="0.7">
+        <circle cx="0" cy="0" r="55" fill="#f4e4c1" stroke="#8b5e2a" stroke-width="2"/>
+        <circle cx="0" cy="0" r="48" fill="none" stroke="#8b5e2a" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="0,-48 6,0 0,6 -6,0" fill="#c0392b"/>
+        <polygon points="0,48 6,0 0,-6 -6,0" fill="#2c1810" opacity="0.7"/>
+        <polygon points="-48,0 0,-6 6,0 0,6" fill="#8b5e2a" opacity="0.6"/>
+        <polygon points="48,0 0,-6 -6,0 0,6" fill="#8b5e2a" opacity="0.6"/>
+        <text x="0" y="-58" text-anchor="middle" font-family="Cinzel" font-size="12" font-weight="700" fill="#2c1810">N</text>
+        <text x="0" y="68" text-anchor="middle" font-family="Cinzel" font-size="12" font-weight="700" fill="#2c1810">S</text>
+        <text x="-62" y="4" text-anchor="middle" font-family="Cinzel" font-size="12" font-weight="700" fill="#2c1810">O</text>
+        <text x="62" y="4" text-anchor="middle" font-family="Cinzel" font-size="12" font-weight="700" fill="#2c1810">L</text>
+      </g>
+
+      <!-- decoração: navio fantasma -->
+      <g transform="translate(140, 1100)" opacity="0.4">
+        <path d="M0 0 L60 0 L50 20 L10 20 Z" fill="#2c1810"/>
+        <rect x="28" y="-32" width="2" height="32" fill="#2c1810"/>
+        <path d="M30 -30 L55 -10 L30 -10 Z" fill="#f4e4c1" stroke="#8b5e2a" stroke-width="0.5"/>
+        <path d="M30 -30 L8 -10 L30 -10 Z" fill="#f4e4c1" stroke="#8b5e2a" stroke-width="0.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <footer class="world-map-legend">
+    <span class="legend-item legend-visited">visitado</span>
+    <span class="legend-item legend-current">você está aqui</span>
+    <span class="legend-item legend-future">próximo</span>
+  </footer>
 </div>
 
 <!-- ════════════════════════════════════════════════════════════
@@ -161,16 +258,19 @@
             <div class="castle-tower castle-tower-3"></div>
             <div class="castle-windows"></div>
           </div>
-          <div class="scene-badge">
-            <span class="badge-clip"></span>
-            <span class="badge-line"></span>
-            <span class="badge-line"></span>
-            <span class="badge-line short"></span>
+          <div class="avatar-slot avatar-clara" data-name="Clara" style="bottom: 20px; right: 18px;">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          </div>
+          <div class="avatar-slot avatar-bernardo avatar-sm" data-name="Bê" style="top: 14px; left: 16px;">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
           </div>
           <div class="scene-stamp stamp-rh">RH</div>
           <div class="scene-sparkle scene-sparkle-1"></div>
-          <div class="scene-sparkle scene-sparkle-2"></div>
         </div>
+
+        <!-- camadas de colagem -->
+        <div class="scrapbook-layer scrap-tape" style="top: 0; left: 22%; width: 80px; transform: rotate(-8deg);"></div>
+        <div class="scrapbook-layer scrap-stamp" style="bottom: 32%; right: 8%; transform: rotate(-12deg);">PROIBIDO</div>
 
         <div class="island-narration">
           <p>"No Reino Desencantado, tão tão distante, onde o amor era proibido pelo RH e os crachás escondiam segredos, Clara não esperava que um simples evento da empresa pudesse mudar sua vida."</p>
@@ -195,21 +295,25 @@
         </header>
 
         <div class="island-scene scene-olhar">
-          <div class="scene-figure figure-left">
-            <div class="figure-head"></div>
-            <div class="figure-body figure-body-bernardo"></div>
+          <div class="avatar-slot avatar-bernardo avatar-lg" data-name="Bê" style="bottom: 12px; left: 8%;">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+            <span class="avatar-label">Bê</span>
           </div>
-          <svg class="scene-gaze" viewBox="0 0 200 100" aria-hidden="true">
-            <path d="M30 50 Q100 30 170 50" stroke="#c0392b" stroke-width="2" stroke-dasharray="3 4" fill="none"/>
-            <circle cx="100" cy="40" r="4" fill="#FF9EC4"/>
-            <circle cx="100" cy="40" r="9" fill="none" stroke="#FFD700" stroke-width="1"/>
+          <svg class="scene-gaze" viewBox="0 0 200 100" aria-hidden="true" style="position:absolute; top:30%; left:25%; width:50%; height:60px;">
+            <path d="M10 50 Q100 20 190 50" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4 5" fill="none"/>
+            <circle cx="100" cy="32" r="5" fill="#FF9EC4"/>
+            <circle cx="100" cy="32" r="11" fill="none" stroke="#FFD700" stroke-width="1.5"/>
           </svg>
-          <div class="scene-figure figure-right">
-            <div class="figure-head"></div>
-            <div class="figure-body figure-body-clara"></div>
+          <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara" style="bottom: 12px; right: 8%;">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+            <span class="avatar-label avatar-label-dr">Clara</span>
           </div>
           <div class="scene-thought">"quem é esse menino?"</div>
         </div>
+
+        <div class="scrapbook-layer scrap-glitter" style="top: 18%; left: 12%;"></div>
+        <div class="scrapbook-layer scrap-glitter" style="top: 24%; right: 18%;"></div>
+        <div class="scrapbook-layer scrap-glitter" style="bottom: 36%; left: 48%;"></div>
 
         <div class="island-narration">
           <p>"Tudo começou quando Bernardo, três anos mais novo, olhou para ela de um jeito tão fixo e nada discreto, que Clara só conseguiu pensar: <em>'quem é esse menino?'</em>"</p>
@@ -228,15 +332,19 @@
 
         <div class="island-scene scene-festa-firma">
           <div class="scene-confetti"></div>
-          <div class="scene-figure figure-mini figure-mini-1"><div class="figure-head"></div></div>
-          <div class="scene-figure figure-mini figure-mini-2"><div class="figure-head"></div></div>
-          <div class="scene-figure figure-mini figure-mini-3"><div class="figure-head"></div></div>
-          <div class="scene-figure figure-mini figure-mini-4"><div class="figure-head"></div></div>
+          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 30px; left: 18%;" data-name="Bê">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+          </div>
+          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 30px; left: 40%;" data-name="Clara">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          </div>
           <div class="scene-callout">
             <span class="callout-tag">RH alerta:</span>
             <span class="callout-msg">"melhor não se envolverem"</span>
           </div>
         </div>
+
+        <div class="scrapbook-layer scrap-tape scrap-tape-pink" style="top: 6px; right: 14%; width: 60px; transform: rotate(8deg);"></div>
 
         <div class="island-narration">
           <p>"No dia seguinte, em uma festa da firma, o destino deu seu segundo sinal: onde Clara ia, Bernardo aparecia. Se ela mudava de lugar, ele surgia por perto. A conexão era tão evidente que nem o RH conseguiu ignorar — e logo veio o alerta: <em>'melhor vocês não se envolverem por causa do trabalho.'</em>"</p>
@@ -292,6 +400,9 @@
         </header>
 
         <div class="island-scene scene-stories">
+          <div class="avatar-slot avatar-clara" style="top: 14px; left: 14%;" data-name="Clara">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          </div>
           <div class="scene-phone">
             <div class="phone-notch"></div>
             <div class="phone-screen">
@@ -301,13 +412,14 @@
               <div class="phone-heart"></div>
             </div>
           </div>
-          <div class="scene-sticker sticker-heart">
-            <svg viewBox="0 0 24 24"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#FF9EC4"/></svg>
-          </div>
-          <div class="scene-sticker sticker-stars">
-            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" fill="#FFD700"/></svg>
+          <div class="avatar-slot avatar-bernardo" style="bottom: 14px; right: 14%;" data-name="Bê">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
           </div>
         </div>
+
+        <div class="scrapbook-layer scrap-glitter" style="top: 14%; left: 50%;"></div>
+        <div class="scrapbook-layer scrap-glitter" style="bottom: 26%; left: 38%;"></div>
+        <div class="scrapbook-layer scrap-note" style="top: 12px; right: 6%; transform: rotate(6deg);">+999 reels</div>
 
         <div class="island-narration">
           <p>"Começava ali uma história feita de curtidas em stories, mensagens discretas e reels de <em>The Office</em> — mesmo Bernardo nem gostando de <em>The Office</em>, mas fingindo interesse com a dedicação de quem já estava completamente entregue ao papel."</p>
@@ -372,8 +484,16 @@
             <span class="star star-3"></span>
             <span class="star star-4"></span>
           </div>
+          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 30px; left: 22%;" data-name="Clara">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          </div>
+          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 30px; right: 22%;" data-name="Bê">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+          </div>
           <div class="scene-ground"></div>
         </div>
+
+        <div class="scrapbook-layer scrap-note" style="top: 8px; right: 14%; transform: rotate(-6deg);">2023 · primeira viagem</div>
 
         <div class="island-narration">
           <p>"Vieram os encontros, a viagem para Conselheiro Mata e o início de um namoro no cenário menos óbvio possível: mato, barraca e carrapatos."</p>
@@ -398,18 +518,21 @@
         </header>
 
         <div class="island-scene scene-luffy">
-          <svg class="scene-paw" viewBox="0 0 100 100" aria-hidden="true">
+          <div class="scene-luffy-photo">
+            <img src="assets/fotos/luffy-filhote.jpeg" alt="Luffy" class="luffy-photo">
+          </div>
+          <svg class="scene-paw" viewBox="0 0 100 100" aria-hidden="true" style="position:absolute; bottom:14px; left:14px; width:60px; height:60px; opacity:0.7;">
             <ellipse cx="50" cy="65" rx="22" ry="18" fill="#3d2818"/>
             <ellipse cx="25" cy="35" rx="9" ry="11" fill="#3d2818"/>
             <ellipse cx="42" cy="22" rx="8" ry="10" fill="#3d2818"/>
             <ellipse cx="58" cy="22" rx="8" ry="10" fill="#3d2818"/>
             <ellipse cx="75" cy="35" rx="9" ry="11" fill="#3d2818"/>
           </svg>
-          <div class="scene-fur-tuft fur-1"></div>
-          <div class="scene-fur-tuft fur-2"></div>
-          <div class="scene-fur-tuft fur-3"></div>
           <div class="scene-bubble">"Au au!"</div>
         </div>
+
+        <div class="scrapbook-layer scrap-tape" style="top: 4px; left: 40%; width: 70px; transform: rotate(4deg);"></div>
+        <div class="scrapbook-layer scrap-note" style="bottom: 28%; right: 8%; transform: rotate(8deg);">Border Collie<br>duplo merle</div>
 
         <div class="island-narration">
           <p>"Mas toda grande história precisa de um personagem inesperado. E foi assim que entrou em cena Luffy, um Border Collie que parece albino, mas na verdade é duplo merle. Com ele, veio mais amor, mais pelos pela casa e uma boa dose de caos no roteiro."</p>
@@ -459,14 +582,20 @@
 
         <div class="island-scene scene-dr30">
           <div class="big-number big-30">30</div>
+          <div class="avatar-slot avatar-clara avatar-lg avatar-wanted" style="bottom: 18px; left: 50%; transform: translateX(-50%);" data-name="Clara">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+            <span class="avatar-label avatar-label-dr">Clara · 30</span>
+          </div>
           <div class="scene-sparkle scene-sparkle-dr scene-sparkle-1"></div>
           <div class="scene-sparkle scene-sparkle-dr scene-sparkle-2"></div>
           <div class="scene-sparkle scene-sparkle-dr scene-sparkle-3"></div>
           <div class="scene-sparkle scene-sparkle-dr scene-sparkle-4"></div>
-          <div class="dr30-banner">
-            <span>Sessão</span><span>da</span><span>Tarde</span>
-          </div>
         </div>
+
+        <div class="scrapbook-layer scrap-glitter" style="top: 12%; left: 14%;"></div>
+        <div class="scrapbook-layer scrap-glitter" style="top: 18%; right: 16%;"></div>
+        <div class="scrapbook-layer scrap-glitter" style="bottom: 18%; left: 18%;"></div>
+        <div class="scrapbook-layer scrap-glitter" style="bottom: 22%; right: 12%;"></div>
 
         <div class="island-narration island-narration-dr">
           <p>"Agora, Clara está prestes a fazer 30 anos, ainda tentando processar que chegou oficialmente no enredo de <em>De Repente 30</em>."</p>
@@ -498,17 +627,18 @@
             <polygon points="100,170 110,100 100,90 90,100" fill="#2c1810"/>
             <polygon points="30,100 100,90 110,100 100,110" fill="#8b5e2a" opacity="0.6"/>
             <polygon points="170,100 100,90 90,100 100,110" fill="#8b5e2a" opacity="0.6"/>
-            <text x="100" y="25" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">N</text>
-            <text x="100" y="185" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">S</text>
-            <text x="20" y="105" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">O</text>
-            <text x="180" y="105" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">L</text>
           </svg>
-          <div class="big-number big-27">27</div>
+          <div class="avatar-slot avatar-bernardo avatar-lg avatar-wanted" style="bottom: 14px; left: 50%; transform: translateX(-50%);" data-name="Bê">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+            <span class="avatar-label">Bê · 27</span>
+          </div>
           <div class="scene-flag">
             <div class="flag-cloth"></div>
             <div class="flag-pole"></div>
           </div>
         </div>
+
+        <div class="scrapbook-layer scrap-stamp scrap-stamp-gold" style="top: 8px; right: 10%; transform: rotate(12deg); font-size: 0.55rem;">GRAND<br>LINE</div>
 
         <div class="island-narration">
           <p>"Bernardo vai fazer 27, seguindo sua aventura no melhor estilo <em>One Piece</em>: meio perdido às vezes, mas sempre com o coração no lugar certo."</p>
@@ -539,7 +669,16 @@
           <div class="festa-tag festa-tag-4">Drinks</div>
           <div class="festa-tag festa-tag-5">Brasil na Copa</div>
           <div class="festa-confetti"></div>
+          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 14px; left: 30%;" data-name="Clara">
+            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          </div>
+          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 14px; right: 30%;" data-name="Bê">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+          </div>
         </div>
+
+        <div class="scrapbook-layer scrap-tape scrap-tape-pink" style="top: 4px; left: 12%; width: 70px; transform: rotate(-10deg);"></div>
+        <div class="scrapbook-layer scrap-tape" style="top: 4px; right: 12%; width: 70px; transform: rotate(8deg);"></div>
 
         <div class="island-narration">
           <p>"Dois aniversários. Uma história improvável. Um cachorro no elenco. Brasil na Copa. Piscina, sauna, comida e drinks."</p>

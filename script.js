@@ -5,7 +5,29 @@
 const STATE = {
   current: 1,
   total: 15,
+  visited: new Set([1]),
 };
+
+/* ════════════════════════════════════════════════════════════
+   WORLD MAP — posições das ilhas em SVG (viewBox 1000x1400)
+════════════════════════════════════════════════════════════ */
+const WORLD_ISLANDS = [
+  { i: 1,  x: 200, y: 130,  label: 'Reino Desencantado' },
+  { i: 2,  x: 480, y: 180,  label: 'O Olhar' },
+  { i: 3,  x: 700, y: 330,  label: 'Festa da Firma' },
+  { i: 4,  x: 660, y: 510,  label: 'Regimento' },
+  { i: 5,  x: 380, y: 600,  label: 'Stories' },
+  { i: 6,  x: 220, y: 760,  label: 'O Convite' },
+  { i: 7,  x: 380, y: 900,  label: 'Conselheiro Mata' },
+  { i: 8,  x: 680, y: 850,  label: 'Luffy' },
+  { i: 9,  x: 820, y: 920,  label: 'O Vilão' },
+  { i: 10, x: 660, y: 1060, label: 'De Repente 30' },
+  { i: 11, x: 380, y: 1140, label: 'Grand Line' },
+  { i: 12, x: 320, y: 1290, label: 'A Festa' },
+  { i: 13, x: 500, y: 1320, label: 'Comédia' },
+  { i: 14, x: 680, y: 1280, label: 'Sessão da Tarde' },
+  { i: 15, x: 820, y: 1180, label: 'RSVP' },
+];
 
 /* ════════════════════════════════════════════════════════════
    "CONFIRA AQUI" — conteúdo dos modais por ilha
@@ -133,6 +155,7 @@ function navigateTo(index, smooth = true) {
   const islands = getIslands();
   if (index < 1 || index > islands.length) return;
   STATE.current = index;
+  STATE.visited.add(index);
 
   const target = islands[index - 1];
   const map = document.getElementById('map');
@@ -161,6 +184,73 @@ function navigateTo(index, smooth = true) {
   // Scroll inner page to top
   const innerPage = target.querySelector('.island-page');
   if (innerPage) innerPage.scrollTop = 0;
+
+  // Update world map markers if open
+  updateWorldMapMarkers();
+}
+
+/* ════════════════════════════════════════════════════════════
+   WORLD MAP — zoom-out de todas as ilhas
+════════════════════════════════════════════════════════════ */
+function initWorldMap() {
+  const container = document.getElementById('world-islands');
+  if (!container) return;
+
+  // Injeta as ilhas
+  WORLD_ISLANDS.forEach(island => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'world-island');
+    g.setAttribute('data-i', island.i);
+    g.setAttribute('transform', `translate(${island.x}, ${island.y})`);
+
+    g.innerHTML = `
+      <circle class="island-marker" cx="0" cy="0" r="22"/>
+      <text class="island-num" x="0" y="4">${island.i}</text>
+      <text class="island-label" x="0" y="46">${island.label}</text>
+    `;
+
+    g.addEventListener('click', () => {
+      navigateTo(island.i);
+      closeWorldMap();
+    });
+
+    container.appendChild(g);
+  });
+
+  // Botões de abrir/fechar
+  document.getElementById('open-world-map').addEventListener('click', openWorldMap);
+  document.getElementById('close-world-map').addEventListener('click', closeWorldMap);
+
+  // ESC para fechar
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !document.getElementById('world-map').classList.contains('hidden')) {
+      closeWorldMap();
+    }
+  });
+}
+
+function openWorldMap() {
+  const wm = document.getElementById('world-map');
+  wm.classList.remove('hidden', 'fade-out');
+  updateWorldMapMarkers();
+}
+
+function closeWorldMap() {
+  const wm = document.getElementById('world-map');
+  wm.classList.add('fade-out');
+  setTimeout(() => {
+    wm.classList.add('hidden');
+    wm.classList.remove('fade-out');
+  }, 400);
+}
+
+function updateWorldMapMarkers() {
+  document.querySelectorAll('.world-island').forEach(g => {
+    const i = parseInt(g.dataset.i);
+    g.classList.remove('visited', 'current');
+    if (i === STATE.current) g.classList.add('current');
+    else if (STATE.visited.has(i) || i < STATE.current) g.classList.add('visited');
+  });
 }
 
 function initProgressDots() {
@@ -361,6 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initConfira();
   initModal();
   initRSVP();
+  initWorldMap();
 });
 
 // reajusta posição em resize (vw muda)

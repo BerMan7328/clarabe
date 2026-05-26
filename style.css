@@ -525,6 +525,419 @@ img { display: block; max-width: 100%; }
   border-radius: 14px;
   border: 1px solid rgba(245,197,24,0.3);
 }
+.hud-map-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--op-amarelo);
+  background: rgba(245,197,24,0.1);
+  border: 1px solid rgba(245,197,24,0.4);
+  padding: 0.3rem 0.7rem;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+.hud-map-btn svg {
+  width: 16px; height: 16px;
+}
+.hud-map-btn:hover {
+  background: var(--op-amarelo);
+  color: var(--op-oceano-esc);
+  transform: scale(1.05);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WORLD MAP — view zoom-out de todas as ilhas
+══════════════════════════════════════════════════════════════ */
+.world-map {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #06222e 0%, #0d3d52 100%);
+  animation: worldMapIn 0.5s var(--easing-page);
+}
+.world-map.fade-out {
+  animation: worldMapOut 0.4s ease forwards;
+}
+@keyframes worldMapIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes worldMapOut {
+  to { opacity: 0; transform: scale(1.05); }
+}
+
+.world-map-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(245,197,24,0.08), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(255,143,184,0.06), transparent 50%);
+  pointer-events: none;
+}
+.world-map::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.world-map-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 44px; height: 44px;
+  background: rgba(0,0,0,0.6);
+  border: 2px solid var(--op-amarelo);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--op-amarelo);
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+.world-map-close:hover { background: var(--op-amarelo); color: var(--op-oceano-esc); transform: rotate(90deg); }
+.world-map-close svg { width: 22px; height: 22px; }
+
+.world-map-header {
+  text-align: center;
+  padding: 1.25rem 1rem 0.5rem;
+  z-index: 5;
+  position: relative;
+}
+.world-map-eyebrow {
+  display: inline-block;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--op-amarelo);
+  margin-bottom: 0.3rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid rgba(245,197,24,0.4);
+  border-radius: 12px;
+}
+.world-map-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+.world-map-sub {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--dr-rosa-claro);
+  margin-top: 0.2rem;
+}
+
+.world-map-canvas {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+.world-map-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  max-height: 100%;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+}
+
+/* ilhas no mapa-mundi */
+.world-island {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.world-island:hover {
+  transform: scale(1.18);
+}
+.world-island circle.island-marker {
+  fill: var(--op-pergaminho);
+  stroke: var(--op-borda);
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+.world-island.visited circle.island-marker {
+  fill: var(--op-amarelo);
+  stroke: var(--op-amarelo-esc);
+}
+.world-island.current circle.island-marker {
+  fill: var(--op-vermelho);
+  stroke: #fff;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(245,197,24,0.8));
+  animation: islandPulse 1.8s ease-in-out infinite;
+}
+@keyframes islandPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+.world-island text.island-label {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 13px;
+  fill: #fff;
+  text-anchor: middle;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  paint-order: stroke fill;
+  stroke: rgba(13,61,82,0.8);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.world-island.current text.island-label {
+  fill: var(--op-amarelo);
+  font-size: 14px;
+}
+.world-island text.island-num {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 10px;
+  fill: var(--op-tinta);
+  text-anchor: middle;
+  pointer-events: none;
+}
+.world-island.visited text.island-num { fill: var(--op-tinta); }
+.world-island.current text.island-num { fill: #fff; }
+
+.world-map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem 1rem;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.7);
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend-item::before {
+  content: '';
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid;
+}
+.legend-visited::before { background: var(--op-amarelo); border-color: var(--op-amarelo-esc); }
+.legend-current::before { background: var(--op-vermelho); border-color: #fff; }
+.legend-future::before  { background: var(--op-pergaminho); border-color: var(--op-borda); }
+
+@media (max-width: 480px) {
+  .world-map-close { top: 0.5rem; right: 0.5rem; width: 38px; height: 38px; }
+  .world-map-header { padding: 1rem 0.85rem 0.3rem; }
+  .world-map-title { font-size: 1.4rem; }
+  .world-map-sub { font-size: 0.95rem; }
+  .world-map-canvas { padding: 0.25rem; }
+  .world-map-legend { gap: 0.65rem; font-size: 0.62rem; padding: 0.3rem 0.5rem 0.65rem; }
+  .hud-map-btn-label { display: none; }
+  .hud-map-btn { padding: 0.3rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CAMADAS DE SCRAPBOOK — colagem por cima das cenas
+══════════════════════════════════════════════════════════════ */
+.scrapbook-layer {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Polaroide rotacionada */
+.scrap-polaroid {
+  width: 70px;
+  background: #fff;
+  padding: 5px 5px 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  font-family: 'Caveat', cursive;
+  font-size: 0.7rem;
+  text-align: center;
+  color: var(--op-tinta);
+}
+.scrap-polaroid::before {
+  content: '';
+  display: block;
+  height: 50px;
+  background: linear-gradient(135deg, var(--dr-rosa-claro), var(--op-pergaminho));
+  margin-bottom: 3px;
+}
+
+/* Fita washi */
+.scrap-tape {
+  height: 18px;
+  background: rgba(255,215,0,0.55);
+  border-top: 1px dashed rgba(0,0,0,0.15);
+  border-bottom: 1px dashed rgba(0,0,0,0.15);
+}
+.scrap-tape-pink { background: rgba(255,143,184,0.55); }
+.scrap-tape-blue { background: rgba(26,107,138,0.5); }
+
+/* Selo circular */
+.scrap-stamp {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: var(--op-vermelho);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  opacity: 0.92;
+}
+.scrap-stamp-gold { background: var(--op-amarelo); color: var(--op-tinta); }
+.scrap-stamp-pink { background: var(--dr-rosa-esc); }
+
+/* Anotação manuscrita */
+.scrap-note {
+  background: rgba(255,243,200,0.85);
+  padding: 0.3rem 0.55rem;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--op-vermelho-esc);
+  border: 1px dashed rgba(192,57,43,0.4);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  max-width: 120px;
+  line-height: 1.2;
+}
+
+/* Estrela glitter */
+.scrap-glitter {
+  width: 14px; height: 14px;
+  background: radial-gradient(circle, #fff 25%, var(--dr-dourado) 55%, transparent 75%);
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.7));
+  animation: glitterTwinkle 2.5s ease-in-out infinite;
+}
+.scrap-glitter:nth-child(2n) { animation-delay: 0.8s; }
+.scrap-glitter:nth-child(3n) { animation-delay: 1.5s; }
+@keyframes glitterTwinkle {
+  0%,100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.2); }
+}
+
+/* Camada de colagem na borda da página */
+.island-page .scrap-corner-tl {
+  position: absolute;
+  top: -8px; left: 14%;
+  width: 64px; height: 22px;
+  z-index: 4;
+}
+.island-page .scrap-corner-br {
+  position: absolute;
+  bottom: 26px; right: 8%;
+  z-index: 4;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AVATARES — slots para clara.png e bernardo.png
+══════════════════════════════════════════════════════════════ */
+.avatar-slot {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, var(--op-pergaminho), var(--op-pergaminho2));
+  z-index: 2;
+}
+.avatar-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.avatar-slot.avatar-clara { border-color: var(--dr-rosa); }
+.avatar-slot.avatar-bernardo { border-color: var(--op-amarelo); }
+
+/* Avatar placeholder enquanto não chegam os JPEGs */
+.avatar-slot::before {
+  content: attr(data-name);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--op-tinta);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.avatar-slot.avatar-clara::before { color: var(--dr-rosa-esc); }
+.avatar-slot:has(img:not([src=""]))::before { display: none; }
+
+.avatar-slot.avatar-sm { width: 64px; height: 64px; border-width: 2px; }
+.avatar-slot.avatar-sm::before { font-size: 0.75rem; }
+.avatar-slot.avatar-lg { width: 130px; height: 130px; border-width: 4px; }
+
+/* Fita debaixo do avatar (nome) */
+.avatar-label {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--op-vermelho);
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 3;
+}
+.avatar-label-dr { background: var(--dr-rosa-esc); }
+
+/* tag wanted estilo cartaz */
+.avatar-wanted {
+  position: relative;
+}
+.avatar-wanted::after {
+  content: 'WANTED';
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: var(--op-amarelo);
+  color: var(--op-vermelho);
+  font-family: 'Special Elite', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 0.15rem 0.45rem;
+  transform: rotate(15deg);
+  border: 1px solid var(--op-vermelho);
+  z-index: 4;
+}
 
 /* ══════════════════════════════════════════════════════════════
    MAP WRAPPER & MAP
@@ -1285,6 +1698,21 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.scene-luffy-photo {
+  width: 70%;
+  max-width: 200px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  background: #fff;
+}
+.luffy-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .scene-paw {
   width: 130px; height: 130px;

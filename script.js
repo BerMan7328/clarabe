@@ -1158,13 +1158,348 @@ function openStatsModal() {
   `);
 }
 
-/* Placeholders — implementados nas próximas waves */
-function openTimelineModal() { openModal(`<h3>📜 Timeline</h3><p>Em construção (Wave 4)</p>`); }
-function openQuizModal()     { openModal(`<h3>💕 Quiz do Casal</h3><p>Em construção (Wave 3)</p>`); }
-function openMemoryModal()   { openModal(`<h3>🧠 Memory Game</h3><p>Em construção (Wave 3)</p>`); }
-function openBrasilMapModal(){ openModal(`<h3>🇧🇷 Mapa Real</h3><p>Em construção (Wave 6)</p>`); }
-function openDiaryModal()    { openModal(`<h3>📖 Diário de Bordo</h3><p>Em construção (Wave 6)</p>`); }
-function openCardModal()     { openModal(`<h3>🪪 Carteirinha de Pirata</h3><p>Em construção (Wave 3)</p>`); }
+/* ══════════════════════════════════════════════════════
+   QUIZ DO CASAL
+══════════════════════════════════════════════════════ */
+const QUIZ = [
+  {
+    q: "Quem disse: 'quem é esse menino?'",
+    options: ['Clara', 'Bernardo', 'O RH', 'Luffy'],
+    correct: 0,
+    explanation: "Clara, no primeiro evento da empresa — ele olhando nada discreto desde 2022.",
+  },
+  {
+    q: 'Qual a diferença de idade entre eles?',
+    options: ['1 ano (ele mais novo)', '2 anos (ele mais novo)', '3 anos (ele mais novo)', '3 anos (ela mais nova)'],
+    correct: 2,
+    explanation: 'Bernardo é 3 anos mais novo que Clara.',
+  },
+  {
+    q: 'Onde aconteceu o primeiro grande sinal?',
+    options: ['Em um bar', 'Em uma festa da empresa', 'No Instagram', 'Em Conselheiro Mata'],
+    correct: 1,
+    explanation: "No dia seguinte ao primeiro olhar, em uma festa da firma — onde Clara ia, Bernardo aparecia.",
+  },
+  {
+    q: 'O que o RH disse sobre o casal?',
+    options: ['Parabéns', "'Melhor vocês não se envolverem por causa do trabalho'", 'Nada, nunca soube', 'Que era proibido namorar'],
+    correct: 1,
+    explanation: 'O alerta clássico — ironicamente, o regulamento foi escrito pela própria Clara.',
+  },
+  {
+    q: 'Como Clara começou a conversa fora do trabalho?',
+    options: ['Mandou DM no LinkedIn', 'Pediu o Instagram dele', 'Pediu o número', 'Marcou um café'],
+    correct: 1,
+    explanation: 'Com uma desculpa qualquer, Clara pediu o Instagram dele.',
+  },
+  {
+    q: 'O que Bernardo mandava no Instagram pra conquistar?',
+    options: ['Frases motivacionais', 'Memes de gato', 'Reels de The Office (mesmo sem gostar)', 'Fotos do treino'],
+    correct: 2,
+    explanation: 'Reels de The Office — mesmo Bernardo nem gostando, mas fingindo com a dedicação de quem já estava entregue ao papel.',
+  },
+  {
+    q: 'Onde foi a primeira viagem que virou namoro?',
+    options: ['Serra do Cipó', 'Conselheiro Mata', 'Piracema', 'Guarapari'],
+    correct: 1,
+    explanation: 'Conselheiro Mata — mato, barraca e carrapatos.',
+  },
+  {
+    q: 'O Luffy (cachorro) é:',
+    options: ['Albino', 'Duplo merle', 'Mestiço', 'Pintado'],
+    correct: 1,
+    explanation: 'Parece albino, mas é duplo merle. Detalhe importante.',
+  },
+  {
+    q: 'Quantos anos a Clara está fazendo?',
+    options: ['27', '28', '29', '30'],
+    correct: 3,
+    explanation: 'Clara está chegando oficialmente em "De Repente 30".',
+  },
+  {
+    q: 'E o Bernardo?',
+    options: ['25', '26', '27', '28'],
+    correct: 2,
+    explanation: 'Bernardo está fazendo 27 — meio perdido às vezes, mas sempre com o coração no lugar certo.',
+  },
+];
+
+let quizState = null;
+
+function openQuizModal() {
+  quizState = { index: 0, score: 0, answers: [] };
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  if (quizState.index >= QUIZ.length) {
+    finishQuiz();
+    return;
+  }
+  const q = QUIZ[quizState.index];
+  const opts = q.options.map((opt, i) =>
+    `<button class="quiz-option" data-i="${i}">${opt}</button>`
+  ).join('');
+  openModal(`
+    <h3>💕 Quiz do Casal</h3>
+    <div class="quiz-progress">Pergunta ${quizState.index + 1} de ${QUIZ.length} · ${quizState.score} acertos</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options">${opts}</div>
+  `);
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => answerQuiz(parseInt(btn.dataset.i)));
+  });
+}
+
+function answerQuiz(i) {
+  const q = QUIZ[quizState.index];
+  const correct = i === q.correct;
+  if (correct) quizState.score++;
+  quizState.answers.push({ chosen: i, correct: q.correct });
+
+  document.querySelectorAll('.quiz-option').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === i)    btn.classList.add('wrong');
+  });
+
+  const body = document.getElementById('modal-body');
+  const exp = document.createElement('div');
+  exp.className = 'quiz-explanation';
+  exp.innerHTML = `${correct ? '✅' : '❌'} ${q.explanation}
+    <button class="quiz-next">${quizState.index === QUIZ.length-1 ? 'Ver resultado →' : 'Próxima →'}</button>`;
+  body.appendChild(exp);
+  exp.querySelector('.quiz-next').addEventListener('click', () => {
+    quizState.index++;
+    renderQuizQuestion();
+  });
+
+  if (correct) addBerries(100, 'quiz-correct');
+}
+
+function finishQuiz() {
+  const score = quizState.score;
+  const pct = Math.round((score / QUIZ.length) * 100);
+  GAME.quizScore = pct;
+  saveGame();
+  unlockAchievement('quiz-done');
+  if (pct === 100) unlockAchievement('quiz-perfect');
+
+  let msg = '';
+  if (pct === 100)      msg = "🏆 Perfeito! Você conhece esse casal como ninguém.";
+  else if (pct >= 80)   msg = "💎 Excelente! Você é da turma íntima.";
+  else if (pct >= 60)   msg = "👍 Bom! Você conhece os pontos principais.";
+  else if (pct >= 40)   msg = "😅 Você conhece o básico... vai melhorar na festa!";
+  else                  msg = "🤔 Talvez você tenha sido convidado por sorte. Sem problemas, vem que a gente te apresenta tudo dia 13.";
+
+  openModal(`
+    <h3>💕 Resultado do Quiz</h3>
+    <div class="quiz-result">
+      <div class="quiz-score">${score}<span>/${QUIZ.length}</span></div>
+      <div class="quiz-pct">${pct}%</div>
+    </div>
+    <p style="text-align:center;font-family:'Lora',serif;font-style:italic;margin-top:0.5rem">${msg}</p>
+    <button class="link-btn" id="quiz-retry" style="margin-top:1rem">Tentar de novo →</button>
+  `);
+  document.getElementById('quiz-retry').addEventListener('click', openQuizModal);
+}
+
+/* ══════════════════════════════════════════════════════
+   MEMORY GAME
+══════════════════════════════════════════════════════ */
+const MEMORY_CARDS = [
+  { emoji: '🏴‍☠️', label: 'Bandeira Pirata' },
+  { emoji: '🐕',   label: 'Luffy' },
+  { emoji: '⛺',   label: 'Camping' },
+  { emoji: '💍',   label: 'Casamento' },
+  { emoji: '⚽',   label: 'Copa' },
+  { emoji: '🪪',   label: 'Crachá' },
+  { emoji: '👗',   label: 'Vestido' },
+  { emoji: '🎩',   label: 'Chapéu' },
+];
+
+let memoryState = null;
+
+function openMemoryModal() {
+  const deck = [...MEMORY_CARDS, ...MEMORY_CARDS]
+    .map((c, i) => ({ ...c, id: i }))
+    .sort(() => Math.random() - 0.5);
+  memoryState = {
+    deck,
+    flipped: [],
+    matched: new Set(),
+    moves: 0,
+    locked: false,
+  };
+  renderMemory();
+}
+
+function renderMemory() {
+  const cells = memoryState.deck.map((c, idx) => {
+    const isFlipped = memoryState.flipped.includes(idx) || memoryState.matched.has(idx);
+    return `<div class="memory-card ${isFlipped ? 'flipped' : ''}" data-idx="${idx}">
+      <div class="memory-front">?</div>
+      <div class="memory-back">${c.emoji}</div>
+    </div>`;
+  }).join('');
+  openModal(`
+    <h3>🧠 Memory Game</h3>
+    <div class="memory-status">
+      Jogadas: <strong id="memory-moves">${memoryState.moves}</strong> · Pares: <strong>${memoryState.matched.size / 2}/${MEMORY_CARDS.length}</strong>
+    </div>
+    <div class="memory-grid">${cells}</div>
+    <button class="link-btn" id="memory-restart" style="margin-top:0.75rem">Reiniciar</button>
+  `);
+  document.querySelectorAll('.memory-card').forEach(el => {
+    el.addEventListener('click', () => flipMemory(parseInt(el.dataset.idx)));
+  });
+  document.getElementById('memory-restart').addEventListener('click', openMemoryModal);
+}
+
+function flipMemory(idx) {
+  if (memoryState.locked) return;
+  if (memoryState.matched.has(idx)) return;
+  if (memoryState.flipped.includes(idx)) return;
+
+  memoryState.flipped.push(idx);
+  const el = document.querySelector(`.memory-card[data-idx="${idx}"]`);
+  if (el) el.classList.add('flipped');
+
+  if (memoryState.flipped.length === 2) {
+    memoryState.moves++;
+    document.getElementById('memory-moves').textContent = memoryState.moves;
+    const [a, b] = memoryState.flipped;
+    const ca = memoryState.deck[a];
+    const cb = memoryState.deck[b];
+    if (ca.emoji === cb.emoji) {
+      memoryState.matched.add(a);
+      memoryState.matched.add(b);
+      memoryState.flipped = [];
+      addBerries(50, 'memory-pair');
+      if (memoryState.matched.size === memoryState.deck.length) {
+        setTimeout(finishMemory, 600);
+      }
+    } else {
+      memoryState.locked = true;
+      setTimeout(() => {
+        document.querySelector(`.memory-card[data-idx="${a}"]`)?.classList.remove('flipped');
+        document.querySelector(`.memory-card[data-idx="${b}"]`)?.classList.remove('flipped');
+        memoryState.flipped = [];
+        memoryState.locked = false;
+      }, 900);
+    }
+  }
+}
+
+function finishMemory() {
+  const moves = memoryState.moves;
+  if (GAME.memoryBestMoves === null || moves < GAME.memoryBestMoves) {
+    GAME.memoryBestMoves = moves;
+    saveGame();
+  }
+  unlockAchievement('memory-done');
+  if (moves <= 16) unlockAchievement('memory-perfect');
+
+  openModal(`
+    <h3>🧠 Memory Completo!</h3>
+    <div style="text-align:center;font-size:3rem;margin:0.5rem 0">🎉</div>
+    <p style="text-align:center;font-family:'Lora',serif">
+      Completou em <strong>${moves}</strong> jogadas.<br>
+      ${GAME.memoryBestMoves === moves ? '🏆 Novo recorde pessoal!' : `Seu recorde: ${GAME.memoryBestMoves} jogadas`}
+    </p>
+    ${moves <= 16
+      ? '<p style="text-align:center;color:var(--op-vermelho);font-weight:bold">💎 Memória de Elefante desbloqueada!</p>'
+      : '<p style="text-align:center;font-size:0.85rem;opacity:0.7">Termine em ≤16 jogadas pra ganhar a conquista de Memória de Elefante.</p>'
+    }
+    <button class="link-btn" id="memory-again" style="margin-top:0.75rem">Jogar de novo</button>
+  `);
+  document.getElementById('memory-again').addEventListener('click', openMemoryModal);
+}
+
+/* ══════════════════════════════════════════════════════
+   CARTEIRINHA DE PIRATA (WANTED POSTER)
+══════════════════════════════════════════════════════ */
+function openCardModal() {
+  const savedName = GAME.cardName || '';
+  const savedSide = GAME.cardSide || STATE.userSide || 'Bernardo';
+  openModal(`
+    <h3>🪪 Carteirinha de Pirata</h3>
+    <p style="font-size:0.85rem;text-align:center;font-style:italic;margin-bottom:0.75rem">
+      Crie seu cartaz WANTED oficial pra entrar na tripulação do casal.
+    </p>
+    <div class="field"><label>Seu nome de pirata</label>
+      <input type="text" id="card-name-input" value="${savedName.replace(/"/g, '&quot;')}" placeholder="Ex: Bê Manoel" maxlength="22">
+    </div>
+    <div class="field"><label>Tripulação</label>
+      <div class="radios">
+        <label class="radio-opt"><input type="radio" name="card-side" value="Bernardo" ${savedSide === 'Bernardo' ? 'checked' : ''}> 🏴‍☠️ Bernardo</label>
+        <label class="radio-opt"><input type="radio" name="card-side" value="Clara"    ${savedSide === 'Clara' ? 'checked' : ''}> 🌸 Clara</label>
+      </div>
+    </div>
+    <button class="link-btn" id="card-generate">Gerar carteirinha →</button>
+    <div id="card-preview" class="card-preview"></div>
+  `);
+
+  document.getElementById('card-generate').addEventListener('click', () => {
+    const name = document.getElementById('card-name-input').value.trim() || 'Pirata Anônimo';
+    const side = document.querySelector('input[name="card-side"]:checked')?.value || 'Bernardo';
+    GAME.cardName = name;
+    GAME.cardSide = side;
+    saveGame();
+    renderCard(name, side);
+    unlockAchievement('identificado');
+  });
+
+  if (savedName) renderCard(savedName, savedSide);
+}
+
+function renderCard(name, side) {
+  const reward = Math.floor(50 + Math.random() * 950); // milhões de berries
+  const bountyText = `B$ ${reward.toLocaleString('pt-BR')}.000.000`;
+  const isClara = side === 'Clara';
+  const preview = document.getElementById('card-preview');
+  if (!preview) return;
+  preview.innerHTML = `
+    <div class="wanted-card ${isClara ? 'wanted-clara' : ''}" id="wanted-card-render">
+      <div class="wanted-title">WANTED</div>
+      <div class="wanted-photo">${isClara ? '🌸' : '🏴‍☠️'}</div>
+      <div class="wanted-name">${name.toUpperCase()}</div>
+      <div class="wanted-subtitle">DEAD OR ALIVE</div>
+      <div class="wanted-bounty">${bountyText}</div>
+      <div class="wanted-crew">— Tripulação ${isClara ? 'da Clara 🌸' : 'do Bê 🏴‍☠️'} —</div>
+      <div class="wanted-stamp">${isClara ? '✨' : '☠️'}</div>
+    </div>
+    <button class="link-btn" id="card-download" style="margin-top:0.75rem">📥 Baixar imagem</button>
+  `;
+  document.getElementById('card-download').addEventListener('click', downloadCard);
+}
+
+function downloadCard() {
+  const node = document.getElementById('wanted-card-render');
+  if (!node) return;
+  // Renderização básica via canvas a partir da string SVG
+  const w = node.offsetWidth, h = node.offsetHeight;
+  const data = `<svg xmlns="http://www.w3.org/2000/svg" width="${w*2}" height="${h*2}" viewBox="0 0 ${w} ${h}">
+    <foreignObject width="100%" height="100%">
+      <div xmlns="http://www.w3.org/1999/xhtml">${new XMLSerializer().serializeToString(node)}</div>
+    </foreignObject></svg>`;
+  const blob = new Blob([data], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `wanted-${(GAME.cardName||'pirata').replace(/\s+/g,'-').toLowerCase()}.svg`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('🪪 Carteirinha baixada!', 'egg-found');
+}
+
+/* placeholders ainda — implementados nas Waves 4 e 6 */
+function openTimelineModal() {
+  openModal(`<h3>📜 Timeline da História</h3>
+    <p>Em construção (Wave 4 — narrativa profunda chegando logo).</p>`);
+}
+function openBrasilMapModal(){ openModal(`<h3>🇧🇷 Mapa Real do Brasil</h3><p>Em construção (Wave 6).</p>`); }
+function openDiaryModal()    { openModal(`<h3>📖 Diário de Bordo</h3><p>Em construção (Wave 6).</p>`); }
 function openHelpModal() {
   openModal(`
     <h3>🏴‍☠️ Como jogar</h3>

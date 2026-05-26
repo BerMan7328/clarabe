@@ -1749,3 +1749,246 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   .achievement-toast { width: 260px; right: -280px; }
   .achievement-toast.show { right: 0.5rem; }
 }
+
+/* ════════════════════════════════════════════════════════════
+   WAVE 3 — QUIZ
+════════════════════════════════════════════════════════════ */
+.quiz-progress {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.78rem;
+  color: var(--op-oceano-esc);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--op-borda);
+}
+.quiz-question {
+  font-family: 'Lora', serif;
+  font-size: 1.05rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.75rem 0;
+  color: var(--op-texto);
+  line-height: 1.4;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.quiz-option {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  text-align: left;
+  padding: 0.65rem 0.9rem;
+  border: 2px solid var(--op-borda);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.5);
+  color: var(--op-texto);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-option:hover:not(:disabled) {
+  background: var(--op-amarelo);
+  transform: translateX(4px);
+}
+.quiz-option:disabled { cursor: default; }
+.quiz-option.correct {
+  background: rgba(40,160,80,0.3);
+  border-color: #2d8a5a;
+  color: #1a4a2a;
+  font-weight: bold;
+}
+.quiz-option.wrong {
+  background: rgba(192,57,43,0.3);
+  border-color: var(--op-vermelho);
+  color: #6b1d10;
+  font-weight: bold;
+}
+.quiz-explanation {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(245,197,24,0.15);
+  border-left: 4px solid var(--op-amarelo);
+  border-radius: 4px;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--op-texto);
+  line-height: 1.5;
+}
+.quiz-next {
+  display: block;
+  margin: 0.75rem 0 0 auto;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.85rem;
+  background: var(--op-oceano);
+  color: white;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  transition: var(--transition);
+}
+.quiz-next:hover { background: var(--op-oceano-esc); }
+.quiz-result {
+  text-align: center;
+  padding: 1rem;
+}
+.quiz-score {
+  font-family: 'Bangers', cursive;
+  font-size: 4rem;
+  color: var(--op-vermelho);
+  line-height: 1;
+}
+.quiz-score span {
+  font-size: 2rem;
+  opacity: 0.6;
+}
+.quiz-pct {
+  font-family: 'Special Elite', monospace;
+  font-size: 1.4rem;
+  color: var(--op-amarelo);
+  text-shadow: 1px 1px 0 var(--op-oceano-esc);
+  margin-top: 0.4rem;
+}
+
+/* ════════════════════════════════════════════════════════════
+   WAVE 3 — MEMORY GAME
+════════════════════════════════════════════════════════════ */
+.memory-status {
+  font-family: 'Special Elite', monospace;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+  color: var(--op-oceano-esc);
+}
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.memory-card {
+  aspect-ratio: 1;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+  perspective: 600px;
+  transition: transform 0.15s;
+}
+.memory-card:hover { transform: scale(1.05); }
+.memory-front, .memory-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  backface-visibility: hidden;
+  transition: transform 0.45s;
+  border: 2px solid var(--op-borda);
+}
+.memory-front {
+  background: linear-gradient(135deg, #1a6b8a, #0d3d52);
+  color: var(--op-amarelo);
+  font-family: 'Bangers', cursive;
+  font-size: 2.2rem;
+}
+.memory-back {
+  background: linear-gradient(135deg, var(--op-pergaminho), var(--op-pergaminho2));
+  transform: rotateY(180deg);
+}
+.memory-card.flipped .memory-front { transform: rotateY(180deg); }
+.memory-card.flipped .memory-back  { transform: rotateY(0); }
+
+/* ════════════════════════════════════════════════════════════
+   WAVE 3 — CARTEIRINHA WANTED
+════════════════════════════════════════════════════════════ */
+.card-preview {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wanted-card {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3/4;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(139,94,42,0.2), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(139,94,42,0.18), transparent 50%),
+    linear-gradient(135deg, #f4e4c1, #e8d4a8 60%, #d4b896);
+  border: 6px double #3d1f08;
+  border-radius: 4px;
+  padding: 1rem 0.75rem;
+  text-align: center;
+  font-family: 'Special Elite', monospace;
+  color: #3d1f08;
+  position: relative;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+}
+.wanted-clara {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,158,196,0.25), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(255,215,0,0.22), transparent 50%),
+    linear-gradient(135deg, #fff5e6, #ffe0f0 60%, #ffd0e0);
+  border-color: #6b2848;
+  color: #4a2040;
+}
+.wanted-title {
+  font-family: 'Bangers', cursive;
+  font-size: 2.4rem;
+  letter-spacing: 0.15em;
+  border-top:    3px solid currentColor;
+  border-bottom: 3px solid currentColor;
+  padding: 0.2rem 0;
+  margin-bottom: 0.5rem;
+}
+.wanted-photo {
+  font-size: 4rem;
+  background: rgba(255,255,255,0.4);
+  border: 3px solid currentColor;
+  padding: 0.5rem 0;
+  margin: 0.5rem 1.5rem;
+}
+.wanted-name {
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  margin: 0.5rem 0 0.2rem;
+  letter-spacing: 0.05em;
+  word-break: break-word;
+}
+.wanted-subtitle {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.4rem;
+}
+.wanted-bounty {
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  color: #6b1d10;
+  border-top:    2px dashed currentColor;
+  border-bottom: 2px dashed currentColor;
+  padding: 0.2rem 0;
+  margin: 0.4rem 0;
+}
+.wanted-clara .wanted-bounty { color: #b03070; }
+.wanted-crew {
+  font-style: italic;
+  font-size: 0.78rem;
+  margin-top: 0.3rem;
+}
+.wanted-stamp {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 1.8rem;
+  opacity: 0.55;
+  transform: rotate(-12deg);
+}
+
+@media (max-width: 768px) {
+  .memory-grid { grid-template-columns: repeat(4, 1fr); }
+  .memory-front, .memory-back { font-size: 1.4rem; }
+  .quiz-question { font-size: 0.95rem; }
+}

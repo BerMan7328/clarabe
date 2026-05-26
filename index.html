@@ -57,9 +57,29 @@
       <span id="current-island-name" class="island-current">Grand Line</span>
     </div>
   </div>
-  <div class="hud-eggs">
-    🏴‍☠️✨ <span id="egg-count">0</span>/20 encontrados
+  <div class="hud-middle">
+    <div class="hud-eggs" id="hud-treasure-wrap" title="Easter eggs encontrados">
+      🏴‍☠️ <span id="hud-treasure">0/20</span>
+    </div>
+    <div class="hud-berries" id="hud-berries-wrap" title="Berries acumulados">
+      🟠 <span id="hud-berries">0</span>
+    </div>
   </div>
+  <!-- Original egg-count hidden (mantido para compat) -->
+  <span id="egg-count" style="display:none">0</span>
+</div>
+
+<!-- Toolbar lateral de ferramentas -->
+<div id="toolbar" class="toolbar hidden">
+  <button class="tool-btn" data-tool="achievements" title="Conquistas">🏆</button>
+  <button class="tool-btn" data-tool="stats"        title="Estatísticas">📊</button>
+  <button class="tool-btn" data-tool="timeline"     title="Timeline">📜</button>
+  <button class="tool-btn" data-tool="quiz"         title="Quiz do Casal">💕</button>
+  <button class="tool-btn" data-tool="memory"       title="Memory Game">🧠</button>
+  <button class="tool-btn" data-tool="map"          title="Mapa do Brasil">🇧🇷</button>
+  <button class="tool-btn" data-tool="diary"        title="Diário de Bordo">📖</button>
+  <button class="tool-btn" data-tool="card"         title="Carteirinha de Pirata">🪪</button>
+  <button class="tool-btn" data-tool="help"         title="Como jogar">❓</button>
 </div>
 
 <!-- ══════════════════════════════════════════════════

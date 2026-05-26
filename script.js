@@ -10,6 +10,184 @@ const STATE = {
 };
 
 /* ══════════════════════════════════════════════════════
+   GAME — Caça ao Tesouro (estado expandido)
+══════════════════════════════════════════════════════ */
+const GAME = {
+  berries: 0,
+  achievements: new Set(),
+  quizScore: null,           // null = não fez, número = % acerto
+  memoryBestMoves: null,     // menor número de jogadas
+  treasureUnlocked: false,
+  hatClicks: 0,              // contador para o 21º egg
+  hintRevealed: false,       // dica do 21º após pegar os 20
+  diaryText: '',
+  cardName: '',
+  cardSide: null,
+  visitedIslands: new Set([1]),
+  loreSeen: new Set(),       // peças de lore vistas
+};
+
+function saveGame() {
+  const data = {
+    berries: GAME.berries,
+    achievements: [...GAME.achievements],
+    quizScore: GAME.quizScore,
+    memoryBestMoves: GAME.memoryBestMoves,
+    treasureUnlocked: GAME.treasureUnlocked,
+    hatClicks: GAME.hatClicks,
+    hintRevealed: GAME.hintRevealed,
+    diaryText: GAME.diaryText,
+    cardName: GAME.cardName,
+    cardSide: GAME.cardSide,
+    visitedIslands: [...GAME.visitedIslands],
+    loreSeen: [...GAME.loreSeen],
+  };
+  localStorage.setItem('gameState', JSON.stringify(data));
+}
+
+function loadGame() {
+  try {
+    const raw = localStorage.getItem('gameState');
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    GAME.berries          = d.berries || 0;
+    GAME.achievements     = new Set(d.achievements || []);
+    GAME.quizScore        = (typeof d.quizScore === 'number') ? d.quizScore : null;
+    GAME.memoryBestMoves  = (typeof d.memoryBestMoves === 'number') ? d.memoryBestMoves : null;
+    GAME.treasureUnlocked = !!d.treasureUnlocked;
+    GAME.hatClicks        = d.hatClicks || 0;
+    GAME.hintRevealed     = !!d.hintRevealed;
+    GAME.diaryText        = d.diaryText || '';
+    GAME.cardName         = d.cardName || '';
+    GAME.cardSide         = d.cardSide || null;
+    GAME.visitedIslands   = new Set(d.visitedIslands || [1]);
+    GAME.loreSeen         = new Set(d.loreSeen || []);
+  } catch(e) { console.warn('loadGame error', e); }
+}
+
+const ACHIEVEMENTS = {
+  'first-egg':      { name: 'Aprendiz de Pirata',          desc: 'Encontrou seu primeiro easter egg',  icon: '🏴‍☠️', berries: 100  },
+  'five-eggs':      { name: 'Explorador',                   desc: '5 easter eggs encontrados',          icon: '🗺️',  berries: 250  },
+  'ten-eggs':       { name: 'Caçador de Tesouros',          desc: '10 easter eggs encontrados',         icon: '⚓',   berries: 500  },
+  'fifteen-eggs':   { name: 'Veterano dos Sete Mares',      desc: '15 easter eggs encontrados',         icon: '🦜',   berries: 750  },
+  'twenty-eggs':    { name: 'Quase Lá...',                  desc: 'Todos os 20 easter eggs visíveis',   icon: '👑',   berries: 1500 },
+  'one-piece':      { name: 'O One Piece é Real',           desc: 'Encontrou o 21º egg secreto',        icon: '🏆',   berries: 5000 },
+  'all-islands':    { name: 'Mestre Navegador',             desc: 'Visitou todas as ilhas',             icon: '🧭',   berries: 500  },
+  'quiz-done':      { name: 'Conhecedor do Casal',          desc: 'Completou o Quiz do Casal',          icon: '💕',   berries: 400  },
+  'quiz-perfect':   { name: 'Íntimo do Casal',              desc: 'Acertou 100% do quiz',               icon: '💎',   berries: 1000 },
+  'memory-done':    { name: 'Boa Memória',                  desc: 'Completou o Memory Game',            icon: '🧠',   berries: 400  },
+  'memory-perfect': { name: 'Memória de Elefante',          desc: 'Memory game em ≤16 jogadas',         icon: '🐘',   berries: 800  },
+  'cupido':         { name: 'Cupido',                       desc: '50+ curtidas no Instagram da ilha',  icon: '💘',   berries: 300  },
+  'diarista':       { name: 'Cronista de Bordo',            desc: 'Deixou mensagem no diário',          icon: '📖',   berries: 200  },
+  'identificado':   { name: 'Pirata Identificado',          desc: 'Criou sua carteirinha de pirata',    icon: '🪪',   berries: 300  },
+  'timeline-seen':  { name: 'Historiador',                  desc: 'Leu a timeline completa',            icon: '📜',   berries: 250  },
+  'map-seen':       { name: 'Cartógrafo',                   desc: 'Abriu o mapa real do Brasil',        icon: '🇧🇷',  berries: 200  },
+};
+
+function unlockAchievement(id) {
+  if (GAME.achievements.has(id)) return;
+  const a = ACHIEVEMENTS[id];
+  if (!a) return;
+  GAME.achievements.add(id);
+  GAME.berries += a.berries;
+  saveGame();
+  updateHUD();
+  showAchievementToast(a);
+}
+
+function showAchievementToast(a) {
+  const el = document.createElement('div');
+  el.className = 'achievement-toast';
+  el.innerHTML = `
+    <div class="ach-icon">${a.icon}</div>
+    <div class="ach-text">
+      <div class="ach-label">🏆 Conquista desbloqueada!</div>
+      <div class="ach-name">${a.name}</div>
+      <div class="ach-desc">${a.desc}</div>
+      <div class="ach-reward">+${a.berries} Berries</div>
+    </div>`;
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add('show'), 50);
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => el.remove(), 500);
+  }, 4500);
+}
+
+function addBerries(amount, reason) {
+  GAME.berries += amount;
+  saveGame();
+  updateHUD();
+  if (amount > 0 && reason) {
+    showFloatingBerries(amount);
+  }
+}
+
+function showFloatingBerries(amount) {
+  const el = document.createElement('div');
+  el.className = 'floating-berries';
+  el.textContent = `+${amount} 🟠`;
+  // Posiciona perto do contador de berries no HUD
+  const berriesEl = document.getElementById('hud-berries-wrap');
+  if (berriesEl) {
+    const rect = berriesEl.getBoundingClientRect();
+    el.style.left = `${rect.left + rect.width/2}px`;
+    el.style.top  = `${rect.bottom + 4}px`;
+  } else {
+    el.style.left = '50%';
+    el.style.top  = '60px';
+  }
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1400);
+}
+
+function countableEggs() {
+  return [...STATE.foundEggs].filter(id => {
+    const e = EGG_DATA[id];
+    return e && !e.secret && e.type !== 'bonus';
+  }).length;
+}
+
+function checkProgressAchievements() {
+  const count = countableEggs();
+  if (count >= 1)  unlockAchievement('first-egg');
+  if (count >= 5)  unlockAchievement('five-eggs');
+  if (count >= 10) unlockAchievement('ten-eggs');
+  if (count >= 15) unlockAchievement('fifteen-eggs');
+  if (count >= 20) {
+    unlockAchievement('twenty-eggs');
+    if (!GAME.hintRevealed) {
+      GAME.hintRevealed = true;
+      saveGame();
+      setTimeout(showHintModal, 1500);
+    }
+  }
+  if (STATE.foundEggs.has('21')) {
+    unlockAchievement('one-piece');
+    if (!GAME.treasureUnlocked) {
+      GAME.treasureUnlocked = true;
+      saveGame();
+      setTimeout(showTreasureFinal, 1800);
+    }
+  }
+  if (GAME.visitedIslands.size >= 11) unlockAchievement('all-islands');
+}
+
+function updateHUD() {
+  // Berries
+  const berriesEl = document.getElementById('hud-berries');
+  if (berriesEl) berriesEl.textContent = GAME.berries.toLocaleString('pt-BR');
+  // Tesouro X/Y
+  const tEl = document.getElementById('hud-treasure');
+  if (tEl) {
+    const c = countableEggs();
+    const total = GAME.hintRevealed ? 21 : 20;
+    const has21 = STATE.foundEggs.has('21') ? 1 : 0;
+    tEl.textContent = `${c + has21}/${total}`;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
    DADOS DOS EASTER EGGS
 ══════════════════════════════════════════════════════ */
 const EGG_DATA = {
@@ -384,12 +562,17 @@ function showEgg(id, skipCount = false) {
     STATE.foundEggs.add(id);
     saveEggs();
     updateEggCounter();
+    updateHUD();
     const eggEl = document.getElementById('egg-' + id);
     if (eggEl) eggEl.classList.add('found');
     const rect = eggEl ? eggEl.getBoundingClientRect() : { left: window.innerWidth/2, top: window.innerHeight/2 };
     spawnConfetti(rect.left + rect.width/2, rect.top);
     const toastType = data.type === 'dr30' ? 'dr30-found' : 'egg-found';
     showToast(`✨ Easter egg encontrado: ${data.title}!`, toastType);
+    // Berries + achievements
+    const reward = data.secret ? 1000 : (data.type === 'bonus' ? 50 : 100);
+    addBerries(reward, 'egg');
+    checkProgressAchievements();
   }
 
   openModal(data.html, data.type === 'dr30');
@@ -597,8 +780,13 @@ function getIslandElements() {
 function navigateToIsland(index, smooth = true) {
   const islands = getIslandElements();
   if (index < 1 || index > islands.length) return;
+  const wasNew = !GAME.visitedIslands.has(index);
   STATE.currentIsland = index;
+  GAME.visitedIslands.add(index);
+  if (wasNew && index !== 1) addBerries(50, 'island-visit');
+  saveGame();
   updateProgressDots(index);
+  checkProgressAchievements();
 
   const targetIsland = islands[index - 1];
   const map = document.getElementById('map');
@@ -848,6 +1036,7 @@ function initIntro() {
     setTimeout(() => {
       intro.classList.add('hidden');
       document.getElementById('hud').classList.remove('hidden');
+      document.getElementById('toolbar').classList.remove('hidden');
       document.getElementById('map-wrapper').classList.remove('hidden');
       document.body.style.overflow = 'hidden';
       setTimeout(() => {
@@ -865,16 +1054,220 @@ function restoreFoundEggs() {
     if (el) el.classList.add('found');
   });
   updateEggCounter();
+  updateHUD();
+  checkProgressAchievements();
+}
+
+/* ══════════════════════════════════════════════════════
+   TOOLBAR — Menu de ferramentas (Timeline, Quiz, Memory, etc)
+══════════════════════════════════════════════════════ */
+function initToolbar() {
+  document.querySelectorAll('[data-tool]').forEach(btn => {
+    btn.addEventListener('click', () => openTool(btn.dataset.tool));
+  });
+}
+
+function openTool(tool) {
+  switch(tool) {
+    case 'achievements': openAchievementsModal(); break;
+    case 'stats':        openStatsModal();        break;
+    case 'timeline':     openTimelineModal();     break;
+    case 'quiz':         openQuizModal();         break;
+    case 'memory':       openMemoryModal();       break;
+    case 'map':          openBrasilMapModal();    break;
+    case 'diary':        openDiaryModal();        break;
+    case 'card':         openCardModal();         break;
+    case 'help':         openHelpModal();         break;
+  }
+}
+
+/* Conquistas — listagem */
+function openAchievementsModal() {
+  const total = Object.keys(ACHIEVEMENTS).length;
+  const got   = GAME.achievements.size;
+  const items = Object.entries(ACHIEVEMENTS).map(([id, a]) => {
+    const has = GAME.achievements.has(id);
+    return `<div class="ach-item ${has ? 'unlocked' : 'locked'}">
+      <div class="ach-item-icon">${has ? a.icon : '🔒'}</div>
+      <div class="ach-item-body">
+        <div class="ach-item-name">${has ? a.name : '???'}</div>
+        <div class="ach-item-desc">${a.desc}</div>
+      </div>
+      <div class="ach-item-reward">+${a.berries}</div>
+    </div>`;
+  }).join('');
+  openModal(`
+    <h3>🏆 Conquistas</h3>
+    <div class="ach-progress-bar">
+      <div class="ach-progress-fill" style="width:${(got/total)*100}%"></div>
+    </div>
+    <p style="text-align:center;font-family:'Special Elite',monospace;font-size:0.85rem;margin-bottom:0.5rem">
+      ${got} / ${total} desbloqueadas • <strong>${GAME.berries.toLocaleString('pt-BR')} 🟠 Berries</strong>
+    </p>
+    <div class="ach-list">${items}</div>
+  `);
+}
+
+/* Estatísticas do casal */
+function openStatsModal() {
+  const visits = GAME.visitedIslands.size;
+  const eggs   = countableEggs();
+  const total21 = STATE.foundEggs.has('21') ? 1 : 0;
+  const ach    = GAME.achievements.size;
+  const totalAch = Object.keys(ACHIEVEMENTS).length;
+  // Stats reais do casal (estimadas pelo contexto)
+  openModal(`
+    <h3>📊 Estatísticas</h3>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">9</div>
+        <div class="stat-label">lugares visitados juntos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">aniversários ao lado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">cachorro duplo merle</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">reels de The Office</div>
+      </div>
+    </div>
+    <h4 style="margin-top:1rem;font-family:'Bangers',cursive;color:var(--op-oceano-esc)">🏴‍☠️ Sua jornada</h4>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">${eggs + total21}/21</div>
+        <div class="stat-label">easter eggs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${visits}/11</div>
+        <div class="stat-label">ilhas exploradas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${ach}/${totalAch}</div>
+        <div class="stat-label">conquistas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${GAME.berries.toLocaleString('pt-BR')}</div>
+        <div class="stat-label">berries 🟠</div>
+      </div>
+    </div>
+  `);
+}
+
+/* Placeholders — implementados nas próximas waves */
+function openTimelineModal() { openModal(`<h3>📜 Timeline</h3><p>Em construção (Wave 4)</p>`); }
+function openQuizModal()     { openModal(`<h3>💕 Quiz do Casal</h3><p>Em construção (Wave 3)</p>`); }
+function openMemoryModal()   { openModal(`<h3>🧠 Memory Game</h3><p>Em construção (Wave 3)</p>`); }
+function openBrasilMapModal(){ openModal(`<h3>🇧🇷 Mapa Real</h3><p>Em construção (Wave 6)</p>`); }
+function openDiaryModal()    { openModal(`<h3>📖 Diário de Bordo</h3><p>Em construção (Wave 6)</p>`); }
+function openCardModal()     { openModal(`<h3>🪪 Carteirinha de Pirata</h3><p>Em construção (Wave 3)</p>`); }
+function openHelpModal() {
+  openModal(`
+    <h3>🏴‍☠️ Como jogar</h3>
+    <p style="font-family:'Lora',serif;line-height:1.7">
+      Este é o convite-jornada do <strong>Bê &amp; Clara</strong>. Mas também é uma caça ao tesouro.<br><br>
+      🗺️ Existem <strong>20 easter eggs</strong> espalhados pelas ilhas e oceanos.<br>
+      🏆 Quando encontrar todos os 20, uma pista vai revelar onde está o <strong>21º</strong>.<br>
+      💰 Cada descoberta soma <strong>Berries</strong> à sua conta de pirata.<br>
+      🎮 Jogue o <strong>Quiz</strong> e o <strong>Memory</strong> para ganhar mais berries e conquistas.<br>
+      📖 Deixe uma mensagem no <strong>Diário de Bordo</strong>.<br>
+      🪪 Crie sua <strong>Carteirinha de Pirata</strong> oficial.<br><br>
+      <strong>Quem encontrar o 21º easter egg ganha o tesouro do One Piece. 👑</strong>
+    </p>
+  `);
+}
+
+function showHintModal() {
+  openModal(`
+    <h3>🗝️ Uma pista do tesouro...</h3>
+    <p style="font-family:'Special Elite',monospace;font-size:1.05rem;text-align:center;padding:1rem;background:rgba(245,197,24,0.15);border-radius:8px;line-height:1.7">
+      "Você encontrou os <strong>20</strong>. Mas o tesouro real ainda dorme.<br><br>
+      <em>Volte ao princípio.<br>
+      O chapéu que te levou ao mar guarda um segredo.<br>
+      Clique nele cinco vezes — e o mundo novo se abrirá."</em>
+    </p>
+    <p style="text-align:center;margin-top:0.75rem;font-size:0.85rem;opacity:0.7">— Carta da Marinha, encontrada à deriva</p>
+  `);
+}
+
+function showTreasureFinal() {
+  openModal(`
+    <h3>🏆 VOCÊ ENCONTROU O ONE PIECE!</h3>
+    <div style="text-align:center;font-size:3rem;margin:1rem 0">🏴‍☠️ 👑 🏴‍☠️</div>
+    <p style="font-family:'Bangers',cursive;font-size:1.4rem;text-align:center;letter-spacing:0.04em;color:var(--op-vermelho)">
+      "É o tesouro deles. Agora é seu também."
+    </p>
+    <p style="font-family:'Lora',serif;font-style:italic;text-align:center;margin-top:0.75rem;line-height:1.7">
+      Você completou a jornada. Encontrou todos os 21 easter eggs.<br>
+      Bê &amp; Clara guardaram um presente especial pra quem chegou até aqui.
+    </p>
+    <div style="background:linear-gradient(135deg,#f5c518,#c0392b);padding:1.5rem;border-radius:10px;margin-top:1rem;text-align:center;border:3px solid #4a2a00">
+      <div style="font-size:2.5rem">🎁</div>
+      <p style="font-family:'Special Elite',monospace;color:#fff;font-size:0.95rem;margin-top:0.5rem">
+        TESOURO A SER REVELADO<br>
+        <small>(em construção — surpresa do casal)</small>
+      </p>
+    </div>
+    <p style="text-align:center;margin-top:1rem;font-size:0.9rem">
+      🏆 Conquista desbloqueada: <strong>O One Piece é Real</strong><br>
+      💰 +5000 Berries
+    </p>
+  `);
 }
 
 /* ══════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  loadGame();
   initIntro();
   initEasterEggs();
   initIslandInteractions();
   initNavigation();
   initProgressDots();
   initRSVP();
+  initToolbar();
+  initHatClicks();
+  updateHUD();
 });
+
+/* Chapéu de palha — 21º easter egg secreto (5 cliques) */
+function initHatClicks() {
+  const hat = document.querySelector('.intro-screen .straw-hat');
+  if (!hat) return;
+  hat.style.cursor = 'pointer';
+  hat.addEventListener('click', e => {
+    e.stopPropagation();
+    GAME.hatClicks++;
+    saveGame();
+    hat.style.transform = 'scale(1.3) rotate(' + (GAME.hatClicks * 15) + 'deg)';
+    setTimeout(() => { hat.style.transform = ''; }, 300);
+    if (GAME.hatClicks >= 5 && !STATE.foundEggs.has('21')) {
+      // Só permite achar o 21º se já tem os 20 + dica revelada
+      if (GAME.hintRevealed) {
+        EGG_DATA['21'] = {
+          type: 'op', secret: true, title: 'O Tesouro Final',
+          html: `<h3>👑 ENCONTROU!</h3>
+            <p style="text-align:center;font-size:1.1rem;font-family:'Bangers',cursive;color:var(--op-vermelho);letter-spacing:0.04em">
+              O chapéu de palha era a chave.
+            </p>
+            <p style="text-align:center;font-style:italic;margin-top:0.5rem">
+              "Você completou o impossível, navegante. Agora vê o que ninguém mais viu..."
+            </p>`,
+        };
+        STATE.foundEggs.add('21');
+        saveEggs();
+        showEgg('21');
+      } else {
+        // Pisca dica mas não conta
+        showToast('🏴‍☠️ O chapéu fez algo... mas talvez você precise descobrir mais antes.', 'egg-found');
+      }
+      GAME.hatClicks = 0;
+      saveGame();
+    }
+  });
+}

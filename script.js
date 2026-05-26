@@ -797,12 +797,17 @@ function navigateToIsland(index, smooth = true) {
   const islands = getIslandElements();
   if (index < 1 || index > islands.length) return;
   const wasNew = !GAME.visitedIslands.has(index);
+  const previousIsland = STATE.currentIsland;
   STATE.currentIsland = index;
   GAME.visitedIslands.add(index);
   if (wasNew && index !== 1) addBerries(50, 'island-visit');
   saveGame();
   updateProgressDots(index);
   checkProgressAchievements();
+  // Animação do barco navegando
+  if (smooth && previousIsland !== index) {
+    animateBoatTransition(previousIsland > index ? 'left' : 'right');
+  }
 
   const targetIsland = islands[index - 1];
   const map = document.getElementById('map');
@@ -1890,8 +1895,65 @@ document.addEventListener('DOMContentLoaded', () => {
   initToolbar();
   initHatClicks();
   injectIslandDates();
+  injectNpcDialogs();
+  startSeagulls();
   updateHUD();
 });
+
+/* NPCs extras com diálogos hover/click */
+const NPC_DIALOGS = {
+  'char-bernardo': [
+    "Eu olhei. Não consegui parar. Foi a vida toda em um segundo.",
+    "Aquela festa... eu sabia que ia rolar. Não sabia que ia ser assim.",
+    "Mandar reels de The Office foi a melhor decisão da minha vida (mesmo que eu nem goste).",
+    "Conselheiro Mata foi o lugar mais errado pra acertar tudo.",
+  ],
+  'char-clara': [
+    "Eu pensei: quem é esse menino? E pensei isso de novo. E de novo.",
+    "O regulamento? Era meu. Eu não segui o meu próprio regulamento.",
+    "Mais um reel? OK. Vou só responder rapidinho. Faz 8 horas que estamos conversando.",
+    "Carrapatos. Tem coisas que a gente faz por amor.",
+  ],
+  'item-luffy-dog': [
+    "Au au! (Tradução: eu sou duplo merle, não albino)",
+    "Au! (Eu também moro aqui)",
+    "Auuuu... (Vocês são insuportáveis, mas eu amo)",
+  ],
+};
+
+function injectNpcDialogs() {
+  Object.entries(NPC_DIALOGS).forEach(([id, lines]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let clickCount = 0;
+    const originalAction = el.dataset.action;
+    el.addEventListener('click', () => {
+      clickCount++;
+      // No 2º clique e seguintes, mostra um diálogo rotativo
+      if (clickCount >= 2) {
+        const line = lines[(clickCount - 2) % lines.length];
+        showNpcBubble(el, line);
+      }
+    });
+  });
+}
+
+function showNpcBubble(target, text) {
+  const existing = document.querySelector('.npc-bubble');
+  if (existing) existing.remove();
+  const rect = target.getBoundingClientRect();
+  const bubble = document.createElement('div');
+  bubble.className = 'npc-bubble';
+  bubble.textContent = text;
+  bubble.style.left = (rect.left + rect.width/2) + 'px';
+  bubble.style.top = (rect.top - 12) + 'px';
+  document.body.appendChild(bubble);
+  setTimeout(() => bubble.classList.add('show'), 50);
+  setTimeout(() => {
+    bubble.classList.remove('show');
+    setTimeout(() => bubble.remove(), 400);
+  }, 3500);
+}
 
 /* ══════════════════════════════════════════════════════
    FITINHAS DE DATA / CAPÍTULO em cada ilha
@@ -1909,6 +1971,33 @@ const ISLAND_META = {
   10: { date: '📅 2023 · novo integrante',    chapter: 'principal', tag: 'Capítulo V — Luffy entra em cena' },
   11: { date: '📅 13/06/2026 · presente',     chapter: 'final',     tag: 'Capítulo Final — A Sessão da Tarde' },
 };
+
+/* Barco navegando na transição entre ilhas */
+function animateBoatTransition(direction = 'right') {
+  const boat = document.createElement('div');
+  boat.className = 'sailing-boat boat-' + direction;
+  boat.textContent = '⛵';
+  document.body.appendChild(boat);
+  setTimeout(() => boat.remove(), 1400);
+}
+
+/* Gaivotas aleatórias */
+function spawnSeagull() {
+  const seagull = document.createElement('div');
+  seagull.className = 'seagull';
+  seagull.textContent = Math.random() > 0.5 ? '🕊️' : '🦅';
+  seagull.style.top = (5 + Math.random() * 25) + '%';
+  seagull.style.animationDuration = (8 + Math.random() * 7) + 's';
+  document.body.appendChild(seagull);
+  setTimeout(() => seagull.remove(), 16000);
+}
+function startSeagulls() {
+  setInterval(() => {
+    if (!document.getElementById('map-wrapper').classList.contains('hidden') && Math.random() > 0.4) {
+      spawnSeagull();
+    }
+  }, 12000);
+}
 
 function injectIslandDates() {
   document.querySelectorAll('.island[data-index]').forEach(island => {

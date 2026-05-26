@@ -2536,3 +2536,86 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   20%  { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.3) translateY(-100px); }
 }
+
+/* ════════════════════════════════════════════════════════════
+   WAVE 5 — CURSOR PIRATA, BARCO, GAIVOTAS, NPCs
+════════════════════════════════════════════════════════════ */
+.map-wrapper, .map-wrapper * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><text y='24' font-size='22'>🧭</text></svg>") 15 15, default;
+}
+.map-wrapper button, .map-wrapper .clickable, .map-wrapper a, .map-wrapper .easter-egg {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='26' font-size='24'>🏴‍☠️</text></svg>") 16 16, pointer;
+}
+
+/* BARCO NAVEGANDO */
+.sailing-boat {
+  position: fixed;
+  top: 35%;
+  font-size: 3rem;
+  z-index: 60;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.4));
+}
+.boat-right { left: -80px; animation: boatSailRight 1.4s ease-in-out forwards; }
+.boat-left  { right: -80px; animation: boatSailLeft 1.4s ease-in-out forwards; }
+@keyframes boatSailRight {
+  0%   { left: -80px; transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-10px) rotate(-3deg); }
+  100% { left: calc(100% + 80px); transform: translateY(0) rotate(0deg); }
+}
+@keyframes boatSailLeft {
+  0%   { right: -80px; transform: translateY(0) rotate(0deg) scaleX(-1); }
+  50%  { transform: translateY(-10px) rotate(3deg) scaleX(-1); }
+  100% { right: calc(100% + 80px); transform: translateY(0) rotate(0deg) scaleX(-1); }
+}
+
+/* GAIVOTAS */
+.seagull {
+  position: fixed;
+  left: -60px;
+  font-size: 1.4rem;
+  z-index: 55;
+  pointer-events: none;
+  opacity: 0.65;
+  animation: seagullFly linear forwards;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+@keyframes seagullFly {
+  from { left: -60px;  transform: translateY(0) rotate(-5deg); }
+  50%  { transform: translateY(-15px) rotate(5deg); }
+  to   { left: calc(100% + 60px); transform: translateY(0) rotate(-5deg); }
+}
+
+/* NPC BUBBLE */
+.npc-bubble {
+  position: fixed;
+  z-index: 220;
+  transform: translate(-50%, -100%) scale(0.6);
+  background: var(--op-pergaminho);
+  border: 2px solid var(--op-borda);
+  border-radius: 14px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'Lora', serif;
+  font-size: 0.85rem;
+  color: var(--op-texto);
+  max-width: 260px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+}
+.npc-bubble.show {
+  opacity: 1;
+  transform: translate(-50%, -110%) scale(1);
+}
+.npc-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid var(--op-borda);
+}

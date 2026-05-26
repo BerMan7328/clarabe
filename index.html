@@ -13,43 +13,114 @@
 <body>
 
 <!-- ════════════════════════════════════════════════════════════
-     INTRO — Grand Line da Clara & Bê
+     INTRO — Banner WANTED (cartaz de procurados)
 ════════════════════════════════════════════════════════════ -->
 <div id="intro-screen" class="intro-screen">
 
-  <div class="intro-bg-split">
-    <div class="intro-side intro-side-op">
+  <!-- fundo ambiente -->
+  <div class="intro-ambient">
+    <div class="ambient-side ambient-op">
       <div class="op-paper-texture"></div>
       <svg class="intro-compass" viewBox="0 0 200 200" aria-hidden="true">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#f5c518" stroke-width="2" opacity="0.4"/>
-        <circle cx="100" cy="100" r="70" fill="none" stroke="#f5c518" stroke-width="1" opacity="0.3"/>
-        <polygon points="100,20 110,100 100,110 90,100" fill="#c0392b"/>
-        <polygon points="100,180 110,100 100,90 90,100" fill="#2c1810" opacity="0.6"/>
-        <text x="100" y="15" text-anchor="middle" font-family="Cinzel" font-size="14" fill="#f5c518">N</text>
-        <text x="100" y="195" text-anchor="middle" font-family="Cinzel" font-size="14" fill="#f5c518" opacity="0.5">S</text>
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#f5c518" stroke-width="2" opacity="0.35"/>
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#f5c518" stroke-width="1" opacity="0.25"/>
+        <polygon points="100,20 110,100 100,110 90,100" fill="#c0392b" opacity="0.7"/>
+        <polygon points="100,180 110,100 100,90 90,100" fill="#2c1810" opacity="0.5"/>
+      </svg>
+      <svg class="ambient-ship" viewBox="0 0 200 120" aria-hidden="true">
+        <path d="M20 80 L180 80 L160 110 L40 110 Z" fill="#2c1810"/>
+        <rect x="95" y="20" width="3" height="60" fill="#2c1810"/>
+        <path d="M98 22 L150 50 L98 50 Z" fill="#f4e4c1" stroke="#8b5e2a"/>
+        <path d="M98 22 L46 50 L98 50 Z" fill="#f4e4c1" stroke="#8b5e2a"/>
       </svg>
     </div>
-    <div class="intro-side intro-side-dr">
+    <div class="ambient-side ambient-dr">
       <div class="dr-paper-texture"></div>
       <div class="intro-glitter" id="intro-glitter"></div>
       <div class="intro-washi intro-washi-1"></div>
       <div class="intro-washi intro-washi-2"></div>
+      <svg class="ambient-stars" viewBox="0 0 60 60" aria-hidden="true">
+        <path d="M30 4 L36 22 L54 22 L40 33 L46 52 L30 41 L14 52 L20 33 L6 22 L24 22 Z" fill="#FFD700" opacity="0.5"/>
+      </svg>
     </div>
   </div>
 
-  <div class="intro-center">
-    <div class="cinema-strip top"></div>
-    <div class="intro-eyebrow">Sessão da Tarde apresenta</div>
-    <h1 class="intro-title" id="intro-title-text">Grand Line</h1>
-    <div class="intro-subtitle-decoration">
-      <span class="decoration-line"></span>
-      <span class="decoration-diamond"></span>
-      <span class="decoration-line"></span>
+  <!-- O BANNER WANTED PRINCIPAL -->
+  <div class="wanted-banner">
+    <div class="wanted-paper">
+      <!-- bordas rasgadas -->
+      <div class="wanted-tear wanted-tear-top"></div>
+      <div class="wanted-tear wanted-tear-bottom"></div>
+
+      <!-- topo -->
+      <div class="wanted-eyebrow">Sessão da Tarde apresenta</div>
+      <h1 class="wanted-title" id="intro-title-text">WANTED</h1>
+      <p class="wanted-subtitle">Dead or Alive · Procurados</p>
+
+      <!-- procurados -->
+      <div class="wanted-suspects">
+        <figure class="suspect suspect-bernardo">
+          <div class="suspect-frame">
+            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+          </div>
+          <figcaption class="suspect-name">Bernardo</figcaption>
+          <div class="suspect-bounty">
+            <span class="bounty-symbol">฿</span>
+            <span class="bounty-value">27.000.000</span>
+          </div>
+        </figure>
+
+        <div class="suspect-and">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#c0392b" stroke="#2c1810" stroke-width="1.5"/></svg>
+        </div>
+
+        <figure class="suspect suspect-clara">
+          <div class="suspect-frame">
+            <img src="assets/avatars/clara.jpeg" alt="Clara">
+          </div>
+          <figcaption class="suspect-name">Clara</figcaption>
+          <div class="suspect-bounty">
+            <span class="bounty-symbol">฿</span>
+            <span class="bounty-value">30.000.000</span>
+          </div>
+        </figure>
+      </div>
+
+      <!-- Informações do crime/evento -->
+      <div class="wanted-charges">
+        <div class="charge-row">
+          <span class="charge-label">Crime</span>
+          <span class="charge-value">Comemorar dois aniversários no mesmo dia</span>
+        </div>
+        <div class="charge-row">
+          <span class="charge-label">Data da execução</span>
+          <span class="charge-value">13 de junho · 2026 · sábado · 14h</span>
+        </div>
+        <div class="charge-row">
+          <span class="charge-label">Local</span>
+          <span class="charge-value">Recanto da Serra · Brumadinho/MG</span>
+        </div>
+      </div>
+
+      <!-- Selo -->
+      <div class="wanted-stamp wanted-stamp-marine">
+        <span class="stamp-line">★</span>
+        <span class="stamp-text">MARINE<br>OFICIAL</span>
+        <span class="stamp-line">★</span>
+      </div>
+
+      <!-- CTA -->
+      <div class="wanted-cta">
+        <button id="zarpar-btn" class="primary-btn intro-cta">Iniciar a jornada</button>
+        <p class="wanted-cta-sub">A história completa começa aqui</p>
+      </div>
     </div>
-    <p class="intro-tagline">da Clara &amp; Bê</p>
-    <p class="intro-description">Uma jornada por 14 ilhas até o aniversário deles.<br>Glitter, caos, romance e uma mulher que acordou de repente aos 30.</p>
-    <button id="zarpar-btn" class="primary-btn intro-cta">Iniciar a jornada</button>
-    <div class="cinema-strip bottom"></div>
+
+    <!-- Pregos nos cantos do cartaz -->
+    <span class="poster-nail nail-tl"></span>
+    <span class="poster-nail nail-tr"></span>
+    <span class="poster-nail nail-bl"></span>
+    <span class="poster-nail nail-br"></span>
   </div>
 
 </div>
@@ -63,10 +134,14 @@
     <header class="welcome-hero">
       <div class="welcome-eyebrow">Você acaba de embarcar</div>
       <h2 class="welcome-title">Bem-vindo, navegante.</h2>
-      <p class="welcome-sub">Antes da Grand Line começar, o essencial:</p>
+      <p class="welcome-sub">A jornada começa agora. Antes dela, o essencial:</p>
     </header>
 
+    <!-- Card pergaminho com info principal -->
     <article class="welcome-card welcome-event">
+      <span class="card-tape card-tape-tl"></span>
+      <span class="card-tape card-tape-tr"></span>
+
       <div class="welcome-card-header">
         <span class="welcome-card-eyebrow">o evento</span>
         <h3 class="welcome-card-title">Sessão da Tarde<br><em>Aniversário da Clara &amp; Bê</em></h3>
@@ -95,6 +170,13 @@
         </div>
       </div>
 
+      <div class="welcome-distance">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z" fill="#c0392b"/>
+        </svg>
+        <span>O local fica a apenas <strong>50 minutos</strong> do Centro de Belo Horizonte.</span>
+      </div>
+
       <div class="welcome-actions">
         <a class="link-btn" href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener">Abrir no Google Maps</a>
         <a class="link-btn" href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener">Grupo no WhatsApp</a>
@@ -102,7 +184,7 @@
     </article>
 
     <div class="welcome-cta">
-      <p class="welcome-hint">A história começa agora. <strong>A confirmação de presença</strong> está no fim da jornada.</p>
+      <p class="welcome-hint">A confirmação de presença está no <strong>fim da jornada</strong>, depois dos 14 capítulos.</p>
       <button id="welcome-embark" class="primary-btn welcome-embark-btn">Começar a história</button>
     </div>
 
@@ -295,25 +377,41 @@
         </header>
 
         <div class="island-scene scene-olhar">
-          <div class="avatar-slot avatar-bernardo avatar-lg" data-name="Bê" style="bottom: 12px; left: 8%;">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
-            <span class="avatar-label">Bê</span>
+          <!-- Bê apaixonado, todo inclinado, com corações ao redor -->
+          <div class="avatar-stage stage-left">
+            <div class="avatar-slot avatar-bernardo avatar-lg avatar-tilt-left" data-name="Bê">
+              <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+            </div>
+            <!-- emotes de apaixonado -->
+            <div class="emote emote-heart heart-1"></div>
+            <div class="emote emote-heart heart-2"></div>
+            <div class="emote emote-heart heart-3"></div>
+            <div class="emote emote-sparkles"></div>
+            <div class="avatar-label">Bê</div>
           </div>
-          <svg class="scene-gaze" viewBox="0 0 200 100" aria-hidden="true" style="position:absolute; top:30%; left:25%; width:50%; height:60px;">
-            <path d="M10 50 Q100 20 190 50" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4 5" fill="none"/>
-            <circle cx="100" cy="32" r="5" fill="#FF9EC4"/>
-            <circle cx="100" cy="32" r="11" fill="none" stroke="#FFD700" stroke-width="1.5"/>
+
+          <!-- linha de gaze + balão -->
+          <svg class="scene-gaze" viewBox="0 0 200 100" aria-hidden="true">
+            <path d="M10 50 Q100 10 190 50" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4 5" fill="none"/>
+            <g transform="translate(100,28)">
+              <path d="M0 6 L-2 2 L-6 0 L-2 -2 L0 -6 L2 -2 L6 0 L2 2 Z" fill="#FF9EC4" stroke="#c0392b" stroke-width="1"/>
+            </g>
           </svg>
-          <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara" style="bottom: 12px; right: 8%;">
-            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
-            <span class="avatar-label avatar-label-dr">Clara</span>
+
+          <!-- Clara confusa/desconfiada -->
+          <div class="avatar-stage stage-right">
+            <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara">
+              <img src="assets/avatars/clara.jpeg" alt="Clara">
+            </div>
+            <div class="emote emote-question">?</div>
+            <div class="avatar-label avatar-label-dr">Clara</div>
           </div>
+
           <div class="scene-thought">"quem é esse menino?"</div>
         </div>
 
         <div class="scrapbook-layer scrap-glitter" style="top: 18%; left: 12%;"></div>
         <div class="scrapbook-layer scrap-glitter" style="top: 24%; right: 18%;"></div>
-        <div class="scrapbook-layer scrap-glitter" style="bottom: 36%; left: 48%;"></div>
 
         <div class="island-narration">
           <p>"Tudo começou quando Bernardo, três anos mais novo, olhou para ela de um jeito tão fixo e nada discreto, que Clara só conseguiu pensar: <em>'quem é esse menino?'</em>"</p>
@@ -378,7 +476,7 @@
             <div class="doc-line short"></div>
             <div class="doc-signature">
               <em>Redigido por:</em>
-              <span class="signature-name">Clara Andrade</span>
+              <span class="signature-name">Maria Clara Gomes</span>
             </div>
             <div class="doc-stamp">PROIBIDO</div>
           </div>
@@ -403,8 +501,11 @@
         </header>
 
         <div class="island-scene scene-stories">
-          <div class="avatar-slot avatar-clara" style="top: 14px; left: 14%;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          <div class="avatar-stage" style="position:absolute; top: 8px; left: 8%;">
+            <div class="avatar-slot avatar-clara avatar-tilt-right" data-name="Clara">
+              <img src="assets/avatars/clara.jpeg" alt="Clara">
+            </div>
+            <div class="emote emote-heart heart-1" style="top:-8px; right:-12px;"></div>
           </div>
           <div class="scene-phone">
             <div class="phone-notch"></div>
@@ -415,8 +516,11 @@
               <div class="phone-heart"></div>
             </div>
           </div>
-          <div class="avatar-slot avatar-bernardo" style="bottom: 14px; right: 14%;" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+          <div class="avatar-stage" style="position:absolute; bottom: 8px; right: 8%;">
+            <div class="avatar-slot avatar-bernardo avatar-tilt-left" data-name="Bê">
+              <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+            </div>
+            <div class="emote emote-sweat" style="top:6px; right:-6px;"></div>
           </div>
         </div>
 
@@ -447,15 +551,22 @@
         </header>
 
         <div class="island-scene scene-convite">
-          <div class="avatar-slot avatar-bernardo" style="bottom: 14px; left: 18%;" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+          <div class="avatar-stage" style="position:absolute; bottom: 8px; left: 12%;">
+            <div class="avatar-slot avatar-bernardo" data-name="Bê">
+              <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+            </div>
+            <div class="emote emote-sweat" style="top:4px; right:-8px;"></div>
+            <div class="emote emote-thinking" style="top:-10px; left:50%;">!</div>
           </div>
           <div class="scene-envelope">
             <div class="envelope-flap"></div>
             <div class="envelope-seal"></div>
           </div>
-          <div class="avatar-slot avatar-clara" style="bottom: 14px; right: 18%;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara">
+          <div class="avatar-stage" style="position:absolute; bottom: 8px; right: 12%;">
+            <div class="avatar-slot avatar-clara" data-name="Clara">
+              <img src="assets/avatars/clara.jpeg" alt="Clara">
+            </div>
+            <div class="emote emote-heart heart-1" style="top:-10px; left:-12px;"></div>
           </div>
           <div class="scene-timer">
             <span class="timer-label">um mês depois...</span>
@@ -491,11 +602,16 @@
             <span class="star star-3"></span>
             <span class="star star-4"></span>
           </div>
-          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 30px; left: 22%;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
+          <div class="avatar-stage" style="position:absolute; bottom: 26px; left: 18%;">
+            <div class="avatar-slot avatar-clara avatar-sm avatar-tilt-right" data-name="Clara">
+              <img src="assets/avatars/clara.jpeg" alt="Clara">
+            </div>
+            <div class="emote emote-heart heart-1" style="top:-6px; right:-8px; width: 14px; height: 14px;"></div>
           </div>
-          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 30px; right: 22%;" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+          <div class="avatar-stage" style="position:absolute; bottom: 26px; right: 18%;">
+            <div class="avatar-slot avatar-bernardo avatar-sm avatar-tilt-left" data-name="Bê">
+              <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+            </div>
           </div>
           <div class="scene-ground"></div>
         </div>
@@ -828,7 +944,7 @@
           </form>
         </div>
 
-        <!-- Estado 2: confirmado -->
+        <!-- Estado 2: confirmado + bloco de links finais -->
         <div class="rsvp-confirmed hidden" id="rsvp-confirmed">
           <svg class="confirm-check" viewBox="0 0 60 60" aria-hidden="true">
             <circle cx="30" cy="30" r="27" fill="none" stroke="#f5c518" stroke-width="2"/>
@@ -839,10 +955,70 @@
           <p class="rsvp-confirmed-text">
             Te esperamos <strong>dia 13 de junho</strong><br>pra viver esse capítulo com a gente.
           </p>
-          <div class="rsvp-confirmed-actions">
-            <a class="link-btn" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG" target="_blank" rel="noopener">Adicionar ao Google Calendar</a>
-            <button class="link-btn" id="btn-ics-final">Baixar .ics (Apple/Outlook)</button>
-            <a class="link-btn" href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener">Entrar no grupo do WhatsApp</a>
+
+          <!-- Card WhatsApp em destaque -->
+          <a class="final-whatsapp-card" href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener">
+            <div class="whatsapp-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.7-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.1 3 .1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z" fill="#fff"/>
+                <path d="M12 2C6.5 2 2 6.5 2 12c0 1.7.4 3.4 1.3 4.9L2 22l5.3-1.3C8.7 21.5 10.3 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.1.8.8-3-.2-.3C4.1 15 3.7 13.5 3.7 12c0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.3-8.3 8.3z" fill="#fff"/>
+              </svg>
+            </div>
+            <div class="whatsapp-text">
+              <span class="whatsapp-eyebrow">o mais importante</span>
+              <span class="whatsapp-title">Entre no grupo do WhatsApp</span>
+              <span class="whatsapp-sub">É lá que combinamos os últimos detalhes</span>
+            </div>
+            <div class="whatsapp-arrow">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+            </div>
+          </a>
+
+          <!-- Grid de info final -->
+          <div class="final-info-section">
+            <h4 class="final-section-title">Tudo que você precisa</h4>
+
+            <div class="final-info-grid">
+              <div class="final-info-card">
+                <span class="final-info-label">Data</span>
+                <span class="final-info-value">13 · 06 · 2026</span>
+                <span class="final-info-sub">sábado · a partir das 14h</span>
+              </div>
+              <div class="final-info-card">
+                <span class="final-info-label">Local</span>
+                <span class="final-info-value">Recanto da Serra</span>
+                <span class="final-info-sub">Av Nair Martins Drumond, 7<br>Brumadinho/MG</span>
+              </div>
+              <div class="final-info-card">
+                <span class="final-info-label">Distância</span>
+                <span class="final-info-value">50 minutos</span>
+                <span class="final-info-sub">do centro de Belo Horizonte</span>
+              </div>
+              <div class="final-info-card">
+                <span class="final-info-label">Estrutura</span>
+                <span class="final-info-value">Piscina · Sauna</span>
+                <span class="final-info-sub">Comida por conta dos anfitriões. Cada um traz o que beber.</span>
+              </div>
+            </div>
+
+            <div class="final-links">
+              <a class="final-link" href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z" fill="currentColor"/></svg>
+                <span>Abrir no Google Maps</span>
+              </a>
+              <a class="final-link" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2"/></svg>
+                <span>Google Calendar</span>
+              </a>
+              <button class="final-link" id="btn-ics-final">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Baixar .ics (Apple/Outlook)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="final-signoff">
+            <p class="signoff-text">Com amor,<br><span class="signoff-name">Clara &amp; Bê</span></p>
           </div>
         </div>
       </article>

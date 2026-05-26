@@ -2,649 +2,711 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sessão da Tarde — Aniversário da Clara &amp; Bê</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0d3d52">
+  <title>Grand Line da Clara &amp; Bê — 13.06.2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lora:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Special+Elite&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════
-     INTRO SCREEN
-══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════
+     INTRO — Grand Line da Clara & Bê
+════════════════════════════════════════════════════════════ -->
 <div id="intro-screen" class="intro-screen">
 
-  <div class="intro-left">
-    <div class="op-bg-texture"></div>
-    <div class="op-ocean-waves"></div>
-    <div class="op-panel-art">
-      <div class="op-art-jolly"></div>
-      <div class="op-art-waves"></div>
-      <div class="op-art-tagline">Grand Line · 2026</div>
+  <div class="intro-bg-split">
+    <div class="intro-side intro-side-op">
+      <div class="op-paper-texture"></div>
+      <svg class="intro-compass" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#f5c518" stroke-width="2" opacity="0.4"/>
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#f5c518" stroke-width="1" opacity="0.3"/>
+        <polygon points="100,20 110,100 100,110 90,100" fill="#c0392b"/>
+        <polygon points="100,180 110,100 100,90 90,100" fill="#2c1810" opacity="0.6"/>
+        <text x="100" y="15" text-anchor="middle" font-family="Cinzel" font-size="14" fill="#f5c518">N</text>
+        <text x="100" y="195" text-anchor="middle" font-family="Cinzel" font-size="14" fill="#f5c518" opacity="0.5">S</text>
+      </svg>
+    </div>
+    <div class="intro-side intro-side-dr">
+      <div class="dr-paper-texture"></div>
+      <div class="intro-glitter" id="intro-glitter"></div>
+      <div class="intro-washi intro-washi-1"></div>
+      <div class="intro-washi intro-washi-2"></div>
     </div>
   </div>
 
   <div class="intro-center">
     <div class="cinema-strip top"></div>
-    <div class="sessao-label">Sessão da Tarde apresenta...</div>
-    <h1 class="grande-title" id="grande-title"></h1>
-    <p class="intro-subtitle">Uma aventura pela Grand Line, com glitter, caos, romance e uma mulher que acordou de repente aos 30.</p>
-    <button id="zarpar-btn" class="zarpar-btn">Zarpar →</button>
+    <div class="intro-eyebrow">Sessão da Tarde apresenta</div>
+    <h1 class="intro-title" id="intro-title-text">Grand Line</h1>
+    <div class="intro-subtitle-decoration">
+      <span class="decoration-line"></span>
+      <span class="decoration-diamond"></span>
+      <span class="decoration-line"></span>
+    </div>
+    <p class="intro-tagline">da Clara &amp; Bê</p>
+    <p class="intro-description">Uma jornada por 14 ilhas até o aniversário deles.<br>Glitter, caos, romance e uma mulher que acordou de repente aos 30.</p>
+    <button id="zarpar-btn" class="primary-btn intro-cta">Iniciar a jornada</button>
     <div class="cinema-strip bottom"></div>
   </div>
 
-  <div class="intro-right">
-    <div class="dr30-bg-gradient"></div>
-    <div class="dr30-panel-art">
-      <div class="dr30-art-title">De Repente</div>
-      <div class="dr30-art-number">30</div>
-      <div class="dr30-art-tagline">Uma comédia romântica da vida real</div>
-    </div>
-    <div id="glitter-intro" class="glitter-container"></div>
-  </div>
-
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     WELCOME / RSVP SCREEN (entre intro e mapa)
-══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════
+     WELCOME — info do evento (sem RSVP, sem caça ao tesouro)
+════════════════════════════════════════════════════════════ -->
 <div id="welcome-screen" class="welcome-screen hidden">
   <div class="welcome-inner">
 
-    <div class="welcome-hero">
-      <div class="welcome-flag">🏴‍☠️</div>
-      <h2 class="welcome-title">Bem-vindo, navegante</h2>
-      <p class="welcome-sub">Antes de zarpar pela Grand Line dos 27 &amp; 30…</p>
-    </div>
+    <header class="welcome-hero">
+      <div class="welcome-eyebrow">Você acaba de embarcar</div>
+      <h2 class="welcome-title">Bem-vindo, navegante.</h2>
+      <p class="welcome-sub">Antes da Grand Line começar, o essencial:</p>
+    </header>
 
-    <!-- Card 1: O Evento -->
-    <div class="welcome-card">
-      <h3>🎉 Sessão da Tarde — Aniversário Clara &amp; Bê</h3>
-      <div class="welcome-info-grid">
-        <div><strong>🗓️ Data</strong><br>13 de junho de 2026 (sábado)</div>
-        <div><strong>🕑 Horário</strong><br>A partir das 14h</div>
-        <div><strong>⚽ Brasil na Copa</strong><br>Transmissão ao vivo às 19h</div>
-        <div><strong>🍽️ Comida & Bebida</strong><br>Comida por conta dos anfitriões<br>Cada um traz o que beber</div>
+    <article class="welcome-card welcome-event">
+      <div class="welcome-card-header">
+        <span class="welcome-card-eyebrow">o evento</span>
+        <h3 class="welcome-card-title">Sessão da Tarde<br><em>Aniversário da Clara &amp; Bê</em></h3>
       </div>
-      <div class="welcome-location">
-        <strong>📍 Local</strong><br>
-        Av Nair Martins Drumond, nº 7<br>
-        Recanto da Serra, Brumadinho/MG<br>
-        <em>(~50 minutos do Centro de BH)</em><br>
-        🏊 Piscina &nbsp;•&nbsp; 🧖 Sauna
-      </div>
-      <div class="welcome-actions">
-        <a href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener" class="link-btn">📍 Google Maps</a>
-        <a href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener" class="link-btn">💬 WhatsApp da festa</a>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG" target="_blank" rel="noopener" class="link-btn">📅 Google Calendar</a>
-        <button class="link-btn" id="welcome-ics-btn">📅 Baixar .ics</button>
-      </div>
-    </div>
 
-    <!-- Card 2: RSVP -->
-    <div class="welcome-card welcome-rsvp" id="welcome-rsvp-card">
-      <h3>✅ Confirme sua presença</h3>
-      <p style="font-size:0.85rem;text-align:center;font-style:italic;opacity:0.85;margin-bottom:0.75rem">
-        Pra organizar comida, bebida e estrutura. RSVP até <strong>05/06/2026</strong>.
-      </p>
-
-      <!-- Step 1: lado -->
-      <div id="welcome-step-1" class="welcome-step">
-        <p style="text-align:center;font-family:'Bangers',cursive;font-size:1.2rem;margin-bottom:0.5rem">Você veio pelo lado de quem?</p>
-        <div class="side-buttons">
-          <button class="side-btn side-op" id="w-btn-bernardo">🏴‍☠️ Bernardo</button>
-          <button class="side-btn side-dr" id="w-btn-clara">🌸 Clara</button>
+      <div class="welcome-meta-grid">
+        <div class="welcome-meta">
+          <span class="meta-label">Data</span>
+          <span class="meta-value">13 de junho · 2026</span>
+          <span class="meta-extra">sábado, a partir das 14h</span>
+        </div>
+        <div class="welcome-meta">
+          <span class="meta-label">Local</span>
+          <span class="meta-value">Recanto da Serra</span>
+          <span class="meta-extra">Av Nair Martins Drumond, 7 · Brumadinho/MG</span>
+        </div>
+        <div class="welcome-meta">
+          <span class="meta-label">Estrutura</span>
+          <span class="meta-value">Piscina · Sauna</span>
+          <span class="meta-extra">Comida por conta dos anfitriões. Cada um traz o que beber.</span>
+        </div>
+        <div class="welcome-meta">
+          <span class="meta-label">Bônus</span>
+          <span class="meta-value">Brasil na Copa</span>
+          <span class="meta-extra">Transmissão ao vivo, 19h</span>
         </div>
       </div>
 
-      <!-- Step 2: form -->
-      <div id="welcome-step-2" class="welcome-step hidden">
-        <form id="welcome-rsvp-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
-          <input type="hidden" name="_subject" value="RSVP — Sessão da Tarde Bê &amp; Clara">
-          <input type="hidden" name="lado" id="w-rsvp-lado-input" value="">
-          <div class="field">
-            <label for="w-f-nome">Nome completo</label>
-            <input type="text" id="w-f-nome" name="nome" required autocomplete="name">
-          </div>
-          <div class="field">
-            <label>Vai?</label>
-            <div class="radios">
-              <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> Sim ✅</label>
-              <label class="radio-opt"><input type="radio" name="vai" value="Não"> Não ❌</label>
-              <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> Talvez 🤔</label>
-            </div>
-          </div>
-          <div class="field">
-            <label for="w-f-restricao">Restrição alimentar (opcional)</label>
-            <input type="text" id="w-f-restricao" name="restricao">
-          </div>
-          <button type="submit" class="submit-btn">Confirmar presença →</button>
-        </form>
+      <div class="welcome-actions">
+        <a class="link-btn" href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener">Abrir no Google Maps</a>
+        <a class="link-btn" href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener">Grupo no WhatsApp</a>
       </div>
-
-      <!-- Step 3: confirmado -->
-      <div id="welcome-step-3" class="welcome-step hidden">
-        <div style="text-align:center;font-size:3rem">✅</div>
-        <p style="text-align:center;font-family:'Bangers',cursive;font-size:1.4rem;color:var(--op-vermelho)">Presença confirmada!</p>
-        <p style="text-align:center;font-style:italic">Até dia 13 de junho. Agora vem comigo conhecer a história deles.</p>
-      </div>
-    </div>
+    </article>
 
     <div class="welcome-cta">
-      <p style="text-align:center;font-family:'Lora',serif;font-size:0.85rem;opacity:0.7;margin-bottom:0.5rem">
-        🗺️ A partir daqui começa a <strong>caça ao tesouro</strong> — 20 easter eggs escondidos pelas ilhas + 1 secreto.<br>
-        Quem encontrar todos, ganha o <strong>tesouro do One Piece</strong>. 🏴‍☠️
-      </p>
-      <button id="welcome-embark" class="zarpar-btn welcome-embark-btn">⛵ Embarcar na aventura →</button>
+      <p class="welcome-hint">A história começa agora. <strong>A confirmação de presença</strong> está no fim da jornada.</p>
+      <button id="welcome-embark" class="primary-btn welcome-embark-btn">Começar a história</button>
     </div>
 
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     HUD (sempre visível após intro)
-══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════
+     HUD — minimal, só capítulo atual e progresso
+════════════════════════════════════════════════════════════ -->
 <div id="hud" class="hud hidden">
-  <div class="hud-logpose">
-    <div class="logpose-wheel">🧭</div>
-    <div class="logpose-info">
-      <span class="logpose-label">Log Pose</span>
-      <span id="current-island-name" class="island-current">Grand Line</span>
+  <div class="hud-left">
+    <svg class="hud-compass" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <polygon points="12,4 13.5,12 12,13.5 10.5,12" fill="currentColor"/>
+      <polygon points="12,20 13.5,12 12,10.5 10.5,12" fill="currentColor" opacity="0.5"/>
+    </svg>
+    <div class="hud-info">
+      <span class="hud-label">Capítulo</span>
+      <span id="current-island-name" class="hud-value">Grand Line</span>
     </div>
   </div>
-  <div class="hud-middle">
-    <div class="hud-eggs" id="hud-treasure-wrap" title="Easter eggs encontrados">
-      🏴‍☠️ <span id="hud-treasure">0/20</span>
-    </div>
-    <div class="hud-berries" id="hud-berries-wrap" title="Berries acumulados">
-      🟠 <span id="hud-berries">0</span>
-    </div>
+  <div class="hud-right">
+    <span class="hud-progress-text"><span id="hud-current">1</span>/<span id="hud-total">15</span></span>
   </div>
-  <!-- Original egg-count hidden (mantido para compat) -->
-  <span id="egg-count" style="display:none">0</span>
 </div>
 
-<!-- Toolbar lateral de ferramentas -->
-<div id="toolbar" class="toolbar hidden">
-  <button class="tool-btn" data-tool="achievements" title="Conquistas">🏆</button>
-  <button class="tool-btn" data-tool="stats"        title="Estatísticas">📊</button>
-  <button class="tool-btn" data-tool="timeline"     title="Timeline">📜</button>
-  <button class="tool-btn" data-tool="quiz"         title="Quiz do Casal">💕</button>
-  <button class="tool-btn" data-tool="memory"       title="Memory Game">🧠</button>
-  <button class="tool-btn" data-tool="map"          title="Mapa do Brasil">🇧🇷</button>
-  <button class="tool-btn" data-tool="diary"        title="Diário de Bordo">📖</button>
-  <button class="tool-btn" data-tool="card"         title="Carteirinha de Pirata">🪪</button>
-  <button class="tool-btn" data-tool="help"         title="Como jogar">❓</button>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     MAP WRAPPER
-══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════
+     MAP — 14 capítulos + RSVP final
+════════════════════════════════════════════════════════════ -->
 <div id="map-wrapper" class="map-wrapper hidden">
-
-  <button id="quick-rsvp" class="quick-rsvp">Só quero confirmar presença →</button>
 
   <div id="island-progress" class="island-progress"></div>
 
-  <div class="nav-arrows">
-    <button id="nav-left"  class="nav-arrow nav-left"  aria-label="Ilha anterior">←</button>
-    <button id="nav-right" class="nav-arrow nav-right" aria-label="Próxima ilha">→</button>
-  </div>
+  <button id="nav-left"  class="nav-arrow nav-left"  aria-label="Capítulo anterior">
+    <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <button id="nav-right" class="nav-arrow nav-right" aria-label="Próximo capítulo">
+    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+  </button>
 
   <div id="map" class="map">
 
-    <!-- rota pontilhada (decorativa) -->
-    <div class="route-line"></div>
+    <!-- ──────────────── ILHA 1 — REINO DESENCANTADO ──────────────── -->
+    <section class="island" data-index="1" data-name="O Reino Desencantado" data-tone="op">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo I</span>
+          <h2 class="island-title">O Reino Desencantado</h2>
+          <span class="title-flourish"></span>
+        </header>
 
-    <!-- ──────────────────────────────────────────
-         ILHA 1 — REINO DESENCANTADO
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative" id="island-1" data-index="1" data-name="Reino Desencantado">
-      <div class="island-body">
-        <h2 class="island-title">I — Reino Desencantado</h2>
-        <div class="island-photo-panel">
-          <img src="assets/fotos/evento-startbet.jpeg" alt="A empresa onde tudo começou" class="island-photo">
+        <div class="island-scene scene-reino">
+          <div class="scene-castle">
+            <div class="castle-tower castle-tower-1"></div>
+            <div class="castle-tower castle-tower-2"></div>
+            <div class="castle-tower castle-tower-3"></div>
+            <div class="castle-windows"></div>
+          </div>
+          <div class="scene-badge">
+            <span class="badge-clip"></span>
+            <span class="badge-line"></span>
+            <span class="badge-line"></span>
+            <span class="badge-line short"></span>
+          </div>
+          <div class="scene-stamp stamp-rh">RH</div>
+          <div class="scene-sparkle scene-sparkle-1"></div>
+          <div class="scene-sparkle scene-sparkle-2"></div>
         </div>
-        <p class="island-narration">
-          "No Reino Desencantado, tão tão distante, onde o amor era proibido pelo RH e os crachás escondiam segredos, Clara não esperava que um simples evento pudesse mudar sua vida. Bernardo olhou de um jeito fixo e nada discreto. Ela só pensou: <em>'quem é esse menino?'</em>"
-        </p>
-        <div class="island-actions">
-          <button class="action-btn" id="char-bernardo" data-action="bernardo-balao">
-            <span class="action-icon">👔</span><span class="action-label">Bernardo</span>
-          </button>
-          <button class="action-btn" id="char-clara" data-action="clara-balao">
-            <span class="action-icon">💼</span><span class="action-label">Clara</span>
-          </button>
-          <button class="action-btn" id="item-cracha" data-action="cracha-photo">
-            <span class="action-icon">🪪</span><span class="action-label">Crachá</span>
+
+        <div class="island-narration">
+          <p>"No Reino Desencantado, tão tão distante, onde o amor era proibido pelo RH e os crachás escondiam segredos, Clara não esperava que um simples evento da empresa pudesse mudar sua vida."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="1">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-8" data-egg-id="8" title="Investigar...">📚</div>
-          <div class="easter-egg dr30-egg clue-visible" id="egg-C2" data-egg-id="C2" title="Investigar...">👗</div>
-          <div class="easter-egg op-egg clue-sea" id="egg-13" data-egg-id="13" title="Achado no mar...">🍾</div>
-        </div>
-      </div>
+      </article>
     </section>
 
-    <!-- Ocean 1→2 -->
-    <div class="ocean-gap" id="ocean-1-2"></div>
+    <!-- ──────────────── ILHA 2 — O OLHAR ──────────────── -->
+    <section class="island" data-index="2" data-name="O Olhar" data-tone="hybrid">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo II</span>
+          <h2 class="island-title">O Olhar</h2>
+          <span class="title-flourish"></span>
+        </header>
 
-    <!-- ──────────────────────────────────────────
-         ILHA 2 — FESTA DO RH / MARINEFORD
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative" id="island-2" data-index="2" data-name="Marineford — Festa do RH">
-      <div class="island-body">
-        <h2 class="island-title">II — Festa do RH</h2>
-        <div class="island-photo-panel island-photo-panel--dark">
-          <div class="island-scene-text">
-            <span class="scene-stamp">⚠️ REGULAMENTO INTERNO</span>
-            <p>"Art. 1º — É vedado o envolvimento romântico entre colaboradores."</p>
-            <p class="scene-caption">— Ironicamente, redigido pela própria Clara.</p>
+        <div class="island-scene scene-olhar">
+          <div class="scene-figure figure-left">
+            <div class="figure-head"></div>
+            <div class="figure-body figure-body-bernardo"></div>
+          </div>
+          <svg class="scene-gaze" viewBox="0 0 200 100" aria-hidden="true">
+            <path d="M30 50 Q100 30 170 50" stroke="#c0392b" stroke-width="2" stroke-dasharray="3 4" fill="none"/>
+            <circle cx="100" cy="40" r="4" fill="#FF9EC4"/>
+            <circle cx="100" cy="40" r="9" fill="none" stroke="#FFD700" stroke-width="1"/>
+          </svg>
+          <div class="scene-figure figure-right">
+            <div class="figure-head"></div>
+            <div class="figure-body figure-body-clara"></div>
+          </div>
+          <div class="scene-thought">"quem é esse menino?"</div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Tudo começou quando Bernardo, três anos mais novo, olhou para ela de um jeito tão fixo e nada discreto, que Clara só conseguiu pensar: <em>'quem é esse menino?'</em>"</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 3 — A FESTA DA FIRMA ──────────────── -->
+    <section class="island" data-index="3" data-name="A Festa da Firma" data-tone="op">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo III</span>
+          <h2 class="island-title">A Festa da Firma</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-festa-firma">
+          <div class="scene-confetti"></div>
+          <div class="scene-figure figure-mini figure-mini-1"><div class="figure-head"></div></div>
+          <div class="scene-figure figure-mini figure-mini-2"><div class="figure-head"></div></div>
+          <div class="scene-figure figure-mini figure-mini-3"><div class="figure-head"></div></div>
+          <div class="scene-figure figure-mini figure-mini-4"><div class="figure-head"></div></div>
+          <div class="scene-callout">
+            <span class="callout-tag">RH alerta:</span>
+            <span class="callout-msg">"melhor não se envolverem"</span>
           </div>
         </div>
-        <p class="island-narration">
-          "No dia seguinte, em uma festa da firma, onde Clara ia, Bernardo aparecia. O RH percebeu e veio o alerta: <em>'melhor vocês não se envolverem por causa do trabalho.'</em> A conexão já estava feita."
-        </p>
-        <div class="island-actions">
-          <button class="action-btn wanted-poster" id="item-wanted" data-action="wanted-modal">
-            <span class="action-icon">📜</span><span class="action-label">Cartaz WANTED</span>
-          </button>
-          <button class="action-btn" id="item-carimbo" data-action="carimbo-tremor">
-            <span class="action-icon">🔴</span><span class="action-label">Carimbo</span>
-          </button>
-          <button class="action-btn" id="item-regulamento" data-action="regulamento-egg">
-            <span class="action-icon">📋</span><span class="action-label">Regulamento</span>
+
+        <div class="island-narration">
+          <p>"No dia seguinte, em uma festa da firma, o destino deu seu segundo sinal: onde Clara ia, Bernardo aparecia. Se ela mudava de lugar, ele surgia por perto. A conexão era tão evidente que nem o RH conseguiu ignorar — e logo veio o alerta: <em>'melhor vocês não se envolverem por causa do trabalho.'</em>"</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="3">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
-        <div class="island-clues">
-          <div class="easter-egg dr30-egg clue-visible" id="egg-C4" data-egg-id="C4" title="Investigar...">📓</div>
-          <div class="easter-egg op-egg clue-sea" id="egg-14" data-egg-id="14" title="Achado no mar...">🍾</div>
-        </div>
-      </div>
+      </article>
     </section>
 
-    <!-- Ocean 2→3 -->
-    <div class="ocean-gap" id="ocean-2-3"></div>
+    <!-- ──────────────── ILHA 4 — O REGIMENTO INTERNO ──────────────── -->
+    <section class="island" data-index="4" data-name="O Regimento Interno" data-tone="op">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo IV</span>
+          <h2 class="island-title">O Regimento Interno</h2>
+          <span class="title-flourish"></span>
+        </header>
 
-    <!-- ──────────────────────────────────────────
-         ILHA 3 — O INSTAGRAM / THE OFFICE
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative" id="island-3" data-index="3" data-name="Ilha da Den Den">
-      <div class="island-body">
-        <h2 class="island-title">III — O Instagram</h2>
-        <div class="island-photo-panel">
-          <img src="assets/fotos/casal-fun.jpeg" alt="Os dois" class="island-photo">
+        <div class="island-scene scene-regimento">
+          <div class="scene-document">
+            <div class="doc-header">REGIMENTO INTERNO</div>
+            <div class="doc-line"></div>
+            <div class="doc-line"></div>
+            <div class="doc-line short"></div>
+            <div class="doc-line"></div>
+            <div class="doc-line short"></div>
+            <div class="doc-signature">
+              <em>Redigido por:</em>
+              <span class="signature-name">Clara Andrade</span>
+            </div>
+            <div class="doc-stamp">PROIBIDO</div>
+          </div>
         </div>
-        <p class="island-narration">
-          "Com uma desculpa qualquer, ela pediu o Instagram dele. Começava ali uma história feita de curtidas e reels de The Office — mesmo Bernardo nem gostando da série, fingindo com a dedicação de quem já estava completamente entregue ao papel."
-        </p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-den-den" data-action="den-den-audio">
-            <span class="action-icon">🐌</span><span class="action-label">Den Den</span>
-          </button>
-          <button class="action-btn" id="item-reels" data-action="reels-msg">
-            <span class="action-icon">📱</span><span class="action-label">Reels</span>
-          </button>
-          <button class="action-btn" id="item-heart" data-action="heart-counter">
-            <span class="action-icon">❤️</span><span class="action-label">Curtir <span id="heart-num">0</span></span>
-          </button>
+
+        <div class="island-narration">
+          <p>"Mas quando o coração resolve desobedecer ao regulamento interno, não tem política da empresa que segure <em>(mesmo que ele tenha sido escrito pela própria Clara)</em>. Com uma desculpa qualquer, ela pediu o Instagram dele."</p>
         </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-sea" id="egg-1" data-egg-id="1" title="Achado no mar...">🍾</div>
-        </div>
-        <div id="heart-count-display" style="display:none"><span></span></div>
-      </div>
+      </article>
     </section>
 
-    <!-- Ocean 3→4 -->
-    <div class="ocean-gap" id="ocean-3-4"></div>
+    <!-- ──────────────── ILHA 5 — STORIES, MENSAGENS E THE OFFICE ──────────────── -->
+    <section class="island" data-index="5" data-name="Stories e Reels" data-tone="hybrid">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo V</span>
+          <h2 class="island-title">Stories, Mensagens<br>e <em>The Office</em></h2>
+          <span class="title-flourish"></span>
+        </header>
 
-    <!-- ──────────────────────────────────────────
-         ILHA 4 — CONSELHEIRO MATA
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative" id="island-4" data-index="4" data-name="Conselheiro Mata">
-      <div class="island-body">
-        <h2 class="island-title">IV — Conselheiro Mata</h2>
-        <div class="island-photo-panel island-photo-panel--double">
-          <img src="assets/fotos/conselheiro-mata.jpeg" alt="Conselheiro Mata" class="island-photo">
-          <img src="assets/fotos/conselheiro-fogueira.jpeg" alt="Fogueira" class="island-photo">
-        </div>
-        <p class="island-narration">
-          "A primeira viagem juntos. Mato, barraca, carrapatos. O cenário menos óbvio do mundo pra começar um namoro — e foi exatamente ali que começou. Sob as estrelas de Conselheiro Mata, sem sinal, sem plano, só os dois."
-        </p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-barraca" data-action="barraca-photo">
-            <span class="action-icon">⛺</span><span class="action-label">Barraca</span>
-          </button>
-          <button class="action-btn fogueira" id="item-fogueira" data-action="fogueira-grow">
-            <span class="action-icon">🔥</span><span class="action-label">Fogueira</span>
-          </button>
-          <button class="action-btn" id="star-1" data-action="star-msg" data-star="1">
-            <span class="action-icon">⭐</span><span class="action-label">Estrelas</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-7" data-egg-id="7" title="Investigar...">💻</div>
-          <div class="easter-egg bonus-egg clue-bonus" id="egg-carrapato" data-egg-id="carrapato" title="...">🪲</div>
-          <div class="easter-egg op-egg clue-sea" id="egg-2" data-egg-id="2" title="Achado no mar...">🍾</div>
-        </div>
-        <!-- hidden star buttons still needed by JS -->
-        <div style="display:none">
-          <div id="star-2" data-action="star-msg" data-star="2"></div>
-          <div id="star-3" data-action="star-msg" data-star="3"></div>
-          <div id="star-4" data-action="star-msg" data-star="4"></div>
-          <div id="star-5" data-action="star-msg" data-star="5"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 4→5 -->
-    <div class="ocean-gap" id="ocean-4-5"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 5 — SERRO
-    ────────────────────────────────────────── -->
-    <section class="island island-passage" id="island-5" data-index="5" data-name="Serro">
-      <div class="island-body">
-        <h2 class="island-title">V — Serro</h2>
-        <div class="island-photo-panel island-photo-panel--scenic">
-          <div class="scene-ilustration serro-scene"></div>
-        </div>
-        <p class="island-narration">"Serro. Casario colonial, ladeiras de pedra e o melhor queijo do Brasil. O tipo de lugar que você vai junto pra descobrir que tem tudo a ver um com o outro."</p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-church" data-action="serro-photo">
-            <span class="action-icon">⛪</span><span class="action-label">Casario</span>
-          </button>
-          <button class="action-btn" id="item-queijo" data-action="queijo-egg">
-            <span class="action-icon">🧀</span><span class="action-label">Queijo Serro</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg dr30-egg clue-sea" id="egg-C6" data-egg-id="C6" title="Achado no mar...">🍾</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 5→6 -->
-    <div class="ocean-gap" id="ocean-5-6"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 6 — PIRACEMA
-    ────────────────────────────────────────── -->
-    <section class="island island-passage" id="island-6" data-index="6" data-name="Piracema">
-      <div class="island-body">
-        <h2 class="island-title">VI — Piracema</h2>
-        <div class="island-photo-panel island-photo-panel--scenic">
-          <div class="scene-ilustration piracema-scene"></div>
-        </div>
-        <p class="island-narration">"Piracema. Água fria, pedra quente. Daquelas paradas onde o tempo para — e você percebe que não quer estar em nenhum outro lugar."</p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-waterfall" data-action="piracema-photo">
-            <span class="action-icon">💧</span><span class="action-label">Cachoeira</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-10" data-egg-id="10" title="Investigar...">🕯️</div>
-          <div class="easter-egg op-egg clue-sea" id="egg-4" data-egg-id="4" title="Achado no mar...">🍾</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 6→7 -->
-    <div class="ocean-gap" id="ocean-6-7"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 7 — GUARAPARI
-    ────────────────────────────────────────── -->
-    <section class="island island-passage" id="island-7" data-index="7" data-name="Guarapari">
-      <div class="island-body">
-        <h2 class="island-title">VII — Guarapari</h2>
-        <div class="island-photo-panel island-photo-panel--scenic">
-          <div class="scene-ilustration guarapari-scene"></div>
-        </div>
-        <p class="island-narration">"Guarapari. Areia radioativa, sol quente — eles dois sem ligar pra nada. Quando você viaja junto e a viagem fica boa, é porque a companhia é melhor que o destino."</p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-sea" data-action="guarapari-photo">
-            <span class="action-icon">🌊</span><span class="action-label">A praia</span>
-          </button>
-          <button class="action-btn" id="item-placa" data-action="placa-egg">
-            <span class="action-icon">🪧</span><span class="action-label">Placa</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-3" data-egg-id="3" title="Investigar...">🙏</div>
-          <div class="easter-egg op-egg clue-sea" id="egg-5" data-egg-id="5" title="Achado no mar...">🍾</div>
-          <div class="easter-egg dr30-egg clue-sea" id="egg-C5" data-egg-id="C5" title="Achado no mar...">🧿</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 7→8 -->
-    <div class="ocean-gap" id="ocean-7-8"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 8 — ENTRE RIOS
-    ────────────────────────────────────────── -->
-    <section class="island island-passage" id="island-8" data-index="8" data-name="Entre Rios">
-      <div class="island-body">
-        <h2 class="island-title">VIII — Entre Rios</h2>
-        <div class="island-photo-panel">
-          <img src="assets/fotos/evento-startbet.jpeg" alt="Entre Rios" class="island-photo" style="filter:hue-rotate(120deg) saturate(0.7)">
-        </div>
-        <p class="island-narration">"Entre Rios. Daquelas viagens onde não precisa acontecer nada pra valer tudo. O silêncio entre as pedras. O cansaço compartilhado. O tipo de lugar que só fica bonito quando você vai com a pessoa certa."</p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-river" data-action="entrerios-photo">
-            <span class="action-icon">🏞️</span><span class="action-label">O rio</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-6" data-egg-id="6" title="Investigar...">🎰</div>
-          <div class="easter-egg op-egg clue-sea" id="egg-12" data-egg-id="12" title="Achado no mar...">🍾</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 8→9 -->
-    <div class="ocean-gap" id="ocean-8-9"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 9 — SERRA DO CIPÓ
-    ────────────────────────────────────────── -->
-    <section class="island island-passage" id="island-9" data-index="9" data-name="Serra do Cipó">
-      <div class="island-body">
-        <h2 class="island-title">IX — Serra do Cipó</h2>
-        <div class="island-photo-panel island-photo-panel--scenic">
-          <div class="scene-ilustration cipo-scene"></div>
-        </div>
-        <p class="island-narration">"Serra do Cipó. A mais épica de todas. Trilha, cachoeira fria, vista absurda. Porque algumas histórias pedem um cenário à altura — e essa história já merecia há tempo."</p>
-        <div class="island-actions">
-          <button class="action-btn" id="item-mountain" data-action="cipo-photo">
-            <span class="action-icon">⛰️</span><span class="action-label">A Serra</span>
-          </button>
-          <button class="action-btn mountain-top" id="item-topo" data-action="topo-wind">
-            <span class="action-icon">🏔️</span><span class="action-label">No topo</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg dr30-egg clue-visible" id="egg-C3" data-egg-id="C3" title="Investigar...">🪞</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 9→10 -->
-    <div class="ocean-gap" id="ocean-9-10"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 10 — ILHA DO LUFFY
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative" id="island-10" data-index="10" data-name="Ilha do Luffy">
-      <div class="island-body">
-        <h2 class="island-title">X — Ilha do Luffy</h2>
-        <div class="island-photo-panel">
-          <img src="assets/fotos/luffy-filhote.jpeg" alt="Luffy" class="island-photo">
-        </div>
-        <p class="island-narration">
-          "Toda grande história precisa de um personagem inesperado. Foi assim que entrou em cena Luffy — Border Collie que parece albino, mas é duplo merle. Mais amor, mais pelos, mais caos no roteiro. E uma presença que fez o apartamento parecer uma casa."
-        </p>
-        <div class="island-actions">
-          <button class="action-btn luffy-dog" id="item-luffy-dog" data-action="luffy-gallery">
-            <span class="action-icon">🐕</span><span class="action-label">Ver Luffy</span>
-          </button>
-          <button class="action-btn" id="item-pelo" data-action="pelo-egg">
-            <span class="action-icon">🪶</span><span class="action-label">Os pelos</span>
-          </button>
-          <button class="action-btn" id="item-coleira" data-action="coleira-bark">
-            <span class="action-icon">🔔</span><span class="action-label">Coleira</span>
-          </button>
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-9" data-egg-id="9" title="Investigar...">🎮</div>
-          <div class="easter-egg dr30-egg clue-visible" id="egg-C1" data-egg-id="C1" title="Investigar...">🏠</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ocean 10→11 -->
-    <div class="ocean-gap" id="ocean-10-11"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 11 — ★ A FESTA ★
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative island-festa" id="island-11" data-index="11" data-name="★ A Festa ★">
-      <div class="island-body">
-        <h2 class="island-title">XI — ★ A Festa ★</h2>
-        <div class="island-photo-panel">
-          <img src="assets/fotos/casal-principal.jpeg" alt="Clara e Bernardo" class="island-photo">
-        </div>
-        <div class="island-clues">
-          <div class="easter-egg op-egg clue-visible" id="egg-11" data-egg-id="11" title="Investigar...">🎩</div>
-          <div class="easter-egg op-egg clue-visible clue-hidden-until-5" id="egg-5b" data-egg-id="5b" title="Investigar...">📺</div>
-        </div>
-        <p class="island-narration">
-          "Dois aniversários. Uma história improvável. Um cachorro no elenco. Brasil na Copa.<br>
-          Uma comédia romântica cheia de caos, amor e reviravoltas."
-        </p>
-
-        <!-- ──────── A FESTA — info final (RSVP já foi feito na welcome) ──────── -->
-        <div id="rsvp-wrapper" class="rsvp-wrapper">
-
-          <!-- Mensagem de "você chegou ao fim" -->
-          <div id="rsvp-step-1" class="rsvp-step active">
-            <div style="text-align:center;padding:1rem">
-              <div style="font-size:3rem">🏁</div>
-              <h3 style="font-family:'Bangers',cursive;font-size:1.6rem;letter-spacing:0.04em;color:var(--op-vermelho)">Você chegou ao destino!</h3>
-              <p style="font-style:italic;margin-top:0.5rem">A história te trouxe até aqui. Agora só falta vir de verdade — dia 13 de junho.</p>
+        <div class="island-scene scene-stories">
+          <div class="scene-phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-msg phone-msg-a">"viu esse reel?"</div>
+              <div class="phone-msg phone-msg-b">"hahahaha sim"</div>
+              <div class="phone-msg phone-msg-a">"mais um?"</div>
+              <div class="phone-heart"></div>
             </div>
           </div>
-
-          <!-- Step 2 mantido vazio (compat) -->
-          <div id="rsvp-step-2" class="rsvp-step hidden">
-            <form id="rsvp-form" style="display:none">
-              <input type="hidden" name="lado" id="rsvp-lado-input" value="">
-            </form>
+          <div class="scene-sticker sticker-heart">
+            <svg viewBox="0 0 24 24"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#FF9EC4"/></svg>
           </div>
-
-          <!-- Info do evento (sempre visível na ilha 11) -->
-          <div id="rsvp-step-3" class="rsvp-step">
-            <div class="arrival-reveal">
-              <img src="assets/fotos/casal-principal.jpeg" alt="Local da festa" class="arrival-photo">
-            </div>
-
-            <div class="info-cards">
-
-              <div class="info-card card-festa">
-                <h3>🎉 Sessão da Tarde — Aniversário da Clara &amp; Bê</h3>
-                <p>🗓️ <strong>13 de junho de 2026</strong> (sábado)</p>
-                <p>🕑 A partir das <strong>14h</strong></p>
-                <p>📍 Av Nair Martins Drumond, nº 7<br>
-                   Recanto da Serra, Brumadinho/MG<br>
-                   <em>(~50 minutos do Centro de BH)</em></p>
-              </div>
-
-              <div class="info-card card-lugar">
-                <h3>🏡 O Lugar</h3>
-                <div class="local-fotos">
-                  <img src="assets/fotos/conselheiro-mata.jpeg" alt="Sítio 1">
-                  <img src="assets/fotos/conselheiro-fogueira.jpeg" alt="Sítio 2">
-                </div>
-                <p>🏊 Piscina &nbsp;•&nbsp; 🧖 Sauna</p>
-                <p>🍽️ Comida por conta dos anfitriões</p>
-                <p>🥤 Cada um traz o que for beber</p>
-              </div>
-
-              <div class="info-card card-copa">
-                <div class="bola-rolando" id="bola-copa">⚽</div>
-                <h3>🇧🇷 Brasil na Copa</h3>
-                <p>Transmissão ao vivo às <strong>19h</strong></p>
-                <p><em>"Festa de aniversário + jogo do Brasil.<br>Impossível ser melhor."</em></p>
-              </div>
-
-              <div class="info-card card-links">
-                <h3>🔗 Links Rápidos</h3>
-                <a href="https://share.google/MXlE6fI5HNrwGPsjW" target="_blank" rel="noopener" class="link-btn">📍 Ver no Google Maps</a>
-                <a href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener" class="link-btn">💬 Grupo do WhatsApp</a>
-                <span class="link-btn link-disabled">🔗 Site do Lugar <small>(em breve)</small></span>
-              </div>
-
-              <div class="info-card card-agenda">
-                <h3>📅 Adicionar à Agenda</h3>
-                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG"
-                   target="_blank" rel="noopener" class="link-btn" id="btn-gcal">📅 Google Calendar</a>
-                <button class="link-btn" id="btn-ics">📅 Baixar .ics (Apple/Outlook)</button>
-                <div id="secret-egg-area" class="hidden"></div>
-              </div>
-
-            </div><!-- /info-cards -->
-          </div><!-- /rsvp-step-3 -->
-
-        </div><!-- /rsvp-wrapper -->
-      </div><!-- /island-body -->
-    </section>
-
-    <!-- Ocean 11→12 (só aparece após hint) -->
-    <div class="ocean-gap ocean-secret hidden-island" id="ocean-11-12"></div>
-
-    <!-- ──────────────────────────────────────────
-         ILHA 12 — RAFTEL (SECRETA — só aparece após hint)
-    ────────────────────────────────────────── -->
-    <section class="island island-narrative island-secret hidden-island" id="island-12" data-index="12" data-name="Raftel — O Mundo Novo">
-      <div class="island-body island-body-secret">
-        <h2 class="island-title">XII — Raftel</h2>
-        <div class="scene raftel-scene">
-          <div class="raftel-storm"></div>
-          <div class="raftel-rays"></div>
-          <div class="raftel-hat" id="raftel-hat-21" title="O chapéu...">🎩</div>
-          <div class="raftel-instruction">
-            <p>O chapéu de palha. Cinco vezes.</p>
-            <p style="font-size:0.75rem;opacity:0.7">Clique <strong><span id="raftel-counter">0</span>/5</strong></p>
+          <div class="scene-sticker sticker-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" fill="#FFD700"/></svg>
           </div>
         </div>
-        <p class="island-narration">
-          "Aqui é onde nenhum navegante chegou antes — exceto você. O chapéu guarda o último segredo da jornada."
-        </p>
-      </div>
+
+        <div class="island-narration">
+          <p>"Começava ali uma história feita de curtidas em stories, mensagens discretas e reels de <em>The Office</em> — mesmo Bernardo nem gostando de <em>The Office</em>, mas fingindo interesse com a dedicação de quem já estava completamente entregue ao papel."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="5">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 6 — O CONVITE ──────────────── -->
+    <section class="island" data-index="6" data-name="O Convite" data-tone="hybrid">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo VI</span>
+          <h2 class="island-title">O Convite</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-convite">
+          <div class="scene-envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-seal"></div>
+          </div>
+          <div class="scene-timer">
+            <span class="timer-label">um mês depois...</span>
+          </div>
+          <div class="scene-sticker sticker-tape sticker-tape-1"></div>
+          <div class="scene-sticker sticker-tape sticker-tape-2"></div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Até que, depois de mais de um mês de suspense, ele finalmente criou coragem para chamá-la para sair."</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 7 — CONSELHEIRO MATA ──────────────── -->
+    <section class="island" data-index="7" data-name="Conselheiro Mata" data-tone="op">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo VII</span>
+          <h2 class="island-title">Conselheiro Mata</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-mata">
+          <div class="scene-tent">
+            <div class="tent-shape"></div>
+            <div class="tent-door"></div>
+          </div>
+          <div class="scene-tree tree-1"></div>
+          <div class="scene-tree tree-2"></div>
+          <div class="scene-tree tree-3"></div>
+          <div class="scene-stars">
+            <span class="star star-1"></span>
+            <span class="star star-2"></span>
+            <span class="star star-3"></span>
+            <span class="star star-4"></span>
+          </div>
+          <div class="scene-ground"></div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Vieram os encontros, a viagem para Conselheiro Mata e o início de um namoro no cenário menos óbvio possível: mato, barraca e carrapatos."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="7">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 8 — LUFFY ──────────────── -->
+    <section class="island" data-index="8" data-name="Luffy Entra em Cena" data-tone="hybrid">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo VIII</span>
+          <h2 class="island-title">Luffy Entra em Cena</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-luffy">
+          <svg class="scene-paw" viewBox="0 0 100 100" aria-hidden="true">
+            <ellipse cx="50" cy="65" rx="22" ry="18" fill="#3d2818"/>
+            <ellipse cx="25" cy="35" rx="9" ry="11" fill="#3d2818"/>
+            <ellipse cx="42" cy="22" rx="8" ry="10" fill="#3d2818"/>
+            <ellipse cx="58" cy="22" rx="8" ry="10" fill="#3d2818"/>
+            <ellipse cx="75" cy="35" rx="9" ry="11" fill="#3d2818"/>
+          </svg>
+          <div class="scene-fur-tuft fur-1"></div>
+          <div class="scene-fur-tuft fur-2"></div>
+          <div class="scene-fur-tuft fur-3"></div>
+          <div class="scene-bubble">"Au au!"</div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Mas toda grande história precisa de um personagem inesperado. E foi assim que entrou em cena Luffy, um Border Collie que parece albino, mas na verdade é duplo merle. Com ele, veio mais amor, mais pelos pela casa e uma boa dose de caos no roteiro."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="8">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 9 — O VILÃO ──────────────── -->
+    <section class="island" data-index="9" data-name="O Vilão" data-tone="op">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo IX</span>
+          <h2 class="island-title">O Vilão</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-vilao">
+          <div class="scene-dark-tower"></div>
+          <div class="scene-exit-door">
+            <span class="exit-light"></span>
+            <span class="exit-label">SAÍDA</span>
+          </div>
+          <div class="scene-villain-tag">"CONTEXTO DE TRABALHO"</div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Entre términos, voltas, conflitos, reconciliações e reviravoltas dignas de filme, Clara e Bernardo precisaram enfrentar o maior vilão da história: o contexto de trabalho. Por muito tempo, o Reino Desencantado bagunçou o caminho dos dois. Mas quando Clara finalmente saiu daquele cenário, eles descobriram que talvez o amor só precisasse de uma nova fase para acontecer do jeito certo."</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 10 — DE REPENTE 30 ──────────────── -->
+    <section class="island" data-index="10" data-name="De Repente 30" data-tone="dr">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo X</span>
+          <h2 class="island-title island-title-dr">De Repente 30</h2>
+          <span class="title-flourish title-flourish-dr"></span>
+        </header>
+
+        <div class="island-scene scene-dr30">
+          <div class="big-number big-30">30</div>
+          <div class="scene-sparkle scene-sparkle-dr scene-sparkle-1"></div>
+          <div class="scene-sparkle scene-sparkle-dr scene-sparkle-2"></div>
+          <div class="scene-sparkle scene-sparkle-dr scene-sparkle-3"></div>
+          <div class="scene-sparkle scene-sparkle-dr scene-sparkle-4"></div>
+          <div class="dr30-banner">
+            <span>Sessão</span><span>da</span><span>Tarde</span>
+          </div>
+        </div>
+
+        <div class="island-narration island-narration-dr">
+          <p>"Agora, Clara está prestes a fazer 30 anos, ainda tentando processar que chegou oficialmente no enredo de <em>De Repente 30</em>."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn confira-btn-dr" data-confira="10">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 11 — BERNARDO NA GRAND LINE ──────────────── -->
+    <section class="island" data-index="11" data-name="Bernardo na Grand Line" data-tone="op">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo XI</span>
+          <h2 class="island-title">Bernardo na Grand Line</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-grand-line">
+          <svg class="scene-compass-big" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="80" fill="#f4e4c1" stroke="#8b5e2a" stroke-width="3"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#8b5e2a" stroke-width="1" opacity="0.5"/>
+            <polygon points="100,30 110,100 100,110 90,100" fill="#c0392b"/>
+            <polygon points="100,170 110,100 100,90 90,100" fill="#2c1810"/>
+            <polygon points="30,100 100,90 110,100 100,110" fill="#8b5e2a" opacity="0.6"/>
+            <polygon points="170,100 100,90 90,100 100,110" fill="#8b5e2a" opacity="0.6"/>
+            <text x="100" y="25" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">N</text>
+            <text x="100" y="185" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">S</text>
+            <text x="20" y="105" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">O</text>
+            <text x="180" y="105" text-anchor="middle" font-family="Cinzel" font-size="11" fill="#2c1810">L</text>
+          </svg>
+          <div class="big-number big-27">27</div>
+          <div class="scene-flag">
+            <div class="flag-cloth"></div>
+            <div class="flag-pole"></div>
+          </div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Bernardo vai fazer 27, seguindo sua aventura no melhor estilo <em>One Piece</em>: meio perdido às vezes, mas sempre com o coração no lugar certo."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="11">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 12 — A FESTA ──────────────── -->
+    <section class="island" data-index="12" data-name="A Festa" data-tone="hybrid">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo XII</span>
+          <h2 class="island-title">A Festa</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-festa">
+          <div class="festa-tag festa-tag-1">Piscina</div>
+          <div class="festa-tag festa-tag-2">Sauna</div>
+          <div class="festa-tag festa-tag-3">Comida</div>
+          <div class="festa-tag festa-tag-4">Drinks</div>
+          <div class="festa-tag festa-tag-5">Brasil na Copa</div>
+          <div class="festa-confetti"></div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Dois aniversários. Uma história improvável. Um cachorro no elenco. Brasil na Copa. Piscina, sauna, comida e drinks."</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="12">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 13 — A COMÉDIA ROMÂNTICA ──────────────── -->
+    <section class="island" data-index="13" data-name="A Comédia Romântica" data-tone="hybrid">
+      <article class="island-page">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo XIII</span>
+          <h2 class="island-title">A Comédia Romântica</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-comedia">
+          <div class="movie-poster">
+            <div class="poster-title">Uma comédia romântica</div>
+            <div class="poster-sub">cheia de caos, amor &amp; reviravoltas</div>
+            <div class="poster-decoration">
+              <span class="poster-skull">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="11" r="8" fill="#fff"/><circle cx="9" cy="10" r="1.5" fill="#2c1810"/><circle cx="15" cy="10" r="1.5" fill="#2c1810"/><rect x="10" y="15" width="4" height="2" fill="#2c1810"/></svg>
+              </span>
+              <span class="poster-rose">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#FF9EC4"/><circle cx="12" cy="12" r="3" fill="#FFD700"/><path d="M12 17 Q15 20 18 20" stroke="#2d8a5a" stroke-width="1.5" fill="none"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="island-narration">
+          <p>"Uma comédia romântica cheia de caos, amor e reviravoltas."</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 14 — SESSÃO DA TARDE ──────────────── -->
+    <section class="island" data-index="14" data-name="Sessão da Tarde" data-tone="hybrid">
+      <article class="island-page island-page-final">
+        <header class="island-header">
+          <span class="chapter-marker">Capítulo XIV</span>
+          <h2 class="island-title island-title-cinema">Sessão da Tarde</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <div class="island-scene scene-sessao">
+          <div class="cinema-strip"></div>
+          <div class="cinema-card">
+            <span class="cinema-eyebrow">Hoje na Sessão da Tarde:</span>
+            <h3 class="cinema-feature">Aniversário<br>da Clara &amp; Bê</h3>
+            <span class="cinema-date">13 · 06 · 2026</span>
+          </div>
+          <div class="cinema-strip cinema-strip-bottom"></div>
+        </div>
+
+        <div class="island-narration island-narration-final">
+          <p>Dia <strong>13 de junho</strong>, na Sessão da Tarde: <strong>Aniversário da Clara &amp; Bê</strong></p>
+        </div>
+
+        <div class="island-cta">
+          <button class="primary-btn next-to-rsvp" id="go-to-rsvp">Confirmar minha presença</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 15 — RSVP ──────────────── -->
+    <section class="island island-rsvp" data-index="15" data-name="Confirme sua presença" data-tone="hybrid">
+      <article class="island-page island-page-rsvp">
+        <header class="island-header">
+          <span class="chapter-marker">A última página</span>
+          <h2 class="island-title">Confirme sua presença</h2>
+          <span class="title-flourish"></span>
+        </header>
+
+        <!-- Estado 1: form -->
+        <div class="rsvp-form-wrap" id="rsvp-form-wrap">
+          <p class="rsvp-intro">
+            Pra gente organizar comida, bebida e estrutura, confirme sua presença até <strong>05/06/2026</strong>.
+          </p>
+
+          <form id="rsvp-form" action="https://formspree.io/f/PLACEHOLDER" method="POST" class="rsvp-form">
+            <input type="hidden" name="_subject" value="RSVP — Grand Line Clara & Bê">
+
+            <div class="field">
+              <label for="rsvp-nome">Seu nome</label>
+              <input type="text" id="rsvp-nome" name="nome" required autocomplete="name" placeholder="Como te chamam">
+            </div>
+
+            <div class="field">
+              <label>Vai à festa?</label>
+              <div class="radios">
+                <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> <span>Sim, conta comigo</span></label>
+                <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> <span>Talvez</span></label>
+                <label class="radio-opt"><input type="radio" name="vai" value="Não"> <span>Não vou poder</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Você é do lado</label>
+              <div class="radios radios-side">
+                <label class="radio-opt"><input type="radio" name="lado" value="Bernardo"> <span>do Bê</span></label>
+                <label class="radio-opt"><input type="radio" name="lado" value="Clara"> <span>da Clara</span></label>
+                <label class="radio-opt"><input type="radio" name="lado" value="Ambos"> <span>dos dois</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="rsvp-restricao">Restrição alimentar <span class="field-optional">(opcional)</span></label>
+              <input type="text" id="rsvp-restricao" name="restricao" placeholder="Sem alcool, vegetariano, alergia a...">
+            </div>
+
+            <div class="field">
+              <label for="rsvp-recado">Um recado pro casal <span class="field-optional">(opcional)</span></label>
+              <textarea id="rsvp-recado" name="recado" rows="3" placeholder="Escreve algo, eles vão ler depois"></textarea>
+            </div>
+
+            <button type="submit" class="primary-btn submit-btn">Confirmar presença</button>
+          </form>
+        </div>
+
+        <!-- Estado 2: confirmado -->
+        <div class="rsvp-confirmed hidden" id="rsvp-confirmed">
+          <svg class="confirm-check" viewBox="0 0 60 60" aria-hidden="true">
+            <circle cx="30" cy="30" r="27" fill="none" stroke="#f5c518" stroke-width="2"/>
+            <circle cx="30" cy="30" r="22" fill="#f5c518"/>
+            <path d="M19 30 L27 38 L43 22" stroke="#0d3d52" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3 class="rsvp-confirmed-title">Presença confirmada!</h3>
+          <p class="rsvp-confirmed-text">
+            Te esperamos <strong>dia 13 de junho</strong><br>pra viver esse capítulo com a gente.
+          </p>
+          <div class="rsvp-confirmed-actions">
+            <a class="link-btn" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sess%C3%A3o+da+Tarde+%E2%80%94+Anivers%C3%A1rio+Clara+%26+B%C3%AA&dates=20260613T140000/20260613T230000&details=Dois+aniversários.+Uma+história+improvável.+Brasil+na+Copa.&location=Av+Nair+Martins+Drumond,+n%C2%BA+7,+Recanto+da+Serra,+Brumadinho/MG" target="_blank" rel="noopener">Adicionar ao Google Calendar</a>
+            <button class="link-btn" id="btn-ics-final">Baixar .ics (Apple/Outlook)</button>
+            <a class="link-btn" href="https://chat.whatsapp.com/FW4srVMmSml9Nghij0cwKU?mode=gi_t" target="_blank" rel="noopener">Entrar no grupo do WhatsApp</a>
+          </div>
+        </div>
+      </article>
     </section>
 
   </div><!-- /map -->
 </div><!-- /map-wrapper -->
 
-<!-- ══════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════
      MODAL
-══════════════════════════════════════════════════ -->
-<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Easter egg">
+════════════════════════════════════════════════════════════ -->
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Confira">
   <div class="modal-backdrop" id="modal-backdrop"></div>
   <div class="modal-box" id="modal-box">
-    <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+    <button class="modal-close" id="modal-close" aria-label="Fechar">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </button>
     <div id="modal-body" class="modal-body"></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════
      TOAST
-══════════════════════════════════════════════════ -->
+════════════════════════════════════════════════════════════ -->
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script src="script.js"></script>

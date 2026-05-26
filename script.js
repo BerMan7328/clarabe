@@ -1722,8 +1722,99 @@ function initGallery(id) {
   root.querySelector('.gallery-next')?.addEventListener('click', () => go(idx + 1));
   dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i))));
 }
-function openBrasilMapModal(){ openModal(`<h3>🇧🇷 Mapa Real do Brasil</h3><p>Em construção (Wave 6).</p>`); }
-function openDiaryModal()    { openModal(`<h3>📖 Diário de Bordo</h3><p>Em construção (Wave 6).</p>`); }
+/* ══════════════════════════════════════════════════════
+   MAPA REAL DO BRASIL — pins das viagens
+══════════════════════════════════════════════════════ */
+const BRAZIL_PINS = [
+  { x: 540, y: 340, label: 'BH / Brumadinho',   desc: 'Origem do casal. A festa será aqui.', icon: '🏠' },
+  { x: 555, y: 320, label: 'Conselheiro Mata',  desc: 'Mato, barraca, carrapatos — virou namoro.', icon: '⛺' },
+  { x: 565, y: 305, label: 'Serro',             desc: 'Casario colonial e o melhor queijo do Brasil.', icon: '🧀' },
+  { x: 535, y: 315, label: 'Piracema',          desc: 'Água fria, pedra quente.', icon: '💧' },
+  { x: 615, y: 360, label: 'Guarapari (ES)',    desc: 'Areia radioativa, sol quente.', icon: '🌊' },
+  { x: 510, y: 360, label: 'Entre Rios',        desc: 'Onde não precisa acontecer nada pra valer tudo.', icon: '🏞️' },
+  { x: 555, y: 325, label: 'Serra do Cipó',     desc: 'A mais épica. Algumas histórias pedem cachoeira grande.', icon: '⛰️' },
+];
+
+function openBrasilMapModal() {
+  const pins = BRAZIL_PINS.map((p, i) =>
+    `<g class="br-pin" data-i="${i}" style="transform-origin:${p.x}px ${p.y}px">
+      <circle cx="${p.x}" cy="${p.y}" r="9" fill="var(--op-vermelho)" stroke="#fff" stroke-width="2"/>
+      <circle cx="${p.x}" cy="${p.y}" r="4" fill="#fff"/>
+    </g>`
+  ).join('');
+  openModal(`
+    <h3>🇧🇷 Os lugares deles, no Brasil real</h3>
+    <p style="font-size:0.85rem;text-align:center;font-style:italic;opacity:0.85;margin-bottom:0.5rem">
+      Tudo concentrado em Minas Gerais (e uma escapada pro Espírito Santo).
+    </p>
+    <div class="br-map-wrap">
+      <svg viewBox="0 0 1000 1000" class="br-map-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa simplificado do Brasil">
+        <!-- silhueta simplificada -->
+        <path d="M 320 200 Q 380 140 500 130 Q 620 130 700 180 Q 770 240 770 320 Q 800 380 760 460 Q 760 540 700 620 Q 680 720 600 780 Q 530 830 460 820 Q 380 830 320 780 Q 260 720 250 620 Q 220 540 240 460 Q 230 380 260 320 Q 280 250 320 200 Z"
+              fill="#dcc798" stroke="#5a3a18" stroke-width="3" />
+        <!-- MG destacado (aproximação) -->
+        <path d="M 480 280 Q 540 270 600 290 Q 640 320 640 360 Q 620 400 560 410 Q 510 410 470 380 Q 460 330 480 280 Z"
+              fill="#f4e4c1" stroke="#c0392b" stroke-width="2" />
+        <text x="540" y="350" font-family="Bangers" font-size="22" fill="#6b1d10" text-anchor="middle">MG</text>
+        ${pins}
+      </svg>
+      <div class="br-pin-info" id="br-pin-info">
+        <p style="font-style:italic;font-size:0.85rem;text-align:center;opacity:0.7">Clique nos pinos vermelhos pra ver cada lugar.</p>
+      </div>
+    </div>
+  `);
+  document.querySelectorAll('.br-pin').forEach((g, i) => {
+    g.addEventListener('click', () => {
+      const p = BRAZIL_PINS[i];
+      document.querySelectorAll('.br-pin').forEach(x => x.classList.remove('active'));
+      g.classList.add('active');
+      const info = document.getElementById('br-pin-info');
+      info.innerHTML = `
+        <div style="text-align:center">
+          <div style="font-size:2rem">${p.icon}</div>
+          <h4 style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.04em;color:var(--op-oceano-esc)">${p.label}</h4>
+          <p style="font-family:'Lora',serif;font-style:italic;font-size:0.9rem;margin-top:0.3rem">${p.desc}</p>
+        </div>`;
+    });
+  });
+  unlockAchievement('map-seen');
+}
+
+/* ══════════════════════════════════════════════════════
+   DIÁRIO DE BORDO — convidado escreve recado
+══════════════════════════════════════════════════════ */
+function openDiaryModal() {
+  const txt = GAME.diaryText || '';
+  openModal(`
+    <h3>📖 Diário de Bordo</h3>
+    <p style="font-size:0.85rem;font-style:italic;text-align:center;opacity:0.85;margin-bottom:0.5rem">
+      Deixe um recado pro Bê &amp; Clara. Eles vão ler depois da festa.
+    </p>
+    <textarea id="diary-text" class="diary-textarea"
+              placeholder="Querido casal,&#10;&#10;Eu queria contar pra vocês...">${txt.replace(/</g,'&lt;')}</textarea>
+    <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+      <button class="link-btn" id="diary-save" style="flex:1">💾 Salvar recado</button>
+      <button class="link-btn" id="diary-clear" style="flex:0 0 auto;background:rgba(0,0,0,0.2)">Limpar</button>
+    </div>
+    <p style="font-size:0.75rem;opacity:0.6;margin-top:0.5rem;text-align:center">
+      Seu texto fica salvo localmente. Para enviar ao casal de verdade, copie e mande pelo WhatsApp.
+    </p>
+  `);
+  document.getElementById('diary-save').addEventListener('click', () => {
+    const text = document.getElementById('diary-text').value.trim();
+    GAME.diaryText = text;
+    saveGame();
+    if (text.length > 5) unlockAchievement('diarista');
+    showToast('💾 Recado salvo!', 'egg-found');
+  });
+  document.getElementById('diary-clear').addEventListener('click', () => {
+    if (confirm('Limpar o recado?')) {
+      document.getElementById('diary-text').value = '';
+      GAME.diaryText = '';
+      saveGame();
+    }
+  });
+}
 function openHelpModal() {
   openModal(`
     <h3>🏴‍☠️ Como jogar</h3>

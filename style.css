@@ -2316,3 +2316,60 @@ img { display: block; max-width: 100%; border-radius: 8px; }
   transition: var(--transition);
 }
 .gdot.active { background: var(--op-amarelo); transform: scale(1.3); }
+
+/* ════════════════════════════════════════════════════════════
+   WAVE 6 — MAPA DO BRASIL
+════════════════════════════════════════════════════════════ */
+.br-map-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.br-map-svg {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  background: rgba(28,140,200,0.08);
+  border-radius: 10px;
+}
+.br-pin {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.br-pin:hover { transform: scale(1.4); }
+.br-pin.active circle:first-child { fill: var(--op-amarelo); }
+.br-pin-info {
+  width: 100%;
+  background: rgba(245,197,24,0.13);
+  border: 1px solid var(--op-borda);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  min-height: 70px;
+}
+
+/* ════════════════════════════════════════════════════════════
+   WAVE 6 — DIÁRIO
+════════════════════════════════════════════════════════════ */
+.diary-textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 0.85rem 1rem;
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  background:
+    repeating-linear-gradient(180deg,
+      transparent 0 24px,
+      rgba(139,94,42,0.18) 24px 25px),
+    var(--op-pergaminho);
+  border: 2px solid var(--op-borda);
+  border-radius: 6px;
+  color: var(--op-texto);
+  resize: vertical;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+}
+.diary-textarea:focus {
+  outline: none;
+  border-color: var(--op-vermelho);
+}

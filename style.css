@@ -3495,6 +3495,11 @@ img { display: block; max-width: 100%; }
   opacity: 0.6;
   font-style: italic;
 }
+.field-required {
+  color: var(--op-vermelho);
+  font-weight: 700;
+  margin-left: 2px;
+}
 .field-help {
   display: block;
   font-family: 'Lora', serif;

@@ -902,34 +902,34 @@
             <input type="hidden" name="_subject" value="RSVP — Grand Line Clara & Bê">
 
             <div class="field">
-              <label for="rsvp-nome">Seu nome</label>
-              <input type="text" id="rsvp-nome" name="nome" autocomplete="name" placeholder="Como te chamam">
+              <label for="rsvp-nome">Seu nome <span class="field-required">*</span></label>
+              <input type="text" id="rsvp-nome" name="nome" required autocomplete="name" placeholder="Como te chamam">
             </div>
 
             <div class="field">
-              <label for="rsvp-whatsapp">WhatsApp</label>
-              <input type="tel" id="rsvp-whatsapp" name="whatsapp" inputmode="tel" autocomplete="tel" placeholder="(31) 9 9999-9999">
+              <label for="rsvp-whatsapp">WhatsApp <span class="field-required">*</span></label>
+              <input type="tel" id="rsvp-whatsapp" name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="(31) 9 9999-9999">
             </div>
 
             <div class="field">
-              <label>Vai à festa?</label>
+              <label>Vai à festa? <span class="field-required">*</span></label>
               <div class="radios">
-                <label class="radio-opt"><input type="radio" name="vai" value="Sim"> <span>Sim, conta comigo</span></label>
+                <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> <span>Sim, conta comigo</span></label>
                 <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> <span>Talvez</span></label>
                 <label class="radio-opt"><input type="radio" name="vai" value="Não"> <span>Não vou poder</span></label>
               </div>
             </div>
 
             <div class="field">
-              <label for="rsvp-quantos">Quantas pessoas no total? <span class="field-optional">(você + até 4 acompanhantes)</span></label>
-              <input type="number" id="rsvp-quantos" name="quantos" min="1" max="5" value="1" inputmode="numeric">
+              <label for="rsvp-quantos">Quantas pessoas no total? <span class="field-required">*</span> <span class="field-optional">(você + até 4 acompanhantes)</span></label>
+              <input type="number" id="rsvp-quantos" name="quantos" required min="1" max="5" value="1" inputmode="numeric">
               <small class="field-help">Máximo de 5 pessoas por confirmação. Para grupos maiores, fala com o casal.</small>
             </div>
 
             <div class="field">
-              <label>Você é do lado</label>
+              <label>Você é do lado <span class="field-required">*</span></label>
               <div class="radios radios-side">
-                <label class="radio-opt"><input type="radio" name="lado" value="Bernardo"> <span>do Bê</span></label>
+                <label class="radio-opt"><input type="radio" name="lado" value="Bernardo" required> <span>do Bê</span></label>
                 <label class="radio-opt"><input type="radio" name="lado" value="Clara"> <span>da Clara</span></label>
                 <label class="radio-opt"><input type="radio" name="lado" value="Ambos"> <span>dos dois</span></label>
               </div>

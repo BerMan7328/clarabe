@@ -2092,7 +2092,11 @@ img { display: block; max-width: 100%; }
 }
 .scene-protagonists .avatar-stage,
 .scene-protagonists .avatar-slot,
-.scene-protagonists .avatar-poster {
+.scene-protagonists .avatar-poster,
+.scene-protagonists .scene-envelope,
+.scene-protagonists .scene-phone,
+.scene-protagonists .scene-luffy-photo,
+.scene-protagonists .movie-poster {
   position: relative;
   inset: auto;
   top: auto; right: auto; bottom: auto; left: auto;
@@ -2101,6 +2105,14 @@ img { display: block; max-width: 100%; }
 }
 .scene-protagonists .avatar-slot.avatar-tilt-left  { transform: rotate(-6deg); }
 .scene-protagonists .avatar-slot.avatar-tilt-right { transform: rotate(6deg); }
+.scene-protagonists .scene-envelope { transform: rotate(-4deg); }
+.scene-protagonists .movie-poster { transform: rotate(-2deg); }
+@media (max-width: 480px) {
+  .scene-protagonists { gap: 0.5rem; }
+  .scene-protagonists .scene-phone { width: 60px; height: 110px; }
+  .scene-protagonists .scene-envelope { width: 90px; height: 60px; }
+  .scene-protagonists .scene-luffy-photo { width: 88px; height: 88px; }
+}
 
 /* — Ilha 1: Reino Desencantado — */
 .scene-reino {

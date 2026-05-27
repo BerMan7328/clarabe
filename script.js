@@ -167,16 +167,18 @@ function enterMap(targetIsland = 1) {
 }
 
 function showQuizNudge() {
-  // Não mostra se já mostrou antes nessa sessão
-  if (localStorage.getItem('quizNudgeSeen') === '1') return;
+  // Não mostra se já fez o quiz ou se dismissou nessa sessão
+  if (STATE.quizScore !== null) return;
+  if (STATE.quizNudgeDismissedThisSession) return;
   const nudge = document.getElementById('quiz-nudge');
   if (!nudge) return;
   nudge.classList.remove('hidden');
-  // auto-esconde após 10s
-  setTimeout(hideQuizNudge, 10000);
+  // auto-esconde após 12s
+  clearTimeout(STATE._nudgeTimeout);
+  STATE._nudgeTimeout = setTimeout(hideQuizNudge, 12000);
 }
 
-function hideQuizNudge() {
+function hideQuizNudge(permanent = false) {
   const nudge = document.getElementById('quiz-nudge');
   if (!nudge || nudge.classList.contains('hidden')) return;
   nudge.classList.add('fade-out');
@@ -184,11 +186,12 @@ function hideQuizNudge() {
     nudge.classList.add('hidden');
     nudge.classList.remove('fade-out');
   }, 400);
-  // marca como visto pra não aparecer de novo
-  localStorage.setItem('quizNudgeSeen', '1');
-  // tira o pulse do botão
-  const btn = document.getElementById('open-quiz');
-  if (btn) btn.classList.add('calmed');
+  // se dismissado por X ou click no Quiz, marca só nessa sessão
+  if (permanent) {
+    STATE.quizNudgeDismissedThisSession = true;
+    const btn = document.getElementById('open-quiz');
+    if (btn) btn.classList.add('calmed');
+  }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -403,13 +406,13 @@ function showQuizSuggestion() {
 function initQuiz() {
   const btn = document.getElementById('open-quiz');
   if (btn) btn.addEventListener('click', () => {
-    hideQuizNudge();
+    hideQuizNudge(true); // dismissa permanentemente nessa sessão
     openQuizModal();
   });
 
   // botão "X" para fechar o nudge
   const closeBtn = document.getElementById('quiz-nudge-close');
-  if (closeBtn) closeBtn.addEventListener('click', hideQuizNudge);
+  if (closeBtn) closeBtn.addEventListener('click', () => hideQuizNudge(true));
 
   // Event delegation no modal-body — resiliente a re-renders e propagação
   const body = document.getElementById('modal-body');

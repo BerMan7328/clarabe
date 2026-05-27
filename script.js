@@ -379,17 +379,12 @@ function showQuizSuggestion() {
   openModal(`
     <h3>Antes de confirmar...</h3>
     <p class="quiz-suggest-intro">
-      Que tal testar o quanto você <strong>conhece o casal</strong>?
+      Que tal testar o quanto você <strong>conhece o casal</strong>?<br>
       São <strong>10 perguntas rápidas</strong> sobre a história deles.
     </p>
-    <div class="quiz-suggest-pointer">
-      <svg viewBox="0 0 30 50" aria-hidden="true">
-        <path d="M15 46 L15 12 M5 22 L15 8 L25 22" stroke="#FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span class="quiz-suggest-pointer-text">o botão Quiz fica ali em cima</span>
-    </div>
+    <p class="quiz-suggest-hint">o seu resultado vai junto com sua confirmação</p>
     <div class="quiz-suggest-actions">
-      <button type="button" class="primary-btn" id="quiz-suggest-go">Fazer o quiz primeiro</button>
+      <button type="button" class="quiz-suggest-go-btn" id="quiz-suggest-go">Fazer o quiz primeiro</button>
       <button type="button" class="quiz-suggest-skip" id="quiz-suggest-skip">Não, enviar minha confirmação</button>
     </div>
   `);
@@ -400,7 +395,6 @@ function showQuizSuggestion() {
   document.getElementById('quiz-suggest-skip').addEventListener('click', () => {
     STATE.quizSuggestionSkipped = true;
     closeModal();
-    // re-trigger o submit
     const form = document.getElementById('rsvp-form');
     if (form) form.requestSubmit();
   });

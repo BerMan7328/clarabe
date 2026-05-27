@@ -682,6 +682,9 @@ function initRSVP() {
     // adiciona flag de "pulou a história"
     dataObj.chato = STATE.skippedStory ? 'Sim' : 'Não';
 
+    console.log('[RSVP] Enviando payload:', dataObj);
+    console.log('[RSVP] STATE.skippedStory:', STATE.skippedStory);
+
     // 1. SEMPRE salva no localStorage (backup)
     saveRsvpLocally(dataObj);
 

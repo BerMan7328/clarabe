@@ -207,6 +207,149 @@ function navigateTo(index, smooth = true) {
 }
 
 /* ════════════════════════════════════════════════════════════
+   QUIZ DO CASAL — 10 perguntas sobre a história
+════════════════════════════════════════════════════════════ */
+const QUIZ = [
+  {
+    q: "Quem disse: 'quem é esse menino?'",
+    options: ['Clara', 'Bernardo', 'O RH', 'Luffy'],
+    correct: 0,
+    explanation: "Clara, no primeiro evento da empresa — ele olhando nada discreto desde 2022.",
+  },
+  {
+    q: 'Qual a diferença de idade entre eles?',
+    options: ['1 ano (ele mais novo)', '2 anos (ele mais novo)', '3 anos (ele mais novo)', '3 anos (ela mais nova)'],
+    correct: 2,
+    explanation: 'Bernardo é 3 anos mais novo que Clara.',
+  },
+  {
+    q: 'Onde aconteceu o primeiro grande sinal?',
+    options: ['Em um bar', 'Em uma festa da empresa', 'No Instagram', 'Em Conselheiro Mata'],
+    correct: 1,
+    explanation: "No dia seguinte ao primeiro olhar, em uma festa da firma — onde Clara ia, Bernardo aparecia.",
+  },
+  {
+    q: 'O que o RH disse sobre o casal?',
+    options: ['Parabéns', "'Melhor vocês não se envolverem por causa do trabalho'", 'Nada, nunca soube', 'Que era proibido namorar'],
+    correct: 1,
+    explanation: 'O alerta clássico — ironicamente, o regulamento foi escrito pela própria Clara.',
+  },
+  {
+    q: 'Como Clara começou a conversa fora do trabalho?',
+    options: ['Mandou DM no LinkedIn', 'Pediu o Instagram dele', 'Pediu o número', 'Marcou um café'],
+    correct: 1,
+    explanation: 'Com uma desculpa qualquer, Clara pediu o Instagram dele.',
+  },
+  {
+    q: 'O que Bernardo mandava no Instagram pra conquistar?',
+    options: ['Frases motivacionais', 'Memes de gato', 'Reels de The Office (mesmo sem gostar)', 'Fotos do treino'],
+    correct: 2,
+    explanation: 'Reels de The Office — mesmo Bernardo nem gostando, mas fingindo com a dedicação de quem já estava entregue ao papel.',
+  },
+  {
+    q: 'Onde foi a primeira viagem que virou namoro?',
+    options: ['Serra do Cipó', 'Conselheiro Mata', 'Piracema', 'Guarapari'],
+    correct: 1,
+    explanation: 'Conselheiro Mata — mato, barraca e carrapatos.',
+  },
+  {
+    q: 'O Luffy (cachorro) é:',
+    options: ['Albino', 'Duplo merle', 'Mestiço', 'Pintado'],
+    correct: 1,
+    explanation: 'Parece albino, mas é duplo merle. Detalhe importante.',
+  },
+  {
+    q: 'Quantos anos a Clara está fazendo?',
+    options: ['27', '28', '29', '30'],
+    correct: 3,
+    explanation: 'Clara está chegando oficialmente em "De Repente 30".',
+  },
+  {
+    q: 'E o Bernardo?',
+    options: ['25', '26', '27', '28'],
+    correct: 2,
+    explanation: 'Bernardo está fazendo 27 — meio perdido às vezes, mas sempre com o coração no lugar certo.',
+  },
+];
+
+let quizState = null;
+
+function openQuizModal() {
+  quizState = { index: 0, score: 0 };
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  if (quizState.index >= QUIZ.length) return finishQuiz();
+  const q = QUIZ[quizState.index];
+  const opts = q.options.map((opt, i) =>
+    `<button class="quiz-option" data-i="${i}">${opt}</button>`
+  ).join('');
+  openModal(`
+    <h3>Quiz do Casal</h3>
+    <div class="quiz-progress">Pergunta ${quizState.index + 1} de ${QUIZ.length} · ${quizState.score} acertos</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options">${opts}</div>
+  `);
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => answerQuiz(parseInt(btn.dataset.i)));
+  });
+}
+
+function answerQuiz(i) {
+  const q = QUIZ[quizState.index];
+  const correct = i === q.correct;
+  if (correct) quizState.score++;
+
+  document.querySelectorAll('.quiz-option').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === i) btn.classList.add('wrong');
+  });
+
+  const body = document.getElementById('modal-body');
+  const exp = document.createElement('div');
+  exp.className = 'quiz-explanation ' + (correct ? 'is-correct' : 'is-wrong');
+  exp.innerHTML = `
+    <span class="quiz-exp-icon">${correct ? '✓' : '✗'}</span>
+    <span class="quiz-exp-text">${q.explanation}</span>
+    <button class="quiz-next">${quizState.index === QUIZ.length - 1 ? 'Ver resultado' : 'Próxima'} →</button>`;
+  body.appendChild(exp);
+  exp.querySelector('.quiz-next').addEventListener('click', () => {
+    quizState.index++;
+    renderQuizQuestion();
+  });
+}
+
+function finishQuiz() {
+  const score = quizState.score;
+  const pct = Math.round((score / QUIZ.length) * 100);
+
+  let title, msg;
+  if (pct === 100)      { title = 'Íntimo do casal!'; msg = 'Você conhece eles como ninguém. Bem-vindo à tripulação principal.'; }
+  else if (pct >= 80)   { title = 'Excelente!'; msg = 'Você é da turma íntima. Vai brilhar na festa.'; }
+  else if (pct >= 60)   { title = 'Bom!'; msg = 'Você conhece os pontos principais. Dá pra puxar papo tranquilo.'; }
+  else if (pct >= 40)   { title = 'Médio'; msg = 'Você conhece o básico. Vai melhorar na festa, prometemos.'; }
+  else                  { title = 'Pegou só pela vibe'; msg = 'Talvez você tenha sido convidado por sorte. Sem problemas — dia 13 a gente te apresenta tudo!'; }
+
+  openModal(`
+    <h3>${title}</h3>
+    <div class="quiz-result">
+      <div class="quiz-score">${score}<span>/${QUIZ.length}</span></div>
+      <div class="quiz-pct">${pct}%</div>
+    </div>
+    <p class="quiz-result-msg">${msg}</p>
+    <button class="link-btn quiz-retry" id="quiz-retry">Tentar de novo</button>
+  `);
+  document.getElementById('quiz-retry').addEventListener('click', openQuizModal);
+}
+
+function initQuiz() {
+  const btn = document.getElementById('open-quiz');
+  if (btn) btn.addEventListener('click', openQuizModal);
+}
+
+/* ════════════════════════════════════════════════════════════
    WORLD MAP — zoom-out de todas as ilhas
 ════════════════════════════════════════════════════════════ */
 function initWorldMap() {
@@ -559,6 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initRSVP();
   initWorldMap();
+  initQuiz();
 });
 
 // reajusta posição em resize (vw muda)

@@ -161,6 +161,33 @@ function enterMap(targetIsland = 1) {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => navigateTo(targetIsland, false));
   });
+  // chama atenção pro quiz logo no início
+  setTimeout(showQuizNudge, 1200);
+}
+
+function showQuizNudge() {
+  // Não mostra se já mostrou antes nessa sessão
+  if (localStorage.getItem('quizNudgeSeen') === '1') return;
+  const nudge = document.getElementById('quiz-nudge');
+  if (!nudge) return;
+  nudge.classList.remove('hidden');
+  // auto-esconde após 10s
+  setTimeout(hideQuizNudge, 10000);
+}
+
+function hideQuizNudge() {
+  const nudge = document.getElementById('quiz-nudge');
+  if (!nudge || nudge.classList.contains('hidden')) return;
+  nudge.classList.add('fade-out');
+  setTimeout(() => {
+    nudge.classList.add('hidden');
+    nudge.classList.remove('fade-out');
+  }, 400);
+  // marca como visto pra não aparecer de novo
+  localStorage.setItem('quizNudgeSeen', '1');
+  // tira o pulse do botão
+  const btn = document.getElementById('open-quiz');
+  if (btn) btn.classList.add('calmed');
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -349,7 +376,14 @@ function finishQuiz() {
 
 function initQuiz() {
   const btn = document.getElementById('open-quiz');
-  if (btn) btn.addEventListener('click', openQuizModal);
+  if (btn) btn.addEventListener('click', () => {
+    hideQuizNudge();
+    openQuizModal();
+  });
+
+  // botão "X" para fechar o nudge
+  const closeBtn = document.getElementById('quiz-nudge-close');
+  if (closeBtn) closeBtn.addEventListener('click', hideQuizNudge);
 
   // Event delegation no modal-body — resiliente a re-renders e propagação
   const body = document.getElementById('modal-body');

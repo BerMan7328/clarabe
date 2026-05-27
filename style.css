@@ -890,6 +890,116 @@ img { display: block; max-width: 100%; }
   transform: scale(1.05);
 }
 
+/* Pulse de chamada no botão Quiz */
+.quiz-btn-pulse {
+  position: relative;
+  animation: quizBtnPulse 1.8s ease-in-out infinite;
+}
+.quiz-btn-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 18px;
+  border: 2px solid var(--op-amarelo);
+  opacity: 0;
+  animation: quizBtnRing 1.8s ease-out infinite;
+  pointer-events: none;
+}
+.quiz-btn-pulse.calmed {
+  animation: none;
+}
+.quiz-btn-pulse.calmed::before {
+  display: none;
+}
+@keyframes quizBtnPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(245,197,24,0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(245,197,24,0); }
+}
+@keyframes quizBtnRing {
+  0%   { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.6); }
+}
+
+/* Tooltip "psiu! testa se conhece o casal" */
+.quiz-nudge {
+  position: fixed;
+  top: 60px;
+  right: 90px; /* alinha com o botão Quiz no HUD */
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  animation: nudgeIn 0.6s var(--easing-bounce) backwards;
+}
+.quiz-nudge.fade-out {
+  animation: nudgeOut 0.4s ease forwards;
+}
+.quiz-nudge-bubble {
+  background: linear-gradient(160deg, #fff, #fff5dc);
+  border: 2px solid var(--op-amarelo-esc);
+  border-radius: 14px 14px 4px 14px;
+  padding: 0.55rem 0.75rem 0.6rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.5), 0 0 0 4px rgba(245,197,24,0.15);
+  pointer-events: auto;
+  position: relative;
+  max-width: 220px;
+}
+.quiz-nudge-text {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--op-tinta);
+  line-height: 1.1;
+}
+.quiz-nudge-close {
+  background: rgba(0,0,0,0.08);
+  border: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--op-tinta);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  flex-shrink: 0;
+}
+.quiz-nudge-close:hover { background: rgba(192,57,43,0.2); }
+.quiz-nudge-arrow {
+  width: 26px;
+  height: 36px;
+  margin-top: -4px;
+  margin-right: 14px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  animation: nudgeArrowBob 0.9s ease-in-out infinite;
+}
+@keyframes nudgeIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.85); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes nudgeOut {
+  to { opacity: 0; transform: translateY(-8px) scale(0.9); }
+}
+@keyframes nudgeArrowBob {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+@media (max-width: 480px) {
+  .quiz-nudge { right: 76px; top: 54px; }
+  .quiz-nudge-bubble { padding: 0.45rem 0.6rem 0.5rem 0.7rem; max-width: 170px; }
+  .quiz-nudge-text { font-size: 0.92rem; }
+  .quiz-nudge-arrow { width: 22px; height: 30px; }
+}
+
 /* ══════════════════════════════════════════════════════════════
    WORLD MAP — view zoom-out de todas as ilhas
 ══════════════════════════════════════════════════════════════ */

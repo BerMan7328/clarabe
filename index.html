@@ -198,6 +198,17 @@
 <!-- ════════════════════════════════════════════════════════════
      HUD — minimal, só capítulo atual e progresso
 ════════════════════════════════════════════════════════════ -->
+<!-- Tooltip que aponta para o botão Quiz no início -->
+<div id="quiz-nudge" class="quiz-nudge hidden" aria-hidden="true">
+  <div class="quiz-nudge-bubble">
+    <span class="quiz-nudge-text">psiu! testa se conhece o casal</span>
+    <button class="quiz-nudge-close" id="quiz-nudge-close" aria-label="Fechar">×</button>
+  </div>
+  <svg class="quiz-nudge-arrow" viewBox="0 0 30 40" aria-hidden="true">
+    <path d="M15 2 L15 30 M5 22 L15 32 L25 22" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
 <div id="hud" class="hud hidden">
   <div class="hud-left">
     <svg class="hud-compass" viewBox="0 0 24 24" aria-hidden="true">
@@ -211,7 +222,7 @@
     </div>
   </div>
   <div class="hud-right">
-    <button class="hud-map-btn" id="open-quiz" aria-label="Quiz do Casal">
+    <button class="hud-map-btn quiz-btn-pulse" id="open-quiz" aria-label="Quiz do Casal">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="currentColor"/>
       </svg>

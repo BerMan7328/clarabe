@@ -3385,6 +3385,14 @@ img { display: block; max-width: 100%; }
   opacity: 0.6;
   font-style: italic;
 }
+.field-help {
+  display: block;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.75rem;
+  color: rgba(44,24,16,0.6);
+  margin-top: 0.25rem;
+}
 .field input, .field textarea {
   font-family: 'Lora', serif;
   font-size: 0.95rem;

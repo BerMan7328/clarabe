@@ -656,6 +656,16 @@ function initRSVP() {
 
     const data = new FormData(form);
     const dataObj = Object.fromEntries(data.entries());
+
+    // Hard cap: máximo 5 pessoas por confirmação
+    const qtd = parseInt(dataObj.quantos || '1', 10);
+    if (isNaN(qtd) || qtd < 1) {
+      dataObj.quantos = '1';
+    } else if (qtd > 5) {
+      dataObj.quantos = '5';
+      showToast('Máximo 5 pessoas por confirmação. Ajustado para 5.');
+    }
+
     // adiciona flag de "pulou a história"
     dataObj.chato = STATE.skippedStory ? 'Sim' : 'Não';
 

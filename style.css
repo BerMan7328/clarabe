@@ -2255,7 +2255,7 @@ img { display: block; max-width: 100%; }
   aspect-ratio: 296 / 284;
   max-width: 360px;
   height: auto;
-  margin: 0.5rem auto 0.75rem;
+  margin: 2.75rem auto 0.75rem; /* margem extra no topo para avatares overlay */
   padding: 8px;
   background:
     radial-gradient(ellipse at 0% 0%, rgba(139,94,42,0.18), transparent 50%),
@@ -2264,6 +2264,62 @@ img { display: block; max-width: 100%; }
   border-radius: 10px;
   box-shadow: 0 8px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
   overflow: visible;
+}
+
+/* Avatares "espiando" por cima da cena com balões de fala */
+.scene-avatars-overlay {
+  position: absolute;
+  top: -52px;
+  left: 8px; right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 6;
+}
+.avatar-overlay {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  max-width: 45%;
+}
+.avatar-overlay .avatar-slot {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-width: 2.5px;
+  flex-shrink: 0;
+}
+.avatar-overlay .speech-bubble {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  padding: 0.25rem 0.55rem 0.3rem;
+  max-width: 150px;
+  white-space: normal;
+  line-height: 1.1;
+  animation: bubblePopSimple 0.5s var(--easing-bounce) backwards;
+}
+.avatar-overlay .speech-bubble::before { left: 38%; }
+.avatar-overlay .speech-bubble::after  { left: 40%; }
+.avatar-overlay-solo {
+  margin: 0 auto;
+  max-width: 70%;
+}
+@keyframes bubblePopSimple {
+  from { opacity: 0; transform: scale(0.6) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@media (max-width: 480px) {
+  .scene-illustrated { margin-top: 2.5rem; }
+  .scene-avatars-overlay { top: -44px; }
+  .avatar-overlay .avatar-slot { width: 50px; height: 50px; }
+  .avatar-overlay .speech-bubble { font-size: 0.72rem; max-width: 110px; padding: 0.2rem 0.45rem 0.25rem; }
 }
 .scene-illustrated--wide {
   aspect-ratio: 616 / 284;

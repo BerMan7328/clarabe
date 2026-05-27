@@ -9,6 +9,7 @@ const STATE = {
   skippedStory: false, // true se clicou em "sou chato, quero pular a história"
   quizScore: null,     // ex: "7/10"
   quizTags: '',        // ex: "1,3,5,7,8,9,10" (índices 1-based das perguntas acertadas)
+  quizSuggestionSkipped: false, // true se já recusou fazer o quiz antes de enviar
 };
 
 /* ════════════════════════════════════════════════════════════
@@ -374,6 +375,37 @@ function finishQuiz() {
   // listener é via event delegation no initQuiz
 }
 
+function showQuizSuggestion() {
+  openModal(`
+    <h3>Antes de confirmar...</h3>
+    <p class="quiz-suggest-intro">
+      Que tal testar o quanto você <strong>conhece o casal</strong>?
+      São <strong>10 perguntas rápidas</strong> sobre a história deles.
+    </p>
+    <div class="quiz-suggest-pointer">
+      <svg viewBox="0 0 30 50" aria-hidden="true">
+        <path d="M15 4 L15 38 M5 30 L15 40 L25 30" stroke="#FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="quiz-suggest-pointer-text">o botão Quiz fica ali em cima</span>
+    </div>
+    <div class="quiz-suggest-actions">
+      <button type="button" class="primary-btn" id="quiz-suggest-go">Fazer o quiz primeiro</button>
+      <button type="button" class="quiz-suggest-skip" id="quiz-suggest-skip">Não, enviar minha confirmação</button>
+    </div>
+  `);
+  document.getElementById('quiz-suggest-go').addEventListener('click', () => {
+    closeModal();
+    setTimeout(openQuizModal, 250);
+  });
+  document.getElementById('quiz-suggest-skip').addEventListener('click', () => {
+    STATE.quizSuggestionSkipped = true;
+    closeModal();
+    // re-trigger o submit
+    const form = document.getElementById('rsvp-form');
+    if (form) form.requestSubmit();
+  });
+}
+
 function initQuiz() {
   const btn = document.getElementById('open-quiz');
   if (btn) btn.addEventListener('click', () => {
@@ -708,6 +740,13 @@ function initRSVP() {
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
+
+    // Se ainda não fez o quiz, oferece antes de enviar
+    if (!STATE.quizScore && !STATE.quizSuggestionSkipped) {
+      showQuizSuggestion();
+      return;
+    }
+
     const btn = form.querySelector('.submit-btn');
     const originalText = btn.textContent;
     btn.textContent = 'Enviando...';

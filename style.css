@@ -3771,6 +3771,69 @@ img { display: block; max-width: 100%; }
   margin-top: 0.5rem;
 }
 
+/* ═══ SUGESTÃO DE QUIZ (modal antes do envio do RSVP) ═══ */
+.quiz-suggest-intro {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--op-tinta);
+  margin-bottom: 1rem;
+}
+.quiz-suggest-pointer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem auto 1.25rem;
+  padding: 0.85rem 1rem 0.65rem;
+  background: rgba(245,197,24,0.12);
+  border: 1.5px dashed var(--op-amarelo-esc);
+  border-radius: 12px;
+}
+.quiz-suggest-pointer svg {
+  width: 28px;
+  height: 44px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  animation: pointerBob 1s ease-in-out infinite;
+}
+@keyframes pointerBob {
+  0%,100% { transform: translateY(-6px); }
+  50%      { transform: translateY(0); }
+}
+.quiz-suggest-pointer-text {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--op-vermelho);
+  margin-top: 0.25rem;
+}
+.quiz-suggest-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  align-items: center;
+}
+.quiz-suggest-actions .primary-btn {
+  width: 100%;
+  font-size: 0.95rem !important;
+}
+.quiz-suggest-skip {
+  background: none;
+  border: none;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: rgba(44,24,16,0.65);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(44,24,16,0.3);
+  text-underline-offset: 3px;
+  padding: 0.4rem 0.65rem;
+}
+.quiz-suggest-skip:hover {
+  color: var(--op-vermelho);
+}
+
 /* ══════════════════════════════════════════════════════════════
    QUIZ DO CASAL
 ══════════════════════════════════════════════════════════════ */

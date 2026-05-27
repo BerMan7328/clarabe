@@ -393,7 +393,7 @@ const WHATSAPP_NUMBER = '5531999999999'; // PLACEHOLDER — número de quem rece
 
 // COLE AQUI a URL do Web App do Google Apps Script (após o deploy)
 // Exemplo: 'https://script.google.com/macros/s/AKfycby.../exec'
-const SHEETS_ENDPOINT = 'PLACEHOLDER_SHEETS_URL';
+const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzcSNBtxSvRHziEwP6_rKMnpNidmwuK1Er7gkYcHNxDnMykcBn966EMeIYp9Kd0_tIM/exec';
 
 function saveRsvpLocally(data) {
   try {

@@ -384,7 +384,7 @@ function showQuizSuggestion() {
     </p>
     <div class="quiz-suggest-pointer">
       <svg viewBox="0 0 30 50" aria-hidden="true">
-        <path d="M15 4 L15 38 M5 30 L15 40 L25 30" stroke="#FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15 46 L15 12 M5 22 L15 8 L25 22" stroke="#FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span class="quiz-suggest-pointer-text">o botão Quiz fica ali em cima</span>
     </div>

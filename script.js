@@ -88,7 +88,7 @@ const CONFIRA = {
   13: {
     title: 'A Festa — onde, quando e como',
     photos: ['assets/ilhas/a-festa-1.jpeg'],
-    caption: 'Dia 13 de junho de 2026 · sábado · a partir das 14h · Recanto da Serra, Brumadinho/MG. Piscina, sauna, comida, drinks e Brasil na Copa.',
+    caption: 'Dia 13 de junho de 2026 · sábado · a partir das 14h · Recanto da Serra · Av. Nair Martins Drumond, 7, Palhano, Brumadinho/MG, 35460-000. Piscina, sauna, comida, drinks e Brasil na Copa.',
   },
   14: {
     title: 'A Comédia Romântica',
@@ -924,7 +924,7 @@ DTSTART:20260613T140000
 DTEND:20260613T230000
 SUMMARY:Sessão da Tarde — Aniversário Clara & Bê
 DESCRIPTION:Dois aniversários. Uma história improvável. Brasil na Copa.
-LOCATION:Av Nair Martins Drumond\\, nº 7\\, Recanto da Serra\\, Brumadinho/MG
+LOCATION:Av. Nair Martins Drumond\\, nº 7\\, Palhano\\, Brumadinho/MG\\, 35460-000
 STATUS:CONFIRMED
 END:VEVENT
 END:VCALENDAR`;

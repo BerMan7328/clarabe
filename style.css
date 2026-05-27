@@ -260,12 +260,15 @@ img { display: block; max-width: 100%; }
   padding: 4px;
   box-shadow: 0 6px 14px rgba(0,0,0,0.4), inset 0 0 0 1px var(--op-borda);
   position: relative;
+  overflow: hidden;
 }
 .suspect-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(1.25);
+  transform-origin: center 24%;
 }
 .suspect-bernardo .suspect-frame { transform: rotate(-2deg); }
 .suspect-clara .suspect-frame { transform: rotate(2deg); }
@@ -1169,8 +1172,10 @@ img { display: block; max-width: 100%; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
   display: block;
+  /* zoom no rosto (avatares são quadrados full-body, rosto fica em ~25% do topo) */
+  transform: scale(1.35);
+  transform-origin: center 26%;
 }
 .avatar-slot.avatar-clara { border-color: var(--dr-rosa); }
 .avatar-slot.avatar-bernardo { border-color: var(--op-amarelo); }
@@ -1230,6 +1235,9 @@ img { display: block; max-width: 100%; }
   margin-bottom: 4px;
   border-bottom: 2px double var(--op-tinta);
   padding-bottom: 3px;
+  background: linear-gradient(180deg, rgba(244,228,193,0.95), rgba(244,228,193,0.85));
+  position: relative;
+  z-index: 2;
 }
 .avatar-poster img {
   width: 100%;
@@ -1237,6 +1245,16 @@ img { display: block; max-width: 100%; }
   object-fit: cover;
   border: 2px solid var(--op-tinta);
   display: block;
+  transform: scale(1.2);
+  transform-origin: center 24%;
+}
+/* container precisa de overflow:hidden para o scale não vazar */
+.avatar-poster {
+  overflow: hidden;
+}
+.avatar-poster .poster-name {
+  z-index: 2;
+  background: linear-gradient(180deg, transparent, rgba(244,228,193,0.9) 30%);
 }
 .avatar-poster .poster-name {
   position: absolute;

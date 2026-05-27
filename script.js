@@ -410,9 +410,15 @@ function buildWhatsappMessage(data) {
     '🏴‍☠️ *Confirmação de presença — Sessão da Tarde*',
     '',
     `*Nome:* ${data.nome || '-'}`,
+    `*WhatsApp:* ${data.whatsapp || '-'}`,
     `*Vai?* ${data.vai || '-'}`,
+    `*Quantas pessoas:* ${data.quantos || '1'}`,
+    `*Dorme no sítio?* ${data.dormir || '-'}`,
     `*Lado:* ${data.lado || '-'}`,
   ];
+  if (data.bebida && data.bebida.trim()) {
+    lines.push(`*Bebida:* ${data.bebida}`);
+  }
   if (data.recado && data.recado.trim()) {
     lines.push('', `*Recado:* ${data.recado}`);
   }

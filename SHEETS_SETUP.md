@@ -9,7 +9,7 @@ Setup único, **gratuito**, sem servidor. Tempo: ~5 minutos.
 3. Na **primeira linha** (cabeçalho), coloque essas colunas exatamente:
 
 ```
-Data/Hora  |  Nome  |  Vai?  |  Lado  |  Recado
+Data/Hora | Nome | WhatsApp | Vai? | Quantas pessoas | Dorme no sítio? | Lado | Bebida que traz | Recado
 ```
 
 ## Passo 2 — Adicionar o Apps Script
@@ -25,8 +25,12 @@ function doPost(e) {
     sheet.appendRow([
       new Date(),
       data.nome || '',
+      data.whatsapp || '',
       data.vai || '',
+      data.quantos || '',
+      data.dormir || '',
       data.lado || '',
+      data.bebida || '',
       data.recado || ''
     ]);
     return ContentService

@@ -886,11 +886,30 @@
             </div>
 
             <div class="field">
+              <label for="rsvp-whatsapp">WhatsApp</label>
+              <input type="tel" id="rsvp-whatsapp" name="whatsapp" inputmode="tel" autocomplete="tel" placeholder="(31) 9 9999-9999">
+            </div>
+
+            <div class="field">
               <label>Vai à festa?</label>
               <div class="radios">
                 <label class="radio-opt"><input type="radio" name="vai" value="Sim" required> <span>Sim, conta comigo</span></label>
                 <label class="radio-opt"><input type="radio" name="vai" value="Talvez"> <span>Talvez</span></label>
                 <label class="radio-opt"><input type="radio" name="vai" value="Não"> <span>Não vou poder</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="rsvp-quantos">Quantas pessoas no total? <span class="field-optional">(você + acompanhantes)</span></label>
+              <input type="number" id="rsvp-quantos" name="quantos" min="1" max="10" value="1" inputmode="numeric">
+            </div>
+
+            <div class="field">
+              <label>Vai dormir no sítio?</label>
+              <div class="radios">
+                <label class="radio-opt"><input type="radio" name="dormir" value="Sim"> <span>Sim, vou dormir</span></label>
+                <label class="radio-opt"><input type="radio" name="dormir" value="Não"> <span>Volto pra casa</span></label>
+                <label class="radio-opt"><input type="radio" name="dormir" value="Talvez"> <span>Ainda não sei</span></label>
               </div>
             </div>
 
@@ -901,6 +920,11 @@
                 <label class="radio-opt"><input type="radio" name="lado" value="Clara"> <span>da Clara</span></label>
                 <label class="radio-opt"><input type="radio" name="lado" value="Ambos"> <span>dos dois</span></label>
               </div>
+            </div>
+
+            <div class="field">
+              <label for="rsvp-bebida">O que você traz de bebida? <span class="field-optional">(opcional)</span></label>
+              <input type="text" id="rsvp-bebida" name="bebida" placeholder="Cerveja, vinho, suco, destilado...">
             </div>
 
             <div class="field">

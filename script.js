@@ -153,7 +153,10 @@ function showWelcome() {
 function enterMap(targetIsland = 1) {
   document.getElementById('hud').classList.remove('hidden');
   document.getElementById('map-wrapper').classList.remove('hidden');
-  navigateTo(targetIsland, false);
+  // garante que o browser fez layout antes de calcular offsetLeft do alvo
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => navigateTo(targetIsland, false));
+  });
 }
 
 /* ════════════════════════════════════════════════════════════

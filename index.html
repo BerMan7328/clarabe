@@ -184,7 +184,7 @@
     </article>
 
     <div class="welcome-cta">
-      <p class="welcome-hint">A confirmação de presença está no <strong>fim da jornada</strong>, depois dos 14 capítulos.</p>
+      <p class="welcome-hint">A confirmação de presença está no <strong>fim da jornada</strong>, depois dos 15 capítulos.</p>
       <button id="welcome-embark" class="primary-btn welcome-embark-btn">Começar a história</button>
       <button id="welcome-skip" class="welcome-skip-btn" type="button">
         sou chato, quero pular a história
@@ -235,7 +235,18 @@
       </svg>
       <span class="hud-map-btn-label">Mapa</span>
     </button>
-    <span class="hud-progress-text"><span id="hud-current">1</span>/<span id="hud-total">15</span></span>
+    <button class="hud-map-btn hud-sound-btn" id="toggle-sound" aria-label="Ativar/desativar som" aria-pressed="false">
+      <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/>
+        <path d="M16.5 8.5a5 5 0 010 7M19 6a8 8 0 010 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+      <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/>
+        <path d="M17 9l5 6M22 9l-5 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="hud-map-btn-label">Som</span>
+    </button>
+    <span class="hud-progress-text"><span id="hud-current">1</span>/<span id="hud-total">16</span></span>
   </div>
 </div>
 
@@ -251,7 +262,7 @@
   <header class="world-map-header">
     <span class="world-map-eyebrow">Grand Line da Clara &amp; Bê</span>
     <h2 class="world-map-title">A jornada inteira</h2>
-    <p class="world-map-sub">14 ilhas até a Sessão da Tarde</p>
+    <p class="world-map-sub">15 ilhas até a Sessão da Tarde</p>
   </header>
 
   <div class="world-map-canvas">
@@ -330,7 +341,7 @@
 </div>
 
 <!-- ════════════════════════════════════════════════════════════
-     MAP — 14 capítulos + RSVP final
+     MAP — 15 capítulos + RSVP final
 ════════════════════════════════════════════════════════════ -->
 <div id="map-wrapper" class="map-wrapper hidden">
 
@@ -421,6 +432,13 @@
 
         <div class="island-narration">
           <p>"Tudo começou quando Bernardo, três anos mais novo, olhou para ela de um jeito tão fixo e nada discreto, que Clara só conseguiu pensar: <em>'quem é esse menino?'</em>"</p>
+        </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="2">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </article>
     </section>
@@ -574,6 +592,13 @@
         <div class="island-narration">
           <p>"Até que, depois de mais de um mês de suspense, ele finalmente criou coragem para chamá-la para sair."</p>
         </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="6">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </article>
     </section>
 
@@ -662,17 +687,41 @@
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 9 — O VILÃO ──────────────── -->
-    <section class="island" data-index="9" data-name="O Vilão" data-tone="op">
+    <!-- ──────────────── ILHA 9 — IN MEMORIAN ──────────────── -->
+    <section class="island island-memorian" data-index="9" data-name="In Memorian" data-tone="memorian">
+      <article class="island-page island-page-memorian">
+        <header class="island-header">
+          <span class="chapter-marker chapter-marker-memorian">Capítulo IX</span>
+          <h2 class="island-title island-title-memorian">In Memorian</h2>
+          <span class="title-flourish title-flourish-memorian"></span>
+        </header>
+
+        <div class="memorian-frame">
+          <div class="memorian-photo-wrap">
+            <img class="memorian-photo" src="assets/ilhas/in-memorian-1.jpeg" alt="In Memorian">
+          </div>
+          <div class="memorian-petals" aria-hidden="true">
+            <span class="memorian-petal"></span>
+            <span class="memorian-petal"></span>
+            <span class="memorian-petal"></span>
+            <span class="memorian-petal"></span>
+            <span class="memorian-petal"></span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ──────────────── ILHA 10 — O VILÃO ──────────────── -->
+    <section class="island" data-index="10" data-name="O Vilão: Contexto de Trabalho" data-tone="op">
       <article class="island-page">
         <header class="island-header">
-          <span class="chapter-marker">Capítulo IX</span>
-          <h2 class="island-title">O Vilão</h2>
+          <span class="chapter-marker">Capítulo X</span>
+          <h2 class="island-title">O Vilão: Contexto de Trabalho</h2>
           <span class="title-flourish"></span>
         </header>
 
         <div class="island-scene scene-illustrated scene-illustrated--wide">
-          <img class="scene-image" src="assets/scenes/ilha-9.jpeg" alt="Ilha 9 — O Vilão">
+          <img class="scene-image" src="assets/scenes/ilha-9.jpeg" alt="Ilha 10 — O Vilão">
           <div class="scene-avatars-overlay">
             <div class="avatar-overlay avatar-overlay-left">
               <div class="speech-bubble speech-bubble-bernardo">agora é nossa nova fase</div>
@@ -692,20 +741,27 @@
         <div class="island-narration">
           <p>"Entre conflitos e reviravoltas dignas de filme, Clara e Bernardo precisaram enfrentar o maior vilão da história: o contexto de trabalho. Por muito tempo, o Reino Desencantado bagunçou o caminho dos dois. Mas quando Clara finalmente saiu daquele cenário, eles descobriram que o amor só precisava de uma nova fase para acontecer do jeito certo."</p>
         </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="10">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 10 — DE REPENTE 30 ──────────────── -->
-    <section class="island" data-index="10" data-name="De Repente 30" data-tone="dr">
+    <!-- ──────────────── ILHA 11 — DE REPENTE 30 ──────────────── -->
+    <section class="island" data-index="11" data-name="De Repente 30" data-tone="dr">
       <article class="island-page">
         <header class="island-header">
-          <span class="chapter-marker">Capítulo X</span>
+          <span class="chapter-marker">Capítulo XI</span>
           <h2 class="island-title island-title-dr">De Repente 30</h2>
           <span class="title-flourish title-flourish-dr"></span>
         </header>
 
         <div class="island-scene scene-illustrated">
-          <img class="scene-image" src="assets/scenes/ilha-10.jpeg" alt="Ilha 10 — De Repente 30">
+          <img class="scene-image" src="assets/scenes/ilha-10.jpeg" alt="Ilha 11 — De Repente 30">
           <div class="scene-avatars-overlay">
             <div class="avatar-overlay avatar-overlay-solo">
               <div class="speech-bubble speech-bubble-clara">de repente cheguei aos 30</div>
@@ -726,7 +782,7 @@
         </div>
 
         <div class="island-cta">
-          <button class="confira-btn confira-btn-dr" data-confira="10">
+          <button class="confira-btn confira-btn-dr" data-confira="11">
             <span class="confira-text">Confira aqui</span>
             <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -734,17 +790,17 @@
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 11 — BERNARDO NA GRAND LINE ──────────────── -->
-    <section class="island" data-index="11" data-name="Bernardo na Grand Line" data-tone="op">
+    <!-- ──────────────── ILHA 12 — BERNARDO NA GRAND LINE ──────────────── -->
+    <section class="island" data-index="12" data-name="Bernardo na Grand Line" data-tone="op">
       <article class="island-page">
         <header class="island-header">
-          <span class="chapter-marker">Capítulo XI</span>
+          <span class="chapter-marker">Capítulo XII</span>
           <h2 class="island-title">Bernardo na Grand Line</h2>
           <span class="title-flourish"></span>
         </header>
 
         <div class="island-scene scene-illustrated">
-          <img class="scene-image" src="assets/scenes/ilha-11.jpeg" alt="Ilha 11 — Bernardo na Grand Line">
+          <img class="scene-image" src="assets/scenes/ilha-11.jpeg" alt="Ilha 12 — Bernardo na Grand Line">
           <div class="scene-avatars-overlay">
             <div class="avatar-overlay avatar-overlay-solo">
               <div class="speech-bubble speech-bubble-bernardo">perdido, mas com rumo</div>
@@ -762,7 +818,7 @@
         </div>
 
         <div class="island-cta">
-          <button class="confira-btn" data-confira="11">
+          <button class="confira-btn" data-confira="12">
             <span class="confira-text">Confira aqui</span>
             <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -770,17 +826,17 @@
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 12 — A FESTA ──────────────── -->
-    <section class="island" data-index="12" data-name="A Festa" data-tone="hybrid">
+    <!-- ──────────────── ILHA 13 — A FESTA ──────────────── -->
+    <section class="island" data-index="13" data-name="A Festa" data-tone="hybrid">
       <article class="island-page">
         <header class="island-header">
-          <span class="chapter-marker">Capítulo XII</span>
+          <span class="chapter-marker">Capítulo XIII</span>
           <h2 class="island-title">A Festa</h2>
           <span class="title-flourish"></span>
         </header>
 
         <div class="island-scene scene-illustrated">
-          <img class="scene-image" src="assets/scenes/ilha-12.jpeg" alt="Ilha 12 — A Festa">
+          <img class="scene-image" src="assets/scenes/ilha-12.jpeg" alt="Ilha 13 — A Festa">
           <div class="scene-avatars-overlay">
             <div class="avatar-overlay avatar-overlay-left">
               <div class="speech-bubble speech-bubble-bernardo">Brasil joga 19h</div>
@@ -805,7 +861,7 @@
         </div>
 
         <div class="island-cta">
-          <button class="confira-btn" data-confira="12">
+          <button class="confira-btn" data-confira="13">
             <span class="confira-text">Confira aqui</span>
             <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -813,17 +869,17 @@
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 13 — A COMÉDIA ROMÂNTICA ──────────────── -->
-    <section class="island" data-index="13" data-name="A Comédia Romântica" data-tone="hybrid">
+    <!-- ──────────────── ILHA 14 — A COMÉDIA ROMÂNTICA ──────────────── -->
+    <section class="island" data-index="14" data-name="A Comédia Romântica" data-tone="hybrid">
       <article class="island-page">
         <header class="island-header">
-          <span class="chapter-marker">Capítulo XIII</span>
+          <span class="chapter-marker">Capítulo XIV</span>
           <h2 class="island-title">A Comédia Romântica</h2>
           <span class="title-flourish"></span>
         </header>
 
         <div class="island-scene scene-illustrated">
-          <img class="scene-image" src="assets/scenes/ilha-13.jpeg" alt="Ilha 13 — A Comédia Romântica">
+          <img class="scene-image" src="assets/scenes/ilha-13.jpeg" alt="Ilha 14 — A Comédia Romântica">
           <div class="scene-avatars-overlay">
             <div class="avatar-overlay avatar-overlay-left">
               <div class="speech-bubble speech-bubble-bernardo">tá pronta a estreia</div>
@@ -843,20 +899,27 @@
         <div class="island-narration">
           <p>"Uma comédia romântica cheia de caos, amor e reviravoltas."</p>
         </div>
+
+        <div class="island-cta">
+          <button class="confira-btn" data-confira="14">
+            <span class="confira-text">Confira aqui</span>
+            <svg class="confira-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 14 — SESSÃO DA TARDE ──────────────── -->
-    <section class="island" data-index="14" data-name="Sessão da Tarde" data-tone="hybrid">
+    <!-- ──────────────── ILHA 15 — SESSÃO DA TARDE ──────────────── -->
+    <section class="island" data-index="15" data-name="Sessão da Tarde" data-tone="hybrid">
       <article class="island-page island-page-final">
         <header class="island-header">
-          <span class="chapter-marker">Capítulo XIV</span>
+          <span class="chapter-marker">Capítulo XV</span>
           <h2 class="island-title island-title-cinema">Sessão da Tarde</h2>
           <span class="title-flourish"></span>
         </header>
 
         <div class="island-scene scene-illustrated">
-          <img class="scene-image" src="assets/scenes/ilha-14.jpeg" alt="Ilha 14 — Sessão da Tarde">
+          <img class="scene-image" src="assets/scenes/ilha-14.jpeg" alt="Ilha 15 — Sessão da Tarde">
           <div class="scene-avatars-overlay">
             <div class="avatar-overlay avatar-overlay-left">
               <div class="speech-bubble speech-bubble-bernardo">13 de junho, salva!</div>
@@ -883,8 +946,8 @@
       </article>
     </section>
 
-    <!-- ──────────────── ILHA 15 — RSVP ──────────────── -->
-    <section class="island island-rsvp" data-index="15" data-name="Confirme sua presença" data-tone="hybrid">
+    <!-- ──────────────── ILHA 16 — RSVP ──────────────── -->
+    <section class="island island-rsvp" data-index="16" data-name="Confirme sua presença" data-tone="hybrid">
       <article class="island-page island-page-rsvp">
         <header class="island-header">
           <span class="chapter-marker">A última página</span>
@@ -1081,6 +1144,12 @@
      TOAST
 ════════════════════════════════════════════════════════════ -->
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- ════════════════════════════════════════════════════════════
+     ÁUDIO — trilha da jornada + refrão final
+════════════════════════════════════════════════════════════ -->
+<audio id="audio-journey" src="assets/sons/drums-of-liberation.mp3" preload="auto" loop></audio>
+<audio id="audio-celebration" src="assets/sons/i-wanna-dance.mp3" preload="none"></audio>
 
 <script src="script.js"></script>
 </body>

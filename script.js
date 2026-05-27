@@ -4,33 +4,36 @@
 
 const STATE = {
   current: 1,
-  total: 15,
+  total: 16,
   visited: new Set([1]),
   skippedStory: false, // true se clicou em "sou chato, quero pular a história"
   quizScore: null,     // ex: "7/10"
   quizTags: '',        // ex: "1,3,5,7,8,9,10" (índices 1-based das perguntas acertadas)
   quizSuggestionSkipped: false, // true se já recusou fazer o quiz antes de enviar
+  soundOn: false,      // estado do toggle de som
+  audioMode: 'journey',// 'journey' (Drums of Liberation) | 'celebration' (refrão Whitney)
 };
 
 /* ════════════════════════════════════════════════════════════
    WORLD MAP — posições das ilhas em SVG (viewBox 1000x1400)
 ════════════════════════════════════════════════════════════ */
 const WORLD_ISLANDS = [
-  { i: 1,  x: 200, y: 130,  label: 'Reino Desencantado' },
-  { i: 2,  x: 480, y: 180,  label: 'O Olhar' },
-  { i: 3,  x: 700, y: 330,  label: 'Festa da Firma' },
-  { i: 4,  x: 660, y: 510,  label: 'Regimento' },
-  { i: 5,  x: 380, y: 600,  label: 'Stories' },
-  { i: 6,  x: 220, y: 760,  label: 'O Convite' },
-  { i: 7,  x: 380, y: 900,  label: 'Conselheiro Mata' },
-  { i: 8,  x: 680, y: 850,  label: 'Luffy' },
-  { i: 9,  x: 820, y: 920,  label: 'O Vilão' },
-  { i: 10, x: 660, y: 1060, label: 'De Repente 30' },
-  { i: 11, x: 380, y: 1140, label: 'Grand Line' },
-  { i: 12, x: 320, y: 1290, label: 'A Festa' },
-  { i: 13, x: 500, y: 1320, label: 'Comédia' },
-  { i: 14, x: 680, y: 1280, label: 'Sessão da Tarde' },
-  { i: 15, x: 820, y: 1180, label: 'RSVP' },
+  { i: 1,  x: 200, y: 120,  label: 'Reino Desencantado' },
+  { i: 2,  x: 460, y: 170,  label: 'O Olhar' },
+  { i: 3,  x: 700, y: 290,  label: 'Festa da Firma' },
+  { i: 4,  x: 720, y: 460,  label: 'Regimento' },
+  { i: 5,  x: 480, y: 540,  label: 'Stories' },
+  { i: 6,  x: 240, y: 640,  label: 'O Convite' },
+  { i: 7,  x: 320, y: 820,  label: 'Conselheiro Mata' },
+  { i: 8,  x: 580, y: 800,  label: 'Luffy' },
+  { i: 9,  x: 780, y: 870,  label: 'In Memorian' },
+  { i: 10, x: 760, y: 1010, label: 'O Vilão' },
+  { i: 11, x: 540, y: 1060, label: 'De Repente 30' },
+  { i: 12, x: 320, y: 1080, label: 'Bernardo G.L.' },
+  { i: 13, x: 280, y: 1230, label: 'A Festa' },
+  { i: 14, x: 500, y: 1280, label: 'Comédia' },
+  { i: 15, x: 720, y: 1260, label: 'Sessão da Tarde' },
+  { i: 16, x: 840, y: 1130, label: 'RSVP' },
 ];
 
 /* ════════════════════════════════════════════════════════════
@@ -39,43 +42,65 @@ const WORLD_ISLANDS = [
 const CONFIRA = {
   1: {
     title: 'O Reino Desencantado',
-    photos: ['assets/fotos/evento-startbet.jpeg', 'assets/fotos/evento-startbet-be.jpeg'],
+    photos: ['assets/ilhas/reino-desencantado-1.jpeg'],
     caption: 'O Reino Desencantado tinha cara de empresa: crachás, RH, eventos corporativos. Foi exatamente ali que começou.',
+  },
+  2: {
+    title: 'O Olhar',
+    photos: ['assets/ilhas/o-olhar-1.jpeg'],
+    caption: 'O primeiro olhar — fixo, nada discreto, mudando tudo em silêncio.',
   },
   3: {
     title: 'A Festa da Firma',
-    photos: ['assets/fotos/evento-startbet.jpeg', 'assets/fotos/evento-startbet-be.jpeg'],
-    caption: 'A noite em que o RH percebeu — e mandou recado.',
+    photos: ['assets/ilhas/festa-da-firma-1.jpeg', 'assets/ilhas/festa-da-firma-2.jpeg'],
+    caption: 'A noite em que o destino deu o segundo sinal — e o RH mandou recado.',
   },
-  5: {
-    title: 'Stories, Reels e o início',
-    photos: ['assets/fotos/casal-fun.jpeg', 'assets/fotos/casal-carro.jpeg'],
-    caption: 'O começo: curtidas, reels, mensagens que não terminavam. E uma série inteira de The Office assistida por obrigação amorosa.',
+  6: {
+    title: 'O Convite',
+    photos: ['assets/ilhas/o-convite-1.jpeg'],
+    caption: 'Depois de um mês inteiro de suspense, finalmente o primeiro encontro.',
   },
   7: {
     title: 'Conselheiro Mata',
-    photos: ['assets/fotos/conselheiro-mata.jpeg', 'assets/fotos/conselheiro-fogueira.jpeg', 'assets/fotos/bernardo-mato.jpeg'],
+    photos: ['assets/ilhas/conselheiro-mata-1.jpeg', 'assets/ilhas/conselheiro-mata-2.jpeg', 'assets/ilhas/conselheiro-mata-3.jpeg'],
     caption: 'A primeira viagem. Mato, barraca, carrapatos, fogueira. Romance no estado bruto.',
   },
   8: {
     title: 'Luffy entra em cena',
-    photos: ['assets/fotos/luffy-filhote.jpeg', 'assets/fotos/luffy-cachorro.jpeg'],
+    photos: ['assets/ilhas/luffy-1.jpeg', 'assets/ilhas/luffy-2.jpeg', 'assets/ilhas/luffy-3.jpeg'],
     caption: 'Luffy: Border Collie duplo merle. Mais amor, mais pelos, mais caos no roteiro.',
   },
   10: {
-    title: 'De Repente 30',
-    photos: ['assets/fotos/casal-fun.jpeg', 'assets/fotos/casal-encontro.jpeg'],
-    caption: 'Clara, agora oficialmente no enredo de De Repente 30.',
+    title: 'O Vilão: Contexto de Trabalho',
+    photos: ['assets/ilhas/vilao-1.jpeg', 'assets/ilhas/vilao-2.jpeg', 'assets/ilhas/vilao-3.jpeg', 'assets/ilhas/vilao-4.jpeg'],
+    caption: 'A maior reviravolta da história — e a nova fase que veio depois.',
   },
   11: {
-    title: 'Bernardo na Grand Line',
-    photos: ['assets/fotos/bernardo-floresta.jpeg', 'assets/fotos/casal-carro.jpeg'],
-    caption: 'Bernardo navegando pela própria Grand Line — meio perdido, mas com o coração no rumo certo.',
+    title: 'De Repente 30',
+    photos: ['assets/ilhas/de-repente-30-1.jpeg', 'assets/ilhas/de-repente-30-2.jpeg', 'assets/ilhas/de-repente-30-3.jpeg'],
+    caption: 'Clara, agora oficialmente no enredo de De Repente 30.',
   },
   12: {
+    title: 'Bernardo na Grand Line',
+    photos: ['assets/ilhas/bernardo-grand-line-1.jpeg', 'assets/ilhas/bernardo-grand-line-2.jpeg'],
+    caption: 'Bernardo navegando pela própria Grand Line — meio perdido, mas com o coração no rumo certo.',
+  },
+  13: {
     title: 'A Festa — onde, quando e como',
-    photos: ['assets/fotos/casal-principal.jpeg'],
+    photos: ['assets/ilhas/a-festa-1.jpeg'],
     caption: 'Dia 13 de junho de 2026 · sábado · a partir das 14h · Recanto da Serra, Brumadinho/MG. Piscina, sauna, comida, drinks e Brasil na Copa.',
+  },
+  14: {
+    title: 'A Comédia Romântica',
+    photos: [
+      'assets/ilhas/comedia-romantica-1.jpeg',
+      'assets/ilhas/comedia-romantica-2.jpeg',
+      'assets/ilhas/comedia-romantica-3.jpeg',
+      'assets/ilhas/comedia-romantica-4.jpeg',
+      'assets/ilhas/comedia-romantica-5.jpeg',
+      'assets/ilhas/comedia-romantica-6.jpeg',
+    ],
+    caption: 'Caos, amor, reviravoltas — e muita cumplicidade no elenco principal.',
   },
 };
 
@@ -100,8 +125,9 @@ function initIntro() {
   // glitter
   initGlitter();
 
-  // botão zarpar
+  // botão zarpar — ativa o som (primeira interação destrava autoplay)
   document.getElementById('zarpar-btn').addEventListener('click', () => {
+    setSoundOn(true);
     document.getElementById('intro-screen').classList.add('fade-out');
     setTimeout(() => {
       document.getElementById('intro-screen').classList.add('hidden');
@@ -149,7 +175,7 @@ function showWelcome() {
       w.classList.add('fade-out');
       setTimeout(() => {
         w.classList.add('hidden');
-        enterMap(15);
+        enterMap(16);
       }, 600);
     }, { once: true });
   }
@@ -596,7 +622,7 @@ function initNavigation() {
 
   // CTA: ir do capítulo final pro RSVP
   const goRsvp = document.getElementById('go-to-rsvp');
-  if (goRsvp) goRsvp.addEventListener('click', () => navigateTo(15));
+  if (goRsvp) goRsvp.addEventListener('click', () => navigateTo(16));
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -617,9 +643,28 @@ function openConfira(id) {
 
   let photosHtml = '';
   if (data.photos && data.photos.length === 1) {
-    photosHtml = `<div class="photo-single"><img src="${data.photos[0]}" alt="${data.title}"></div>`;
+    photosHtml = `<div class="photo-single"><img src="${data.photos[0]}" alt="${data.title}" loading="lazy"></div>`;
   } else if (data.photos && data.photos.length > 1) {
-    photosHtml = `<div class="photo-grid">${data.photos.map(p => `<img src="${p}" alt="${data.title}">`).join('')}</div>`;
+    const slides = data.photos.map((p, i) =>
+      `<div class="photo-slide${i === 0 ? ' is-active' : ''}" data-i="${i}">
+         <img src="${p}" alt="${data.title} — ${i + 1}" loading="lazy">
+       </div>`
+    ).join('');
+    const dots = data.photos.map((_, i) =>
+      `<button type="button" class="photo-dot${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-label="Foto ${i + 1}"></button>`
+    ).join('');
+    photosHtml = `
+      <div class="photo-carousel" data-total="${data.photos.length}" data-index="0">
+        <div class="photo-track">${slides}</div>
+        <button type="button" class="photo-nav photo-nav-prev" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="photo-nav photo-nav-next" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <div class="photo-counter"><span class="photo-counter-cur">1</span> / ${data.photos.length}</div>
+        <div class="photo-dots">${dots}</div>
+      </div>`;
   }
 
   openModal(`
@@ -627,6 +672,44 @@ function openConfira(id) {
     ${photosHtml}
     ${data.caption ? `<p class="modal-caption">${data.caption}</p>` : ''}
   `);
+
+  initCarousel();
+}
+
+function initCarousel() {
+  const carousel = document.querySelector('#modal-body .photo-carousel');
+  if (!carousel) return;
+  const total = parseInt(carousel.dataset.total, 10);
+  const slides = carousel.querySelectorAll('.photo-slide');
+  const dots = carousel.querySelectorAll('.photo-dot');
+  const counter = carousel.querySelector('.photo-counter-cur');
+
+  function goTo(i) {
+    const idx = ((i % total) + total) % total;
+    carousel.dataset.index = idx;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === idx));
+    dots.forEach((d, k) => d.classList.toggle('is-active', k === idx));
+    if (counter) counter.textContent = idx + 1;
+  }
+
+  carousel.querySelector('.photo-nav-prev').addEventListener('click', () =>
+    goTo(parseInt(carousel.dataset.index, 10) - 1));
+  carousel.querySelector('.photo-nav-next').addEventListener('click', () =>
+    goTo(parseInt(carousel.dataset.index, 10) + 1));
+  dots.forEach((d, k) => d.addEventListener('click', () => goTo(k)));
+
+  // swipe horizontal dentro do carrossel
+  let sx = 0, sy = 0;
+  carousel.addEventListener('touchstart', e => {
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  carousel.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      goTo(parseInt(carousel.dataset.index, 10) + (dx < 0 ? 1 : -1));
+    }
+  }, { passive: true });
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -804,6 +887,9 @@ function initRSVP() {
       showToast('Confirmação salva. Configure a planilha ou envie pelo WhatsApp.');
     }
 
+    // ✨ vira a chave da trilha sonora: aventura → celebração
+    switchToCelebration();
+
     btn.textContent = originalText;
     btn.disabled = false;
   });
@@ -862,6 +948,129 @@ function showToast(msg, duration = 2800) {
 }
 
 /* ════════════════════════════════════════════════════════════
+   ÁUDIO — trilha da jornada + refrão após confirmar presença
+════════════════════════════════════════════════════════════ */
+// Refrão de "I Wanna Dance With Somebody" — primeira aparição
+// no áudio oficial da Whitney (intro instrumental ~21s antes).
+const REFRAO_START = 46.5;
+const REFRAO_END   = 75.5;
+
+function getAudio(mode) {
+  return document.getElementById(mode === 'celebration' ? 'audio-celebration' : 'audio-journey');
+}
+
+function ensureCelebrationLoop() {
+  const a = getAudio('celebration');
+  if (!a || a.dataset.loopWired === '1') return;
+  a.dataset.loopWired = '1';
+  a.addEventListener('timeupdate', () => {
+    if (a.currentTime >= REFRAO_END || a.currentTime < REFRAO_START - 0.2) {
+      a.currentTime = REFRAO_START;
+    }
+  });
+  a.addEventListener('seeked', () => { /* noop, mas necessário p/ alguns browsers */ });
+}
+
+function fadeAudio(audio, from, to, ms, onDone) {
+  if (!audio) { onDone && onDone(); return; }
+  const steps = 18;
+  const stepMs = ms / steps;
+  let i = 0;
+  audio.volume = Math.max(0, Math.min(1, from));
+  const iv = setInterval(() => {
+    i++;
+    const v = from + ((to - from) * (i / steps));
+    audio.volume = Math.max(0, Math.min(1, v));
+    if (i >= steps) {
+      clearInterval(iv);
+      onDone && onDone();
+    }
+  }, stepMs);
+}
+
+function startJourneyMusic() {
+  if (!STATE.soundOn) return;
+  const a = getAudio('journey');
+  if (!a) return;
+  STATE.audioMode = 'journey';
+  // se já tocando, ignora
+  if (!a.paused) return;
+  a.volume = 0;
+  const p = a.play();
+  if (p && typeof p.catch === 'function') {
+    p.then(() => fadeAudio(a, 0, 0.55, 900))
+     .catch(() => { /* bloqueado pelo browser — usuário precisa interagir de novo */ });
+  }
+}
+
+function stopJourneyMusic(cb) {
+  const a = getAudio('journey');
+  if (!a || a.paused) { cb && cb(); return; }
+  fadeAudio(a, a.volume, 0, 600, () => {
+    a.pause();
+    a.currentTime = 0;
+    cb && cb();
+  });
+}
+
+function startCelebrationMusic() {
+  ensureCelebrationLoop();
+  const a = getAudio('celebration');
+  if (!a) return;
+  STATE.audioMode = 'celebration';
+  if (!STATE.soundOn) return; // mesmo se off, registra modo; toggle ON depois retoma
+  a.currentTime = REFRAO_START;
+  a.volume = 0;
+  const p = a.play();
+  if (p && typeof p.catch === 'function') {
+    p.then(() => fadeAudio(a, 0, 0.7, 900))
+     .catch(() => { /* ignorado */ });
+  }
+}
+
+function setSoundOn(on, opts = {}) {
+  STATE.soundOn = !!on;
+  const btn = document.getElementById('toggle-sound');
+  if (btn) {
+    btn.setAttribute('aria-pressed', String(STATE.soundOn));
+    btn.classList.toggle('is-on', STATE.soundOn);
+  }
+  if (STATE.soundOn) {
+    if (STATE.audioMode === 'celebration') {
+      startCelebrationMusic();
+    } else {
+      startJourneyMusic();
+    }
+  } else {
+    const j = getAudio('journey');
+    const c = getAudio('celebration');
+    if (j && !j.paused) fadeAudio(j, j.volume, 0, 400, () => j.pause());
+    if (c && !c.paused) fadeAudio(c, c.volume, 0, 400, () => c.pause());
+  }
+  try { localStorage.setItem('grand-line-sound', STATE.soundOn ? '1' : '0'); } catch (e) {}
+}
+
+function initSound() {
+  const btn = document.getElementById('toggle-sound');
+  if (btn) {
+    btn.addEventListener('click', () => setSoundOn(!STATE.soundOn));
+  }
+  // restaura preferência (mas só liga quando o usuário interagir — autoplay policy)
+  try {
+    const pref = localStorage.getItem('grand-line-sound');
+    if (pref === '1') STATE.soundOn = true; // será ativado de fato na próxima interação
+  } catch (e) {}
+}
+
+// trocar do journey → celebration ao confirmar presença
+function switchToCelebration() {
+  STATE.audioMode = 'celebration';
+  stopJourneyMusic(() => {
+    if (STATE.soundOn) startCelebrationMusic();
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
    INIT
 ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
@@ -873,6 +1082,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRSVP();
   initWorldMap();
   initQuiz();
+  initSound();
 });
 
 // reajusta posição em resize (vw muda)

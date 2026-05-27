@@ -334,24 +334,29 @@
         </header>
 
         <div class="island-scene scene-reino">
+          <!-- background: torres do "reino" -->
           <div class="scene-castle">
             <div class="castle-tower castle-tower-1"></div>
             <div class="castle-tower castle-tower-2"></div>
             <div class="castle-tower castle-tower-3"></div>
             <div class="castle-windows"></div>
           </div>
-          <div class="avatar-slot avatar-clara" data-name="Clara" style="bottom: 20px; right: 18px;">
-            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
-          </div>
-          <div class="avatar-slot avatar-bernardo avatar-sm" data-name="Bê" style="top: 14px; left: 16px;">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
-          </div>
+          <!-- selos/decoração ao redor -->
           <div class="scene-stamp stamp-rh">RH</div>
           <div class="scene-sparkle scene-sparkle-1"></div>
+          <!-- PROTAGONISTA CENTRAL -->
+          <div class="scene-protagonists">
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara">
+                <img src="assets/avatars/clara.jpeg" alt="Clara">
+              </div>
+              <div class="avatar-label avatar-label-dr">Clara</div>
+            </div>
+          </div>
         </div>
 
         <!-- camadas de colagem -->
-        <div class="scrapbook-layer scrap-tape" style="top: 0; left: 22%; width: 80px; transform: rotate(-8deg);"></div>
+        <div class="scrapbook-layer scrap-tape" style="top: 4px; left: 22%; width: 80px; transform: rotate(-8deg);"></div>
         <div class="scrapbook-layer scrap-stamp" style="bottom: 32%; right: 8%; transform: rotate(-12deg);">PROIBIDO</div>
 
         <div class="island-narration">
@@ -434,15 +439,23 @@
 
         <div class="island-scene scene-festa-firma">
           <div class="scene-confetti"></div>
-          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 30px; left: 18%;" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
-          </div>
-          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 30px; left: 40%;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
-          </div>
           <div class="scene-callout">
             <span class="callout-tag">RH alerta:</span>
             <span class="callout-msg">"melhor não se envolverem"</span>
+          </div>
+          <div class="scene-protagonists">
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara">
+                <img src="assets/avatars/clara.jpeg" alt="Clara">
+              </div>
+              <div class="avatar-label avatar-label-dr">Clara</div>
+            </div>
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-bernardo avatar-lg avatar-tilt-left" data-name="Bê">
+                <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+              </div>
+              <div class="avatar-label">Bê (orbitando)</div>
+            </div>
           </div>
         </div>
 
@@ -477,15 +490,19 @@
             <div class="doc-line"></div>
             <div class="doc-line short"></div>
             <div class="doc-line"></div>
-            <div class="doc-line short"></div>
             <div class="doc-signature">
               <em>Redigido por:</em>
               <span class="signature-name">Maria Clara Gomes</span>
             </div>
             <div class="doc-stamp">PROIBIDO</div>
           </div>
-          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 10px; right: 10px;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara">
+          <div class="scene-protagonists" style="justify-content: flex-end; padding-right: 1.5rem;">
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara">
+                <img src="assets/avatars/clara.jpeg" alt="Clara">
+              </div>
+              <div class="avatar-label avatar-label-dr">Autora do regimento</div>
+            </div>
           </div>
         </div>
 
@@ -646,16 +663,24 @@
         </header>
 
         <div class="island-scene scene-luffy">
-          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 14px; left: 16px;" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
-          </div>
-          <div class="scene-luffy-photo">
-            <img src="assets/fotos/luffy-filhote.jpeg" alt="Luffy" class="luffy-photo">
-          </div>
-          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 14px; right: 16px;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara">
-          </div>
           <div class="scene-bubble">"Au au!"</div>
+          <div class="scene-protagonists">
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-bernardo" data-name="Bê">
+                <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+              </div>
+              <div class="avatar-label">Bê</div>
+            </div>
+            <div class="scene-luffy-photo">
+              <img src="assets/fotos/luffy-filhote.jpeg" alt="Luffy" class="luffy-photo">
+            </div>
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-clara" data-name="Clara">
+                <img src="assets/avatars/clara.jpeg" alt="Clara">
+              </div>
+              <div class="avatar-label avatar-label-dr">Clara</div>
+            </div>
+          </div>
         </div>
 
         <div class="scrapbook-layer scrap-tape" style="top: 4px; left: 40%; width: 70px; transform: rotate(4deg);"></div>
@@ -791,17 +816,23 @@
         </header>
 
         <div class="island-scene scene-festa">
+          <div class="festa-confetti"></div>
           <div class="festa-tag festa-tag-1">Piscina</div>
           <div class="festa-tag festa-tag-2">Sauna</div>
           <div class="festa-tag festa-tag-3">Comida</div>
           <div class="festa-tag festa-tag-4">Drinks</div>
           <div class="festa-tag festa-tag-5">Brasil na Copa</div>
-          <div class="festa-confetti"></div>
-          <div class="avatar-slot avatar-clara avatar-sm" style="bottom: 14px; left: 30%;" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara" onerror="this.style.display='none'">
-          </div>
-          <div class="avatar-slot avatar-bernardo avatar-sm" style="bottom: 14px; right: 30%;" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo" onerror="this.style.display='none'">
+          <div class="scene-protagonists">
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara">
+                <img src="assets/avatars/clara.jpeg" alt="Clara">
+              </div>
+            </div>
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-bernardo avatar-lg" data-name="Bê">
+                <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -831,23 +862,29 @@
         </header>
 
         <div class="island-scene scene-comedia">
-          <div class="avatar-slot avatar-bernardo avatar-sm" style="top: 50%; left: 14%; transform: translateY(-50%);" data-name="Bê">
-            <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
-          </div>
-          <div class="movie-poster">
-            <div class="poster-title">Uma comédia romântica</div>
-            <div class="poster-sub">cheia de caos, amor &amp; reviravoltas</div>
-            <div class="poster-decoration">
-              <span class="poster-skull">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="11" r="8" fill="#fff"/><circle cx="9" cy="10" r="1.5" fill="#2c1810"/><circle cx="15" cy="10" r="1.5" fill="#2c1810"/><rect x="10" y="15" width="4" height="2" fill="#2c1810"/></svg>
-              </span>
-              <span class="poster-rose">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#FF9EC4"/><circle cx="12" cy="12" r="3" fill="#FFD700"/><path d="M12 17 Q15 20 18 20" stroke="#2d8a5a" stroke-width="1.5" fill="none"/></svg>
-              </span>
+          <div class="scene-protagonists">
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-bernardo avatar-lg" data-name="Bê">
+                <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+              </div>
             </div>
-          </div>
-          <div class="avatar-slot avatar-clara avatar-sm" style="top: 50%; right: 14%; transform: translateY(-50%);" data-name="Clara">
-            <img src="assets/avatars/clara.jpeg" alt="Clara">
+            <div class="movie-poster">
+              <div class="poster-title">Uma comédia romântica</div>
+              <div class="poster-sub">cheia de caos, amor &amp; reviravoltas</div>
+              <div class="poster-decoration">
+                <span class="poster-skull">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="11" r="8" fill="#fff"/><circle cx="9" cy="10" r="1.5" fill="#2c1810"/><circle cx="15" cy="10" r="1.5" fill="#2c1810"/><rect x="10" y="15" width="4" height="2" fill="#2c1810"/></svg>
+                </span>
+                <span class="poster-rose">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#FF9EC4"/><circle cx="12" cy="12" r="3" fill="#FFD700"/><path d="M12 17 Q15 20 18 20" stroke="#2d8a5a" stroke-width="1.5" fill="none"/></svg>
+                </span>
+              </div>
+            </div>
+            <div class="avatar-stage">
+              <div class="avatar-slot avatar-clara avatar-lg" data-name="Clara">
+                <img src="assets/avatars/clara.jpeg" alt="Clara">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -870,10 +907,10 @@
           <div class="cinema-strip"></div>
           <div class="cinema-card">
             <div class="cinema-avatars">
-              <div class="avatar-slot avatar-clara avatar-sm" data-name="Clara">
+              <div class="avatar-slot avatar-clara" data-name="Clara">
                 <img src="assets/avatars/clara.jpeg" alt="Clara">
               </div>
-              <div class="avatar-slot avatar-bernardo avatar-sm" data-name="Bê">
+              <div class="avatar-slot avatar-bernardo" data-name="Bê">
                 <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
               </div>
             </div>

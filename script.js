@@ -385,10 +385,15 @@ function initModal() {
    RSVP — form submit + confirmação
 ════════════════════════════════════════════════════════════ */
 /* ════════════════════════════════════════════════════════════
-   RSVP — Persistência local + fallback WhatsApp
+   RSVP — Envia para Google Sheets via Apps Script + backup local
+   Setup: ver SHEETS_SETUP.md
 ════════════════════════════════════════════════════════════ */
 const RSVP_STORAGE_KEY = 'grand-line-rsvp';
-const WHATSAPP_NUMBER = '5531999999999'; // PLACEHOLDER — substitua pelo número real
+const WHATSAPP_NUMBER = '5531999999999'; // PLACEHOLDER — número de quem recebe confirmações
+
+// COLE AQUI a URL do Web App do Google Apps Script (após o deploy)
+// Exemplo: 'https://script.google.com/macros/s/AKfycby.../exec'
+const SHEETS_ENDPOINT = 'PLACEHOLDER_SHEETS_URL';
 
 function saveRsvpLocally(data) {
   try {
@@ -414,6 +419,27 @@ function buildWhatsappMessage(data) {
   return encodeURIComponent(lines.join('\n'));
 }
 
+async function sendToSheets(dataObj) {
+  if (!SHEETS_ENDPOINT || SHEETS_ENDPOINT === 'PLACEHOLDER_SHEETS_URL') {
+    return false;
+  }
+  try {
+    // Apps Script Web App não suporta CORS preflight com Content-Type custom,
+    // por isso usa 'text/plain' e parse no lado do Apps Script.
+    const res = await fetch(SHEETS_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors', // Apps Script doPost com no-cors funciona
+      body: JSON.stringify({ ...dataObj, ts: new Date().toISOString() }),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    });
+    // no-cors: response é opaque (sempre ok=true). Confiamos no envio.
+    return true;
+  } catch (err) {
+    console.warn('Sheets falhou', err);
+    return false;
+  }
+}
+
 function initRSVP() {
   const form = document.getElementById('rsvp-form');
   if (!form) return;
@@ -425,31 +451,22 @@ function initRSVP() {
     btn.textContent = 'Enviando...';
     btn.disabled = true;
 
-    // coleta dados
     const data = new FormData(form);
     const dataObj = Object.fromEntries(data.entries());
 
-    // SEMPRE salva no localStorage (backup)
+    // 1. SEMPRE salva no localStorage (backup)
     saveRsvpLocally(dataObj);
 
-    let formspreeOk = false;
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' },
-      });
-      formspreeOk = res.ok;
-    } catch (err) {
-      console.warn('Formspree falhou', err);
-    }
+    // 2. Envia para Google Sheets via Apps Script
+    const sheetsOk = await sendToSheets(dataObj);
 
-    showConfirmation(dataObj, formspreeOk);
+    // 3. Mostra confirmação
+    showConfirmation(dataObj, sheetsOk);
 
-    if (formspreeOk) {
+    if (sheetsOk) {
       showToast('Presença confirmada!');
     } else {
-      showToast('Confirmação salva. Envie pelo WhatsApp também.');
+      showToast('Confirmação salva. Configure a planilha ou envie pelo WhatsApp.');
     }
 
     btn.textContent = originalText;

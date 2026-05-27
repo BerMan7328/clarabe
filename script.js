@@ -136,12 +136,24 @@ function showWelcome() {
       enterMap();
     }, 600);
   }, { once: true });
+
+  // Botão "sou chato, quero pular a história" → vai direto pra ilha 15 (RSVP)
+  const skipBtn = document.getElementById('welcome-skip');
+  if (skipBtn) {
+    skipBtn.addEventListener('click', () => {
+      w.classList.add('fade-out');
+      setTimeout(() => {
+        w.classList.add('hidden');
+        enterMap(15);
+      }, 600);
+    }, { once: true });
+  }
 }
 
-function enterMap() {
+function enterMap(targetIsland = 1) {
   document.getElementById('hud').classList.remove('hidden');
   document.getElementById('map-wrapper').classList.remove('hidden');
-  navigateTo(1, false);
+  navigateTo(targetIsland, false);
 }
 
 /* ════════════════════════════════════════════════════════════

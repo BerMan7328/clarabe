@@ -760,6 +760,44 @@ img { display: block; max-width: 100%; }
   font-size: 1.05rem !important;
 }
 
+/* Botão "pular a história" — sutil, embaixo do CTA principal */
+.welcome-skip-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  margin: 0.85rem auto 0;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  padding: 0.4rem 0.65rem;
+  border-radius: 8px;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.3);
+  text-underline-offset: 3px;
+  transition: color 0.2s, background 0.2s;
+}
+.welcome-skip-btn:hover {
+  color: var(--dr-rosa-claro);
+  background: rgba(255,255,255,0.05);
+  text-decoration-color: var(--dr-rosa-claro);
+}
+.welcome-skip-sub {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-style: normal;
+  color: var(--op-amarelo);
+  opacity: 0.85;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
 /* ══════════════════════════════════════════════════════════════
    HUD
 ══════════════════════════════════════════════════════════════ */

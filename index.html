@@ -377,23 +377,29 @@
         </header>
 
         <div class="island-scene scene-olhar">
-          <!-- Bê COMPLETAMENTE apaixonado: inclinado, com corações enormes e sparkles -->
+          <!-- Bê HIPNOTIZADO: tilt + olhos de coração + babando + corações flutuando -->
           <div class="avatar-stage stage-left">
             <div class="avatar-slot avatar-bernardo avatar-lg avatar-tilt-left" data-name="Bê">
               <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
+              <!-- olhos de coração sobrepostos -->
+              <svg class="heart-eye heart-eye-left" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#ff1744" stroke="#fff" stroke-width="2"/></svg>
+              <svg class="heart-eye heart-eye-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#ff1744" stroke="#fff" stroke-width="2"/></svg>
+              <!-- babinha cômica -->
+              <svg class="drool" viewBox="0 0 12 24" aria-hidden="true"><path d="M6 0 Q4 8 6 14 Q8 18 6 24 Q4 18 6 14 Z" fill="#7fd8ff" stroke="#fff" stroke-width="1"/></svg>
             </div>
+            <!-- corações flutuando ao redor -->
             <svg class="emote-svg heart-bob heart-pos-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#c0392b" stroke="#fff" stroke-width="1.5"/></svg>
             <svg class="emote-svg heart-bob heart-pos-2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#ff5470" stroke="#fff" stroke-width="1.5"/></svg>
             <svg class="emote-svg heart-bob heart-pos-3" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#FF9EC4" stroke="#fff" stroke-width="1.5"/></svg>
             <svg class="emote-svg spark-flash spark-pos-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" fill="#FFD700" stroke="#fff" stroke-width="1"/></svg>
             <svg class="emote-svg spark-flash spark-pos-2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" fill="#FFD700" stroke="#fff" stroke-width="1"/></svg>
-            <div class="avatar-label">Bê apaixonado</div>
+            <div class="avatar-label">Bê hipnotizado</div>
           </div>
 
-          <!-- linha de gaze entre os dois -->
+          <!-- linha de gaze com coração entre os dois -->
           <svg class="scene-gaze" viewBox="0 0 200 100" aria-hidden="true">
             <path d="M10 50 Q100 8 190 50" stroke="#c0392b" stroke-width="3" stroke-dasharray="6 6" fill="none"/>
-            <path transform="translate(94,24)" d="M0 8 l-3 5 -6 1 4 4 -1 6 6 -3 6 3 -1 -6 4 -4 -6 -1 z" fill="#FF9EC4" stroke="#c0392b" stroke-width="1.5"/>
+            <path transform="translate(94,18)" d="M6 18l-1-1C2 14 0 12 0 8.5 0 6 2 4 4.5 4c1 0 2 .5 2.5 1.2C7.5 4.5 8.5 4 9.5 4 12 4 14 6 14 8.5c0 3.5-2 5.5-5 8.5z" fill="#ff1744" stroke="#fff" stroke-width="1.5"/>
           </svg>
 
           <!-- Clara curiosa com balão de interrogação -->
@@ -503,7 +509,7 @@
             <div class="avatar-slot avatar-clara avatar-tilt-right" data-name="Clara">
               <img src="assets/avatars/clara.jpeg" alt="Clara">
             </div>
-            <div class="emote emote-heart heart-1" style="top:-8px; right:-12px;"></div>
+            <svg class="emote-svg heart-bob heart-pos-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#ff5470" stroke="#fff" stroke-width="1.5"/></svg>
           </div>
           <div class="scene-phone">
             <div class="phone-notch"></div>
@@ -518,7 +524,7 @@
             <div class="avatar-slot avatar-bernardo avatar-tilt-left" data-name="Bê">
               <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
             </div>
-            <div class="emote emote-sweat" style="top:6px; right:-6px;"></div>
+            <svg class="emote-svg sweat-svg sweat-pos" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 2 C12 2 22 16 22 22 C22 27 17 30 12 30 C7 30 2 27 2 22 C2 16 12 2 12 2 Z" fill="#4dc3ff" stroke="#fff" stroke-width="2"/></svg>
           </div>
         </div>
 
@@ -553,8 +559,8 @@
             <div class="avatar-slot avatar-bernardo" data-name="Bê">
               <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
             </div>
-            <div class="emote emote-sweat" style="top:4px; right:-8px;"></div>
-            <div class="emote emote-thinking" style="top:-10px; left:50%;">!</div>
+            <svg class="emote-svg sweat-svg sweat-pos" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 2 C12 2 22 16 22 22 C22 27 17 30 12 30 C7 30 2 27 2 22 C2 16 12 2 12 2 Z" fill="#4dc3ff" stroke="#fff" stroke-width="2"/></svg>
+            <div class="exclaim-bubble">!</div>
           </div>
           <div class="scene-envelope">
             <div class="envelope-flap"></div>
@@ -564,7 +570,7 @@
             <div class="avatar-slot avatar-clara" data-name="Clara">
               <img src="assets/avatars/clara.jpeg" alt="Clara">
             </div>
-            <div class="emote emote-heart heart-1" style="top:-10px; left:-12px;"></div>
+            <svg class="emote-svg heart-bob heart-pos-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#FF9EC4" stroke="#fff" stroke-width="1.5"/></svg>
           </div>
           <div class="scene-timer">
             <span class="timer-label">um mês depois...</span>
@@ -604,12 +610,13 @@
             <div class="avatar-slot avatar-clara avatar-sm avatar-tilt-right" data-name="Clara">
               <img src="assets/avatars/clara.jpeg" alt="Clara">
             </div>
-            <div class="emote emote-heart heart-1" style="top:-6px; right:-8px; width: 14px; height: 14px;"></div>
+            <svg class="emote-svg heart-bob heart-pos-1" viewBox="0 0 24 24" aria-hidden="true" style="width:18px; height:18px; top:-12px; right:-10px;"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#FF9EC4" stroke="#fff" stroke-width="1.5"/></svg>
           </div>
           <div class="avatar-stage" style="position:absolute; bottom: 26px; right: 18%;">
             <div class="avatar-slot avatar-bernardo avatar-sm avatar-tilt-left" data-name="Bê">
               <img src="assets/avatars/bernardo.jpeg" alt="Bernardo">
             </div>
+            <svg class="emote-svg heart-bob heart-pos-1" viewBox="0 0 24 24" aria-hidden="true" style="width:18px; height:18px; top:-12px; left:-10px;"><path d="M12 21l-1.5-1.4C5 14.7 2 12 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.5-3 6.2-8.5 11.1L12 21z" fill="#c0392b" stroke="#fff" stroke-width="1.5"/></svg>
           </div>
           <div class="scene-ground"></div>
         </div>

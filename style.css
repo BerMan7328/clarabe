@@ -1339,6 +1339,39 @@ img { display: block; max-width: 100%; }
   z-index: 5;
 }
 
+/* ═══ HEART EYES — sobrepostos nos olhos do avatar (Ilha 2 — Bê) ═══ */
+.heart-eye {
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  top: 30%;
+  z-index: 5;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  animation: heartEyeBeat 0.6s ease-in-out infinite alternate;
+}
+.heart-eye-left  { left: 14%; }
+.heart-eye-right { right: 14%; }
+@keyframes heartEyeBeat {
+  from { transform: scale(0.92); }
+  to   { transform: scale(1.12); }
+}
+
+/* Babinha cômica saindo da boca */
+.drool {
+  position: absolute;
+  width: 9%;
+  height: 18%;
+  top: 68%;
+  left: 60%;
+  z-index: 5;
+  animation: droolDrip 1.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+@keyframes droolDrip {
+  0%,100% { transform: scaleY(0.8); opacity: 0.85; }
+  50%      { transform: scaleY(1.15); opacity: 1; }
+}
+
 /* ═══ EMOTES INLINE SVG (versão definitiva, mais visível) ═══ */
 .emote-svg {
   position: absolute;
@@ -1372,6 +1405,39 @@ img { display: block; max-width: 100%; }
 @keyframes sparkFlash {
   0%,100% { opacity: 0.55; transform: rotate(0) scale(1); }
   50%      { opacity: 1; transform: rotate(45deg) scale(1.25); }
+}
+
+/* Gota de suor SVG */
+.sweat-svg {
+  animation: sweatBob 1.4s ease-in-out infinite;
+}
+.sweat-pos {
+  width: 18px; height: 24px;
+  top: 8px; right: -10px;
+}
+@keyframes sweatBob {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* Balão de exclamação */
+.exclaim-bubble {
+  position: absolute;
+  top: -16px; left: 50%;
+  transform: translateX(-50%);
+  width: 28px; height: 28px;
+  background: var(--op-amarelo);
+  color: var(--op-tinta);
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid var(--op-tinta);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  z-index: 7;
+  animation: bubblePulse 1.5s ease-in-out infinite;
 }
 
 /* Balão de interrogação Clara */

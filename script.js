@@ -625,7 +625,7 @@ async function sendToSheets(dataObj) {
 }
 
 function formatBrPhone(raw) {
-  const digits = raw.replace(/\D/g, '').slice(0, 11);
+  const digits = (raw || '').toString().replace(/\D/g, '').slice(0, 11);
   if (!digits) return '';
   if (digits.length <= 2)  return `(${digits}`;
   if (digits.length <= 3)  return `(${digits.slice(0,2)}) ${digits.slice(2)}`;
@@ -636,10 +636,23 @@ function formatBrPhone(raw) {
 
 function initWhatsappMask() {
   const inp = document.getElementById('rsvp-whatsapp');
-  if (!inp) return;
-  inp.addEventListener('input', e => {
-    e.target.value = formatBrPhone(e.target.value);
-  });
+  if (!inp) {
+    console.warn('[whatsapp mask] input não encontrado — retry em 200ms');
+    setTimeout(initWhatsappMask, 200);
+    return;
+  }
+  if (inp.dataset.maskWired === '1') return; // evita wiring duplo
+  inp.dataset.maskWired = '1';
+
+  const apply = (el) => {
+    const formatted = formatBrPhone(el.value);
+    if (formatted !== el.value) el.value = formatted;
+  };
+
+  inp.addEventListener('input', e => apply(e.target));
+  inp.addEventListener('blur',  e => apply(e.target));
+  inp.addEventListener('paste', e => setTimeout(() => apply(e.target), 0));
+  console.log('[whatsapp mask] wired OK');
 }
 
 function initRSVP() {

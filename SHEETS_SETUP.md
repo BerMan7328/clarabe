@@ -9,7 +9,7 @@ Setup único, **gratuito**, sem servidor. Tempo: ~5 minutos.
 3. Na **primeira linha** (cabeçalho), coloque essas colunas exatamente:
 
 ```
-Data/Hora | Nome | WhatsApp | Vai? | Quantas pessoas | Lado | Recado
+Data/Hora | Nome | WhatsApp | Vai? | Quantas pessoas | Lado | Recado | Pulou a história?
 ```
 
 ## Passo 2 — Adicionar o Apps Script
@@ -29,7 +29,8 @@ function doPost(e) {
       data.vai || '',
       data.quantos || '',
       data.lado || '',
-      data.recado || ''
+      data.recado || '',
+      data.chato || 'Não'
     ]);
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))

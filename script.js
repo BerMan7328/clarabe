@@ -6,6 +6,7 @@ const STATE = {
   current: 1,
   total: 15,
   visited: new Set([1]),
+  skippedStory: false, // true se clicou em "sou chato, quero pular a história"
 };
 
 /* ════════════════════════════════════════════════════════════
@@ -141,6 +142,7 @@ function showWelcome() {
   const skipBtn = document.getElementById('welcome-skip');
   if (skipBtn) {
     skipBtn.addEventListener('click', () => {
+      STATE.skippedStory = true; // marca que esse user pulou — vai pra planilha
       w.classList.add('fade-out');
       setTimeout(() => {
         w.classList.add('hidden');
@@ -429,6 +431,7 @@ function buildWhatsappMessage(data) {
     `*Vai?* ${data.vai || '-'}`,
     `*Quantas pessoas:* ${data.quantos || '1'}`,
     `*Lado:* ${data.lado || '-'}`,
+    `*Pulou a história?* ${data.chato || 'Não'}`,
   ];
   if (data.recado && data.recado.trim()) {
     lines.push('', `*Recado:* ${data.recado}`);
@@ -470,6 +473,8 @@ function initRSVP() {
 
     const data = new FormData(form);
     const dataObj = Object.fromEntries(data.entries());
+    // adiciona flag de "pulou a história"
+    dataObj.chato = STATE.skippedStory ? 'Sim' : 'Não';
 
     // 1. SEMPRE salva no localStorage (backup)
     saveRsvpLocally(dataObj);

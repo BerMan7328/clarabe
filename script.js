@@ -7,6 +7,8 @@ const STATE = {
   total: 15,
   visited: new Set([1]),
   skippedStory: false, // true se clicou em "sou chato, quero pular a história"
+  quizScore: null,     // ex: "7/10"
+  quizTags: '',        // ex: "1,3,5,7,8,9,10" (índices 1-based das perguntas acertadas)
 };
 
 /* ════════════════════════════════════════════════════════════
@@ -275,7 +277,7 @@ const QUIZ = [
 let quizState = null;
 
 function openQuizModal() {
-  quizState = { index: 0, score: 0 };
+  quizState = { index: 0, score: 0, hits: [] };
   renderQuizQuestion();
 }
 
@@ -296,7 +298,10 @@ function renderQuizQuestion() {
 function answerQuiz(i) {
   const q = QUIZ[quizState.index];
   const correct = i === q.correct;
-  if (correct) quizState.score++;
+  if (correct) {
+    quizState.score++;
+    quizState.hits.push(quizState.index + 1); // índice 1-based
+  }
 
   document.querySelectorAll('.quiz-option').forEach((btn, idx) => {
     btn.disabled = true;
@@ -318,6 +323,10 @@ function answerQuiz(i) {
 function finishQuiz() {
   const score = quizState.score;
   const pct = Math.round((score / QUIZ.length) * 100);
+
+  // salva no STATE pra ir junto com o RSVP
+  STATE.quizScore = `${score}/${QUIZ.length}`;
+  STATE.quizTags  = quizState.hits.join(',');
 
   let title, msg;
   if (pct === 100)      { title = 'Íntimo do casal!'; msg = 'Você conhece eles como ninguém. Bem-vindo à tripulação principal.'; }
@@ -597,6 +606,9 @@ function buildWhatsappMessage(data) {
     `*Lado:* ${data.lado || '-'}`,
     `*Pulou a história?* ${data.chato || 'Não'}`,
   ];
+  if (data.acertos_quiz) {
+    lines.push(`*Quiz:* ${data.acertos_quiz} acertos`);
+  }
   if (data.recado && data.recado.trim()) {
     lines.push('', `*Recado:* ${data.recado}`);
   }
@@ -679,8 +691,10 @@ function initRSVP() {
       showToast('Máximo 5 pessoas por confirmação. Ajustado para 5.');
     }
 
-    // adiciona flag de "pulou a história"
+    // adiciona flag de "pulou a história" e score do quiz (se fez)
     dataObj.chato = STATE.skippedStory ? 'Sim' : 'Não';
+    dataObj.acertos_quiz = STATE.quizScore || '';
+    dataObj.tags_acertos_quiz = STATE.quizTags || '';
 
     console.log('[RSVP] Enviando payload:', dataObj);
     console.log('[RSVP] STATE.skippedStory:', STATE.skippedStory);

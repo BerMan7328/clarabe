@@ -3682,6 +3682,8 @@ img { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  position: relative;
+  z-index: 2;
 }
 .quiz-option {
   font-family: 'Lora', serif;
@@ -3694,6 +3696,12 @@ img { display: block; max-width: 100%; }
   color: var(--op-tinta);
   cursor: pointer;
   transition: all 0.15s var(--easing-bounce);
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+  width: 100%;
+  display: block;
+  user-select: none;
 }
 .quiz-option:hover:not(:disabled) {
   background: rgba(245,197,24,0.18);

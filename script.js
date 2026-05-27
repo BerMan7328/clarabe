@@ -283,7 +283,7 @@ function renderQuizQuestion() {
   if (quizState.index >= QUIZ.length) return finishQuiz();
   const q = QUIZ[quizState.index];
   const opts = q.options.map((opt, i) =>
-    `<button class="quiz-option" data-i="${i}">${opt}</button>`
+    `<button type="button" class="quiz-option" data-quiz-i="${i}">${opt}</button>`
   ).join('');
   openModal(`
     <h3>Quiz do Casal</h3>
@@ -291,9 +291,6 @@ function renderQuizQuestion() {
     <div class="quiz-question">${q.q}</div>
     <div class="quiz-options">${opts}</div>
   `);
-  document.querySelectorAll('.quiz-option').forEach(btn => {
-    btn.addEventListener('click', () => answerQuiz(parseInt(btn.dataset.i)));
-  });
 }
 
 function answerQuiz(i) {
@@ -313,12 +310,9 @@ function answerQuiz(i) {
   exp.innerHTML = `
     <span class="quiz-exp-icon">${correct ? '✓' : '✗'}</span>
     <span class="quiz-exp-text">${q.explanation}</span>
-    <button class="quiz-next">${quizState.index === QUIZ.length - 1 ? 'Ver resultado' : 'Próxima'} →</button>`;
+    <button type="button" class="quiz-next">${quizState.index === QUIZ.length - 1 ? 'Ver resultado' : 'Próxima'} →</button>`;
   body.appendChild(exp);
-  exp.querySelector('.quiz-next').addEventListener('click', () => {
-    quizState.index++;
-    renderQuizQuestion();
-  });
+  // o listener é via event delegation no initQuiz
 }
 
 function finishQuiz() {
@@ -339,14 +333,41 @@ function finishQuiz() {
       <div class="quiz-pct">${pct}%</div>
     </div>
     <p class="quiz-result-msg">${msg}</p>
-    <button class="link-btn quiz-retry" id="quiz-retry">Tentar de novo</button>
+    <button type="button" class="link-btn quiz-retry" id="quiz-retry">Tentar de novo</button>
   `);
-  document.getElementById('quiz-retry').addEventListener('click', openQuizModal);
+  // listener é via event delegation no initQuiz
 }
 
 function initQuiz() {
   const btn = document.getElementById('open-quiz');
   if (btn) btn.addEventListener('click', openQuizModal);
+
+  // Event delegation no modal-body — resiliente a re-renders e propagação
+  const body = document.getElementById('modal-body');
+  if (!body) return;
+  body.addEventListener('click', (e) => {
+    // Opção do quiz
+    const opt = e.target.closest('.quiz-option');
+    if (opt && !opt.disabled && quizState) {
+      e.stopPropagation();
+      answerQuiz(parseInt(opt.dataset.quizI));
+      return;
+    }
+    // Botão "Próxima/Ver resultado"
+    const next = e.target.closest('.quiz-next');
+    if (next && quizState) {
+      e.stopPropagation();
+      quizState.index++;
+      renderQuizQuestion();
+      return;
+    }
+    // Botão "Tentar de novo"
+    const retry = e.target.closest('#quiz-retry');
+    if (retry) {
+      e.stopPropagation();
+      openQuizModal();
+    }
+  });
 }
 
 /* ════════════════════════════════════════════════════════════

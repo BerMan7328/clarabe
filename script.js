@@ -171,17 +171,37 @@ function showQuizNudge() {
   if (STATE.quizScore !== null) return;
   if (STATE.quizNudgeDismissedThisSession) return;
   const nudge = document.getElementById('quiz-nudge');
-  if (!nudge) return;
+  const btn = document.getElementById('open-quiz');
+  if (!nudge || !btn) return;
   nudge.classList.remove('hidden');
+  positionQuizNudge();
+  window.addEventListener('resize', positionQuizNudge);
   // auto-esconde após 12s
   clearTimeout(STATE._nudgeTimeout);
   STATE._nudgeTimeout = setTimeout(hideQuizNudge, 12000);
+}
+
+function positionQuizNudge() {
+  const nudge = document.getElementById('quiz-nudge');
+  const btn = document.getElementById('open-quiz');
+  const arrow = nudge && nudge.querySelector('.quiz-nudge-arrow');
+  if (!nudge || !btn || !arrow) return;
+  const btnRect = btn.getBoundingClientRect();
+  const arrowStyle = getComputedStyle(arrow);
+  const arrowW = arrow.offsetWidth || parseFloat(arrowStyle.width) || 26;
+  const arrowMR = parseFloat(arrowStyle.marginRight) || 0;
+  // distância do centro da seta até a borda direita do container .quiz-nudge
+  const arrowCenterFromContainerRight = arrowMR + arrowW / 2;
+  const quizCenterX = btnRect.left + btnRect.width / 2;
+  const rightPx = window.innerWidth - quizCenterX - arrowCenterFromContainerRight;
+  nudge.style.right = Math.max(8, rightPx) + 'px';
 }
 
 function hideQuizNudge(permanent = false) {
   const nudge = document.getElementById('quiz-nudge');
   if (!nudge || nudge.classList.contains('hidden')) return;
   nudge.classList.add('fade-out');
+  window.removeEventListener('resize', positionQuizNudge);
   setTimeout(() => {
     nudge.classList.add('hidden');
     nudge.classList.remove('fade-out');

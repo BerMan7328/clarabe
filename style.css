@@ -2439,8 +2439,8 @@ img { display: block; max-width: 100%; }
 .scene-illustrated {
   position: relative;
   width: 100%;
-  aspect-ratio: 296 / 284;
-  max-width: 360px;
+  aspect-ratio: 1280 / 548;
+  max-width: 480px;
   height: auto;
   margin: 2.75rem auto 0.75rem; /* margem extra no topo para avatares overlay */
   padding: 8px;
@@ -2549,8 +2549,8 @@ img { display: block; max-width: 100%; }
   .avatar-overlay-right { right: -4px; }
 }
 .scene-illustrated--wide {
-  aspect-ratio: 616 / 284;
-  max-width: 460px;
+  aspect-ratio: 1280 / 548;
+  max-width: 480px;
 }
 .scene-image {
   width: 100%;
@@ -2589,7 +2589,7 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 480px) {
   .scene-illustrated { max-width: 100%; padding: 6px; }
-  .scene-illustrated--wide { aspect-ratio: 616 / 320; }
+  .scene-illustrated--wide { aspect-ratio: 1280 / 548; }
   .scene-illustrated::before, .scene-illustrated::after { width: 44px; }
 }
 

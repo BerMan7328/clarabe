@@ -1695,23 +1695,122 @@ img { display: block; max-width: 100%; }
 /* ══════════════════════════════════════════════════════════════
    FINAL — seção de links após RSVP
 ══════════════════════════════════════════════════════════════ */
+/* ═══ SEÇÃO BAÚ DA TRIPULAÇÃO (fechamento da jornada) ═══ */
+.treasure-chest-section {
+  margin-top: 1.75rem;
+  padding: 1.25rem 1rem;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(245,197,24,0.1), transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(255,143,184,0.1), transparent 50%),
+    linear-gradient(160deg, var(--op-pergaminho), var(--op-pergaminho2));
+  border: 2px solid var(--op-borda);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+  position: relative;
+}
+.treasure-chest-section::before, .treasure-chest-section::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: radial-gradient(circle at 35% 35%, #888, #2a2a2a 70%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.3);
+}
+.treasure-chest-section::before { top: 10px; left: 10px; }
+.treasure-chest-section::after  { top: 10px; right: 10px; }
+
+.treasure-chest-header {
+  text-align: center;
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed rgba(139,94,42,0.3);
+}
+.treasure-eyebrow {
+  display: inline-block;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--op-vermelho);
+  background: rgba(192,57,43,0.08);
+  border: 1px solid rgba(192,57,43,0.3);
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
+  margin-bottom: 0.45rem;
+}
+.treasure-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--op-oceano-esc);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+.treasure-sub {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--op-tinta);
+}
+
+.treasure-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0.85rem;
+}
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,94,42,0.45), transparent);
+}
+.divider-text {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(44,24,16,0.6);
+}
+
+/* WhatsApp card MAIS DESTACADO */
 .final-whatsapp-card {
   display: flex;
   align-items: center;
   gap: 1rem;
   background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
   color: #fff;
-  border-radius: 14px;
-  padding: 1rem 1.15rem;
-  margin: 1.5rem 0 1.25rem;
-  box-shadow: 0 8px 20px rgba(37,211,102,0.4);
+  border-radius: 16px;
+  padding: 1.15rem 1.25rem;
+  margin: 0;
+  box-shadow:
+    0 10px 28px rgba(37,211,102,0.5),
+    0 0 0 4px rgba(37,211,102,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.25);
   transition: transform 0.2s var(--easing-bounce), box-shadow 0.25s ease;
   cursor: pointer;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #1ea655;
+}
+.whatsapp-pulse {
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 60%);
+  pointer-events: none;
+  animation: pulseRing 3s ease-in-out infinite;
+}
+@keyframes pulseRing {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 0.9; }
 }
 .final-whatsapp-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(37,211,102,0.55);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 14px 36px rgba(37,211,102,0.65),
+    0 0 0 5px rgba(37,211,102,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.3);
 }
 .whatsapp-icon {
   width: 48px; height: 48px;
@@ -2147,6 +2246,68 @@ img { display: block; max-width: 100%; }
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+}
+
+/* ═══ CENA COM IMAGEM ILUSTRADA (substitui scene-X CSS individuais) ═══ */
+.scene-illustrated {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 296 / 284;
+  max-width: 360px;
+  height: auto;
+  margin: 0.5rem auto 0.75rem;
+  padding: 8px;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(139,94,42,0.18), transparent 50%),
+    linear-gradient(160deg, var(--op-pergaminho), var(--op-pergaminho2));
+  border: 2px solid var(--op-borda);
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+  overflow: visible;
+}
+.scene-illustrated--wide {
+  aspect-ratio: 616 / 284;
+  max-width: 460px;
+}
+.scene-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid var(--op-borda-esc);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+/* fita decorativa em diagonal nos cantos da moldura */
+.scene-illustrated::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: 18%;
+  width: 60px; height: 18px;
+  background: rgba(255,143,184,0.6);
+  border-top: 1px dashed rgba(0,0,0,0.2);
+  border-bottom: 1px dashed rgba(0,0,0,0.2);
+  transform: rotate(-8deg);
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.scene-illustrated::after {
+  content: '';
+  position: absolute;
+  bottom: -8px; right: 14%;
+  width: 56px; height: 18px;
+  background: rgba(255,215,0,0.55);
+  border-top: 1px dashed rgba(0,0,0,0.2);
+  border-bottom: 1px dashed rgba(0,0,0,0.2);
+  transform: rotate(6deg);
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 480px) {
+  .scene-illustrated { max-width: 100%; padding: 6px; }
+  .scene-illustrated--wide { aspect-ratio: 616 / 320; }
+  .scene-illustrated::before, .scene-illustrated::after { width: 44px; }
 }
 
 /* Camada central para protagonistas — avatares ancorados no bottom, balões sobem acima */

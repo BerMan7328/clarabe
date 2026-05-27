@@ -384,6 +384,36 @@ function initModal() {
 /* ════════════════════════════════════════════════════════════
    RSVP — form submit + confirmação
 ════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════
+   RSVP — Persistência local + fallback WhatsApp
+════════════════════════════════════════════════════════════ */
+const RSVP_STORAGE_KEY = 'grand-line-rsvp';
+const WHATSAPP_NUMBER = '5531999999999'; // PLACEHOLDER — substitua pelo número real
+
+function saveRsvpLocally(data) {
+  try {
+    const all = JSON.parse(localStorage.getItem(RSVP_STORAGE_KEY) || '[]');
+    all.push({ ...data, savedAt: new Date().toISOString() });
+    localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(all));
+  } catch (e) {
+    console.warn('localStorage indisponível', e);
+  }
+}
+
+function buildWhatsappMessage(data) {
+  const lines = [
+    '🏴‍☠️ *Confirmação de presença — Sessão da Tarde*',
+    '',
+    `*Nome:* ${data.nome || '-'}`,
+    `*Vai?* ${data.vai || '-'}`,
+    `*Lado:* ${data.lado || '-'}`,
+  ];
+  if (data.recado && data.recado.trim()) {
+    lines.push('', `*Recado:* ${data.recado}`);
+  }
+  return encodeURIComponent(lines.join('\n'));
+}
+
 function initRSVP() {
   const form = document.getElementById('rsvp-form');
   if (!form) return;
@@ -395,27 +425,35 @@ function initRSVP() {
     btn.textContent = 'Enviando...';
     btn.disabled = true;
 
+    // coleta dados
+    const data = new FormData(form);
+    const dataObj = Object.fromEntries(data.entries());
+
+    // SEMPRE salva no localStorage (backup)
+    saveRsvpLocally(dataObj);
+
+    let formspreeOk = false;
     try {
-      const data = new FormData(form);
       const res = await fetch(form.action, {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' },
       });
-      if (res.ok) {
-        showConfirmation();
-        showToast('Presença confirmada!');
-      } else {
-        throw new Error('Erro Formspree');
-      }
+      formspreeOk = res.ok;
     } catch (err) {
-      // mesmo se Formspree não configurado, deixa o user prosseguir
-      showConfirmation();
-      showToast('Confirmação recebida localmente. Configure o Formspree para receber as respostas.');
-    } finally {
-      btn.textContent = originalText;
-      btn.disabled = false;
+      console.warn('Formspree falhou', err);
     }
+
+    showConfirmation(dataObj, formspreeOk);
+
+    if (formspreeOk) {
+      showToast('Presença confirmada!');
+    } else {
+      showToast('Confirmação salva. Envie pelo WhatsApp também.');
+    }
+
+    btn.textContent = originalText;
+    btn.disabled = false;
   });
 
   // ICS
@@ -423,9 +461,20 @@ function initRSVP() {
   if (btnIcs) btnIcs.addEventListener('click', downloadICS);
 }
 
-function showConfirmation() {
+function showConfirmation(data, formspreeOk) {
   document.getElementById('rsvp-form-wrap').classList.add('hidden');
   document.getElementById('rsvp-confirmed').classList.remove('hidden');
+
+  // Se Formspree falhou, mostrar botão de envio via WhatsApp com a mensagem pronta
+  if (data && !formspreeOk) {
+    const fallbackEl = document.getElementById('rsvp-fallback-wa');
+    if (fallbackEl) {
+      const msg = buildWhatsappMessage(data);
+      const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+      fallbackEl.querySelector('.fallback-wa-link').href = waLink;
+      fallbackEl.classList.remove('hidden');
+    }
+  }
 }
 
 function downloadICS() {

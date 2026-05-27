@@ -1695,6 +1695,45 @@ img { display: block; max-width: 100%; }
 /* ══════════════════════════════════════════════════════════════
    FINAL — seção de links após RSVP
 ══════════════════════════════════════════════════════════════ */
+/* Fallback WhatsApp quando Formspree falha */
+.rsvp-fallback-wa {
+  background: rgba(255,143,184,0.12);
+  border: 2px dashed var(--op-vermelho);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.fallback-wa-text {
+  font-family: 'Lora', serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--op-tinta);
+  margin-bottom: 0.75rem;
+}
+.fallback-wa-text strong { color: var(--op-vermelho); }
+.fallback-wa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #fff !important;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37,211,102,0.45);
+  transition: transform 0.2s, box-shadow 0.25s;
+}
+.fallback-wa-link svg { width: 20px; height: 20px; }
+.fallback-wa-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37,211,102,0.6);
+}
+
 /* ═══ SEÇÃO BAÚ DA TRIPULAÇÃO (fechamento da jornada) ═══ */
 .treasure-chest-section {
   margin-top: 1.75rem;
@@ -2269,57 +2308,97 @@ img { display: block; max-width: 100%; }
 /* Avatares "espiando" por cima da cena com balões de fala */
 .scene-avatars-overlay {
   position: absolute;
-  top: -52px;
-  left: 8px; right: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
-  z-index: 6;
+  z-index: 10;
 }
+/* cada avatar fixo na quina superior */
 .avatar-overlay {
-  position: relative;
+  position: absolute;
+  top: -38px;
+  width: 60px;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  pointer-events: auto;
-  max-width: 45%;
 }
+.avatar-overlay-left  { left: -8px; }
+.avatar-overlay-right { right: -8px; }
+.avatar-overlay-solo  { left: 50%; transform: translateX(-50%); }
+
 .avatar-overlay .avatar-slot {
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   border-width: 2.5px;
   flex-shrink: 0;
 }
+
+/* Balão flutua ACIMA do avatar (não no flow do flex) */
 .avatar-overlay .speech-bubble {
-  position: relative;
-  bottom: auto;
-  left: auto;
-  transform: none;
-  margin-bottom: 6px;
-  font-size: 0.82rem;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
   padding: 0.25rem 0.55rem 0.3rem;
-  max-width: 150px;
+  min-width: 80px;
+  max-width: 130px;
   white-space: normal;
-  line-height: 1.1;
+  line-height: 1.15;
+  margin: 0;
   animation: bubblePopSimple 0.5s var(--easing-bounce) backwards;
 }
-.avatar-overlay .speech-bubble::before { left: 38%; }
-.avatar-overlay .speech-bubble::after  { left: 40%; }
-.avatar-overlay-solo {
-  margin: 0 auto;
-  max-width: 70%;
+/* pontinha do balão no CENTRO apontando pro avatar */
+.avatar-overlay .speech-bubble::before {
+  left: 50%;
+  transform: translateX(-50%);
 }
+.avatar-overlay .speech-bubble::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* balão de quem está à direita inclina pra esquerda */
+.avatar-overlay-right .speech-bubble {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.avatar-overlay-right .speech-bubble::before {
+  left: auto;
+  right: 20%;
+  transform: none;
+}
+.avatar-overlay-right .speech-bubble::after {
+  left: auto;
+  right: 22%;
+  transform: none;
+}
+.avatar-overlay-left .speech-bubble {
+  left: 0;
+  transform: none;
+}
+.avatar-overlay-left .speech-bubble::before {
+  left: 20%;
+  transform: none;
+}
+.avatar-overlay-left .speech-bubble::after {
+  left: 22%;
+  transform: none;
+}
+
 @keyframes bubblePopSimple {
   from { opacity: 0; transform: scale(0.6) translateY(8px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+
 @media (max-width: 480px) {
-  .scene-illustrated { margin-top: 2.5rem; }
-  .scene-avatars-overlay { top: -44px; }
+  .scene-illustrated { margin-top: 3rem; }
+  .avatar-overlay { width: 50px; top: -34px; }
   .avatar-overlay .avatar-slot { width: 50px; height: 50px; }
-  .avatar-overlay .speech-bubble { font-size: 0.72rem; max-width: 110px; padding: 0.2rem 0.45rem 0.25rem; }
+  .avatar-overlay .speech-bubble { font-size: 0.7rem; max-width: 110px; min-width: 70px; padding: 0.2rem 0.45rem 0.25rem; }
+  .avatar-overlay-left  { left: -4px; }
+  .avatar-overlay-right { right: -4px; }
 }
 .scene-illustrated--wide {
   aspect-ratio: 616 / 284;

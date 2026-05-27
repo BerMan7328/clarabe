@@ -2149,14 +2149,15 @@ img { display: block; max-width: 100%; }
   background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
 }
 
-/* Camada central para protagonistas — avatares ficam no centro da cena */
+/* Camada central para protagonistas — avatares ancorados no bottom, balões sobem acima */
 .scene-protagonists {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   gap: 1.5rem;
+  padding-bottom: 10px;
   z-index: 2;
 }
 .scene-protagonists .avatar-stage,

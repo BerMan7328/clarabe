@@ -9,8 +9,10 @@ Setup único, **gratuito**, sem servidor. Tempo: ~5 minutos.
 3. Na **primeira linha** (cabeçalho), coloque essas colunas exatamente:
 
 ```
-Data/Hora | Nome | WhatsApp | Vai? | Quantas pessoas | Lado | Recado | Pulou a história?
+Data/Hora | Nome | WhatsApp | Vai? | Quantas pessoas | Lado | Recado | Pulou a história? | Acertos Quiz | Tags Acertos Quiz
 ```
+
+> ⚠️ **Acertos Quiz deve ser número inteiro (ex.: `9`), NUNCA no formato `9/10`.** O Google Sheets interpreta `"9/10"` como **data** (vira `09/out`) e corrompe a coluna — quebrando a média e os cálculos da aba de resumo. O `script.js` já envia só o inteiro (ver `finishQuiz()`). Mantenha a coluna formatada como **Número**.
 
 ## Passo 2 — Adicionar o Apps Script
 
@@ -30,7 +32,9 @@ function doPost(e) {
       data.quantos || '',
       data.lado || '',
       data.recado || '',
-      data.chato || 'Não'
+      data.chato || 'Não',
+      data.acertos_quiz || '',
+      data.tags_acertos_quiz || ''
     ]);
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
@@ -90,6 +94,7 @@ Pronto. A partir de agora, cada submit do RSVP **aparece automaticamente na plan
 3. Volte à planilha — em até **5 segundos** uma nova linha deve aparecer com:
    - Data/Hora do envio
    - Nome, "Vai?", "Lado" e "Recado"
+   - "Pulou a história?", "Acertos Quiz" e "Tags Acertos Quiz" (se o convidado fez o quiz)
 
 ## Se precisar atualizar o script
 

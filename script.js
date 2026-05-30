@@ -402,7 +402,8 @@ function finishQuiz() {
   const pct = Math.round((score / QUIZ.length) * 100);
 
   // salva no STATE pra ir junto com o RSVP
-  STATE.quizScore = `${score}/${QUIZ.length}`;
+  // IMPORTANTE: número inteiro (0–10), NÃO "X/10" — o Google Sheets lê "9/10" como DATA e corrompe a coluna
+  STATE.quizScore = score;
   STATE.quizTags  = quizState.hits.join(',');
 
   let title, msg;
@@ -772,7 +773,7 @@ function buildWhatsappMessage(data) {
     `*Lado:* ${data.lado || '-'}`,
     `*Pulou a história?* ${data.chato || 'Não'}`,
   ];
-  if (data.acertos_quiz) {
+  if (data.acertos_quiz !== '' && data.acertos_quiz != null) {
     lines.push(`*Quiz:* ${data.acertos_quiz} acertos`);
   }
   if (data.recado && data.recado.trim()) {
@@ -841,8 +842,8 @@ function initRSVP() {
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    // Se ainda não fez o quiz, oferece antes de enviar
-    if (!STATE.quizScore && !STATE.quizSuggestionSkipped) {
+    // Se ainda não fez o quiz, oferece antes de enviar (=== null pra não confundir score 0 com "não fez")
+    if (STATE.quizScore === null && !STATE.quizSuggestionSkipped) {
       showQuizSuggestion();
       return;
     }
@@ -866,7 +867,7 @@ function initRSVP() {
 
     // adiciona flag de "pulou a história" e score do quiz (se fez)
     dataObj.chato = STATE.skippedStory ? 'Sim' : 'Não';
-    dataObj.acertos_quiz = STATE.quizScore || '';
+    dataObj.acertos_quiz = STATE.quizScore ?? '';
     dataObj.tags_acertos_quiz = STATE.quizTags || '';
 
     console.log('[RSVP] Enviando payload:', dataObj);
